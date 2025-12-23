@@ -1,4 +1,4 @@
-// script.js
+// script.js - исправленная версия
 document.addEventListener('DOMContentLoaded', function() {
     // Инициализация KaTeX
     renderMath();
@@ -22,51 +22,61 @@ document.addEventListener('DOMContentLoaded', function() {
 // Рендеринг математических формул с помощью KaTeX
 function renderMath() {
     // Титульный слайд
-    katex.renderToString("Ax + By + C = 0", document.getElementById('title-math'), {
+    katex.render("Ax + By + C = 0", document.getElementById('title-math'), {
         throwOnError: false
     });
     
     // Определение
-    katex.renderToString("F(x, y) = 0", document.getElementById('def-math'), {
+    katex.render("F(x, y) = 0", document.getElementById('def-math'), {
         throwOnError: false
     });
     
     // Общее уравнение
-    katex.renderToString("Ax + By + C = 0", document.getElementById('general-eq'), {
+    katex.render("Ax + By + C = 0", document.getElementById('general-eq'), {
         throwOnError: false
     });
     
     // Уравнение через 2 точки
-    katex.renderToString("\\frac{x - x_1}{x_2 - x_1} = \\frac{y - y_1}{y_2 - y_1}", document.getElementById('two-points-eq'), {
+    katex.render("\\frac{x - x_1}{x_2 - x_1} = \\frac{y - y_1}{y_2 - y_1}", document.getElementById('two-points-eq'), {
         throwOnError: false
     });
     
-    katex.renderToString("\\frac{x - 1}{4 - 1} = \\frac{y - 2}{5 - 2}", document.getElementById('two-points-example'), {
+    katex.render("\\frac{x - 1}{4 - 1} = \\frac{y - 2}{5 - 2}", document.getElementById('two-points-example'), {
         throwOnError: false
     });
     
     // Каноническое уравнение
-    katex.renderToString("\\frac{x - x_0}{l} = \\frac{y - y_0}{m}", document.getElementById('canonical-eq'), {
+    katex.render("\\frac{x - x_0}{l} = \\frac{y - y_0}{m}", document.getElementById('canonical-eq'), {
         throwOnError: false
     });
     
-    katex.renderToString("\\frac{x - 2}{3} = \\frac{y - 1}{4}", document.getElementById('canonical-example'), {
+    katex.render("\\frac{x - 2}{3} = \\frac{y - 1}{4}", document.getElementById('canonical-example'), {
         throwOnError: false
     });
     
     // Параметрическое уравнение
-    katex.renderToString("\\begin{cases} x = x_0 + lt \\\\ y = y_0 + mt \\end{cases}, \\quad t \\in \\mathbb{R}", document.getElementById('parametric-eq'), {
+    katex.render("\\begin{cases} x = x_0 + lt \\\\ y = y_0 + mt \\end{cases}, \\quad t \\in \\mathbb{R}", document.getElementById('parametric-eq'), {
         throwOnError: false,
         displayMode: true
     });
     
-    katex.renderToString("\\begin{cases} x = 1 + 2t \\\\ y = -1 + 3t \\end{cases}, \\quad t \\in \\mathbb{R}", document.getElementById('parametric-example'), {
+    katex.render("\\begin{cases} x = 1 + 2t \\\\ y = -1 + 3t \\end{cases}, \\quad t \\in \\mathbb{R}", document.getElementById('parametric-example'), {
         throwOnError: false,
         displayMode: true
     });
     
     // Автоматический рендеринг KaTeX на всем документе
-    renderMathInDocument();
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\(", right: "\\)", display: false},
+                {left: "\\[", right: "\\]", display: true}
+            ],
+            throwOnError: false
+        });
+    });
 }
 
 // Инициализация меню
@@ -76,19 +86,26 @@ function initMenu() {
     const slidesContainer = document.querySelector('.slides-container');
     const menuLinks = document.querySelectorAll('.menu-link');
     
-    menuToggle.addEventListener('click', function() {
-        slideMenu.classList.toggle('active');
-        slidesContainer.classList.toggle('menu-open');
-        menuToggle.innerHTML = slideMenu.classList.contains('active') ? 
-            '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-    });
+    if (menuToggle && slideMenu) {
+        menuToggle.addEventListener('click', function() {
+            slideMenu.classList.toggle('active');
+            slidesContainer.classList.toggle('menu-open');
+            menuToggle.innerHTML = slideMenu.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+    }
     
     // Закрытие меню при клике на ссылку
     menuLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            slideMenu.classList.remove('active');
-            slidesContainer.classList.remove('menu-open');
-            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (slideMenu) {
+                slideMenu.classList.remove('active');
+                slidesContainer.classList.remove('menu-open');
+                if (menuToggle) {
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            }
         });
     });
 }
@@ -106,10 +123,16 @@ function initSlideNavigation() {
     let currentSlideIndex = 0;
     
     // Устанавливаем общее количество слайдов
-    totalSlidesElement.textContent = totalSlides;
+    if (totalSlidesElement) {
+        totalSlidesElement.textContent = totalSlides;
+    }
     
     // Функция для показа слайда
     function showSlide(index) {
+        // Проверяем, что индекс в пределах
+        if (index < 0) index = 0;
+        if (index >= totalSlides) index = totalSlides - 1;
+        
         // Скрываем все слайды
         slides.forEach(slide => {
             slide.classList.remove('active');
@@ -120,7 +143,9 @@ function initSlideNavigation() {
         
         // Обновляем счетчик
         currentSlideIndex = index;
-        currentSlideElement.textContent = index + 1;
+        if (currentSlideElement) {
+            currentSlideElement.textContent = index + 1;
+        }
         
         // Обновляем активную ссылку в меню
         menuLinks.forEach(link => {
@@ -136,32 +161,32 @@ function initSlideNavigation() {
     }
     
     // Кнопка "назад"
-    prevBtn.addEventListener('click', function() {
-        if (currentSlideIndex > 0) {
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
             showSlide(currentSlideIndex - 1);
-        }
-    });
+        });
+    }
     
     // Кнопка "вперед"
-    nextBtn.addEventListener('click', function() {
-        if (currentSlideIndex < totalSlides - 1) {
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
             showSlide(currentSlideIndex + 1);
-        }
-    });
+        });
+    }
     
     // Навигация с клавиатуры
     document.addEventListener('keydown', function(e) {
         if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-            if (currentSlideIndex > 0) {
-                showSlide(currentSlideIndex - 1);
-            }
+            e.preventDefault();
+            showSlide(currentSlideIndex - 1);
         } else if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
-            if (currentSlideIndex < totalSlides - 1) {
-                showSlide(currentSlideIndex + 1);
-            }
+            e.preventDefault();
+            showSlide(currentSlideIndex + 1);
         } else if (e.key === 'Home') {
+            e.preventDefault();
             showSlide(0);
         } else if (e.key === 'End') {
+            e.preventDefault();
             showSlide(totalSlides - 1);
         }
     });
@@ -187,17 +212,19 @@ function initConverter() {
     const canonicalInputs = document.getElementById('canonical-inputs');
     const parametricInputs = document.getElementById('parametric-inputs');
     
+    if (!sourceType || !convertBtn) return;
+    
     // Показать/скрыть соответствующие поля ввода
     sourceType.addEventListener('change', function() {
-        generalInputs.style.display = 'none';
-        canonicalInputs.style.display = 'none';
-        parametricInputs.style.display = 'none';
+        if (generalInputs) generalInputs.style.display = 'none';
+        if (canonicalInputs) canonicalInputs.style.display = 'none';
+        if (parametricInputs) parametricInputs.style.display = 'none';
         
-        if (sourceType.value === 'general') {
+        if (sourceType.value === 'general' && generalInputs) {
             generalInputs.style.display = 'block';
-        } else if (sourceType.value === 'canonical') {
+        } else if (sourceType.value === 'canonical' && canonicalInputs) {
             canonicalInputs.style.display = 'block';
-        } else if (sourceType.value === 'parametric') {
+        } else if (sourceType.value === 'parametric' && parametricInputs) {
             parametricInputs.style.display = 'block';
         }
         
@@ -205,7 +232,8 @@ function initConverter() {
     });
     
     // Обновление исходного уравнения при изменении значений
-    document.querySelectorAll('#general-inputs input, #canonical-inputs input, #parametric-inputs input').forEach(input => {
+    const inputs = document.querySelectorAll('#general-inputs input, #canonical-inputs input, #parametric-inputs input');
+    inputs.forEach(input => {
         input.addEventListener('input', updateSourceEquation);
     });
     
@@ -218,28 +246,30 @@ function initConverter() {
     // Функция обновления отображения исходного уравнения
     function updateSourceEquation() {
         const sourceEqElement = document.getElementById('source-equation');
+        if (!sourceEqElement) return;
+        
         let equation = '';
         
         if (sourceType.value === 'general') {
-            const A = parseFloat(document.getElementById('input-A').value) || 0;
-            const B = parseFloat(document.getElementById('input-B').value) || 0;
-            const C = parseFloat(document.getElementById('input-C').value) || 0;
+            const A = parseFloat(document.getElementById('input-A')?.value) || 0;
+            const B = parseFloat(document.getElementById('input-B')?.value) || 0;
+            const C = parseFloat(document.getElementById('input-C')?.value) || 0;
             
             equation = `${formatCoefficient(A)}x ${formatSignedCoefficient(B)}y ${formatSignedCoefficient(C)} = 0`;
             
         } else if (sourceType.value === 'canonical') {
-            const x0 = parseFloat(document.getElementById('input-x0').value) || 0;
-            const y0 = parseFloat(document.getElementById('input-y0').value) || 0;
-            const l = parseFloat(document.getElementById('input-l').value) || 1;
-            const m = parseFloat(document.getElementById('input-m').value) || 1;
+            const x0 = parseFloat(document.getElementById('input-x0')?.value) || 0;
+            const y0 = parseFloat(document.getElementById('input-y0')?.value) || 0;
+            const l = parseFloat(document.getElementById('input-l')?.value) || 1;
+            const m = parseFloat(document.getElementById('input-m')?.value) || 1;
             
             equation = `\\frac{x ${formatSignedNumber(-x0)}}{${l}} = \\frac{y ${formatSignedNumber(-y0)}}{${m}}`;
             
         } else if (sourceType.value === 'parametric') {
-            const x0 = parseFloat(document.getElementById('param-x0').value) || 0;
-            const y0 = parseFloat(document.getElementById('param-y0').value) || 0;
-            const l = parseFloat(document.getElementById('param-l').value) || 1;
-            const m = parseFloat(document.getElementById('param-m').value) || 1;
+            const x0 = parseFloat(document.getElementById('param-x0')?.value) || 0;
+            const y0 = parseFloat(document.getElementById('param-y0')?.value) || 0;
+            const l = parseFloat(document.getElementById('param-l')?.value) || 1;
+            const m = parseFloat(document.getElementById('param-m')?.value) || 1;
             
             equation = `\\begin{cases} x = ${x0} ${formatSignedNumber(l)}t \\\\ y = ${y0} ${formatSignedNumber(m)}t \\end{cases}`;
         }
@@ -247,9 +277,9 @@ function initConverter() {
         // Рендерим с помощью KaTeX
         try {
             if (sourceType.value === 'parametric') {
-                sourceEqElement.innerHTML = katex.renderToString(equation, { throwOnError: false, displayMode: true });
+                katex.render(equation, sourceEqElement, { throwOnError: false, displayMode: true });
             } else {
-                sourceEqElement.innerHTML = katex.renderToString(equation, { throwOnError: false });
+                katex.render(equation, sourceEqElement, { throwOnError: false });
             }
         } catch (e) {
             sourceEqElement.textContent = equation;
@@ -263,6 +293,8 @@ function initConverter() {
         const resultEqElement = document.getElementById('result-equation');
         const stepsElement = document.getElementById('conversion-steps');
         
+        if (!resultEqElement) return;
+        
         let result = '';
         let steps = '';
         
@@ -272,13 +304,13 @@ function initConverter() {
                 steps = "Преобразование не требуется.";
             } 
             else if (sourceTypeVal === 'general' && targetTypeVal === 'canonical') {
-                const A = parseFloat(document.getElementById('input-A').value) || 0;
-                const B = parseFloat(document.getElementById('input-B').value) || 0;
-                const C = parseFloat(document.getElementById('input-C').value) || 0;
+                const A = parseFloat(document.getElementById('input-A')?.value) || 0;
+                const B = parseFloat(document.getElementById('input-B')?.value) || 0;
+                const C = parseFloat(document.getElementById('input-C')?.value) || 0;
                 
                 // Находим точку на прямой
                 let x0, y0;
-                if (A !== 0) {
+                if (Math.abs(A) > 0.0001) {
                     y0 = 0;
                     x0 = -C / A;
                     steps += `1. Принимаем y = 0, тогда x = -C/A = ${formatNumber(-C/A)}<br>`;
@@ -296,7 +328,7 @@ function initConverter() {
                 
                 // Нормализуем вектор (делим на НОД)
                 let gcdVal = gcd(l, m);
-                if (gcdVal !== 0) {
+                if (Math.abs(gcdVal) > 0.0001) {
                     l /= gcdVal;
                     m /= gcdVal;
                     steps += `2. Направляющий вектор: s = (-B, A) = (${formatNumber(B)}, ${formatNumber(-A)})<br>`;
@@ -309,13 +341,13 @@ function initConverter() {
                 
             } 
             else if (sourceTypeVal === 'general' && targetTypeVal === 'parametric') {
-                const A = parseFloat(document.getElementById('input-A').value) || 0;
-                const B = parseFloat(document.getElementById('input-B').value) || 0;
-                const C = parseFloat(document.getElementById('input-C').value) || 0;
+                const A = parseFloat(document.getElementById('input-A')?.value) || 0;
+                const B = parseFloat(document.getElementById('input-B')?.value) || 0;
+                const C = parseFloat(document.getElementById('input-C')?.value) || 0;
                 
                 // Находим точку на прямой
                 let x0, y0;
-                if (A !== 0) {
+                if (Math.abs(A) > 0.0001) {
                     y0 = 0;
                     x0 = -C / A;
                     steps += `1. Принимаем y = 0, тогда x = -C/A = ${formatNumber(-C/A)}<br>`;
@@ -333,7 +365,7 @@ function initConverter() {
                 
                 // Нормализуем вектор (делим на НОД)
                 let gcdVal = gcd(l, m);
-                if (gcdVal !== 0) {
+                if (Math.abs(gcdVal) > 0.0001) {
                     l /= gcdVal;
                     m /= gcdVal;
                     steps += `2. Направляющий вектор: s = (-B, A) = (${formatNumber(B)}, ${formatNumber(-A)})<br>`;
@@ -346,10 +378,10 @@ function initConverter() {
                 
             }
             else if (sourceTypeVal === 'canonical' && targetTypeVal === 'general') {
-                const x0 = parseFloat(document.getElementById('input-x0').value) || 0;
-                const y0 = parseFloat(document.getElementById('input-y0').value) || 0;
-                const l = parseFloat(document.getElementById('input-l').value) || 1;
-                const m = parseFloat(document.getElementById('input-m').value) || 1;
+                const x0 = parseFloat(document.getElementById('input-x0')?.value) || 0;
+                const y0 = parseFloat(document.getElementById('input-y0')?.value) || 0;
+                const l = parseFloat(document.getElementById('input-l')?.value) || 1;
+                const m = parseFloat(document.getElementById('input-m')?.value) || 1;
                 
                 steps += `1. Из канонического уравнения: ${m}(x ${formatSignedNumber(-x0)}) = ${l}(y ${formatSignedNumber(-y0)})<br>`;
                 
@@ -363,10 +395,10 @@ function initConverter() {
                 
             }
             else if (sourceTypeVal === 'canonical' && targetTypeVal === 'parametric') {
-                const x0 = parseFloat(document.getElementById('input-x0').value) || 0;
-                const y0 = parseFloat(document.getElementById('input-y0').value) || 0;
-                const l = parseFloat(document.getElementById('input-l').value) || 1;
-                const m = parseFloat(document.getElementById('input-m').value) || 1;
+                const x0 = parseFloat(document.getElementById('input-x0')?.value) || 0;
+                const y0 = parseFloat(document.getElementById('input-y0')?.value) || 0;
+                const l = parseFloat(document.getElementById('input-l')?.value) || 1;
+                const m = parseFloat(document.getElementById('input-m')?.value) || 1;
                 
                 steps += `1. Приравниваем каждую дробь к параметру t:<br>`;
                 steps += `   \\frac{x ${formatSignedNumber(-x0)}}{${l}} = t и \\frac{y ${formatSignedNumber(-y0)}}{${m}} = t<br>`;
@@ -376,10 +408,10 @@ function initConverter() {
                 
             }
             else if (sourceTypeVal === 'parametric' && targetTypeVal === 'canonical') {
-                const x0 = parseFloat(document.getElementById('param-x0').value) || 0;
-                const y0 = parseFloat(document.getElementById('param-y0').value) || 0;
-                const l = parseFloat(document.getElementById('param-l').value) || 1;
-                const m = parseFloat(document.getElementById('param-m').value) || 1;
+                const x0 = parseFloat(document.getElementById('param-x0')?.value) || 0;
+                const y0 = parseFloat(document.getElementById('param-y0')?.value) || 0;
+                const l = parseFloat(document.getElementById('param-l')?.value) || 1;
+                const m = parseFloat(document.getElementById('param-m')?.value) || 1;
                 
                 steps += `1. Из параметрических уравнений выражаем t:<br>`;
                 steps += `   t = \\frac{x ${formatSignedNumber(-x0)}}{${l}}<br>`;
@@ -390,10 +422,10 @@ function initConverter() {
                 
             }
             else if (sourceTypeVal === 'parametric' && targetTypeVal === 'general') {
-                const x0 = parseFloat(document.getElementById('param-x0').value) || 0;
-                const y0 = parseFloat(document.getElementById('param-y0').value) || 0;
-                const l = parseFloat(document.getElementById('param-l').value) || 1;
-                const m = parseFloat(document.getElementById('param-m').value) || 1;
+                const x0 = parseFloat(document.getElementById('param-x0')?.value) || 0;
+                const y0 = parseFloat(document.getElementById('param-y0')?.value) || 0;
+                const l = parseFloat(document.getElementById('param-l')?.value) || 1;
+                const m = parseFloat(document.getElementById('param-m')?.value) || 1;
                 
                 steps += `1. Из первого уравнения: t = \\frac{x ${formatSignedNumber(-x0)}}{${l}}<br>`;
                 steps += `2. Подставляем во второе уравнение:<br>`;
@@ -420,19 +452,23 @@ function initConverter() {
             // Рендерим результат с помощью KaTeX
             try {
                 if (targetTypeVal === 'parametric') {
-                    resultEqElement.innerHTML = katex.renderToString(result, { throwOnError: false, displayMode: true });
+                    katex.render(result, resultEqElement, { throwOnError: false, displayMode: true });
                 } else {
-                    resultEqElement.innerHTML = katex.renderToString(result, { throwOnError: false });
+                    katex.render(result, resultEqElement, { throwOnError: false });
                 }
             } catch (e) {
                 resultEqElement.textContent = result;
             }
             
-            stepsElement.innerHTML = steps;
+            if (stepsElement) {
+                stepsElement.innerHTML = steps;
+            }
             
         } catch (error) {
             resultEqElement.textContent = "Ошибка преобразования: " + error.message;
-            stepsElement.textContent = "";
+            if (stepsElement) {
+                stepsElement.textContent = "";
+            }
         }
     }
     
@@ -466,7 +502,7 @@ function initConverter() {
         a = Math.abs(a);
         b = Math.abs(b);
         
-        if (a < 0.0001 && b < 0.0001) return 0;
+        if (a < 0.0001 && b < 0.0001) return 1;
         if (a < 0.0001) return b;
         if (b < 0.0001) return a;
         
@@ -488,12 +524,16 @@ function initTwoPointsApp() {
     const point2x = document.getElementById('point2-x');
     const point2y = document.getElementById('point2-y');
     
+    if (!calculateBtn) return;
+    
     // Обработчик кнопки расчета
     calculateBtn.addEventListener('click', calculateLineEquation);
     
     // Обработчики изменений значений
     [point1x, point1y, point2x, point2y].forEach(input => {
-        input.addEventListener('input', calculateLineEquation);
+        if (input) {
+            input.addEventListener('input', calculateLineEquation);
+        }
     });
     
     // Инициализация при загрузке
@@ -501,10 +541,10 @@ function initTwoPointsApp() {
     
     function calculateLineEquation() {
         try {
-            const x1 = parseFloat(point1x.value) || 0;
-            const y1 = parseFloat(point1y.value) || 0;
-            const x2 = parseFloat(point2x.value) || 0;
-            const y2 = parseFloat(point2y.value) || 0;
+            const x1 = parseFloat(point1x?.value) || 0;
+            const y1 = parseFloat(point1y?.value) || 0;
+            const x2 = parseFloat(point2x?.value) || 0;
+            const y2 = parseFloat(point2y?.value) || 0;
             
             // Проверка, что точки не совпадают
             if (Math.abs(x1 - x2) < 0.001 && Math.abs(y1 - y2) < 0.001) {
@@ -518,39 +558,60 @@ function initTwoPointsApp() {
             
             // Отображаем общее уравнение
             const generalFormElement = document.getElementById('general-form');
-            const generalEq = `${formatCoefficient(A)}x ${formatSignedCoefficient(B)}y ${formatSignedCoefficient(C)} = 0`;
-            generalFormElement.innerHTML = katex.renderToString(generalEq, { throwOnError: false });
+            if (generalFormElement) {
+                const generalEq = `${formatCoefficient(A)}x ${formatSignedCoefficient(B)}y ${formatSignedCoefficient(C)} = 0`;
+                katex.render(generalEq, generalFormElement, { throwOnError: false });
+            }
             
             // Отображаем каноническое уравнение
             const canonicalFormElement = document.getElementById('canonical-form');
-            const l = x2 - x1;
-            const m = y2 - y1;
-            const canonicalEq = `\\frac{x ${formatSignedNumber(-x1)}}{${formatNumber(l)}} = \\frac{y ${formatSignedNumber(-y1)}}{${formatNumber(m)}}`;
-            canonicalFormElement.innerHTML = katex.renderToString(canonicalEq, { throwOnError: false });
+            if (canonicalFormElement) {
+                const l = x2 - x1;
+                const m = y2 - y1;
+                const canonicalEq = `\\frac{x ${formatSignedNumber(-x1)}}{${formatNumber(l)}} = \\frac{y ${formatSignedNumber(-y1)}}{${formatNumber(m)}}`;
+                katex.render(canonicalEq, canonicalFormElement, { throwOnError: false });
+            }
             
             // Отображаем параметрическое уравнение
             const parametricFormElement = document.getElementById('parametric-form');
-            const parametricEq = `\\begin{cases} x = ${formatNumber(x1)} ${formatSignedNumber(l)}t \\\\ y = ${formatNumber(y1)} ${formatSignedNumber(m)}t \\end{cases}`;
-            parametricFormElement.innerHTML = katex.renderToString(parametricEq, { throwOnError: false, displayMode: true });
+            if (parametricFormElement) {
+                const l = x2 - x1;
+                const m = y2 - y1;
+                const parametricEq = `\\begin{cases} x = ${formatNumber(x1)} ${formatSignedNumber(l)}t \\\\ y = ${formatNumber(y1)} ${formatSignedNumber(m)}t \\end{cases}`;
+                katex.render(parametricEq, parametricFormElement, { throwOnError: false, displayMode: true });
+            }
             
             // Отображаем основное уравнение
             const lineEquationElement = document.getElementById('line-equation');
-            lineEquationElement.innerHTML = katex.renderToString(generalEq, { throwOnError: false });
+            if (lineEquationElement) {
+                const generalEq = `${formatCoefficient(A)}x ${formatSignedCoefficient(B)}y ${formatSignedCoefficient(C)} = 0`;
+                katex.render(generalEq, lineEquationElement, { throwOnError: false });
+            }
             
             // Строим график
             createLineChart(x1, y1, x2, y2, A, B, C);
             
         } catch (error) {
-            document.getElementById('general-form').textContent = "Ошибка: " + error.message;
-            document.getElementById('canonical-form').textContent = "";
-            document.getElementById('parametric-form').textContent = "";
-            document.getElementById('line-equation').textContent = "Ошибка: " + error.message;
+            const generalFormElement = document.getElementById('general-form');
+            if (generalFormElement) generalFormElement.textContent = "Ошибка: " + error.message;
+            
+            const canonicalFormElement = document.getElementById('canonical-form');
+            if (canonicalFormElement) canonicalFormElement.textContent = "";
+            
+            const parametricFormElement = document.getElementById('parametric-form');
+            if (parametricFormElement) parametricFormElement.textContent = "";
+            
+            const lineEquationElement = document.getElementById('line-equation');
+            if (lineEquationElement) lineEquationElement.textContent = "Ошибка: " + error.message;
         }
     }
     
     // Функция для построения графика с использованием Chart.js
     function createLineChart(x1, y1, x2, y2, A, B, C) {
-        const ctx = document.getElementById('line-chart').getContext('2d');
+        const canvas = document.getElementById('line-chart');
+        if (!canvas) return;
+        
+        const ctx = canvas.getContext('2d');
         
         // Рассчитываем точки для прямой
         const linePoints = [];
@@ -709,20 +770,10 @@ function initCodeTabs() {
             });
             
             // Показываем выбранный блок с кодом
-            document.getElementById(`${tabId}-code`).classList.add('active');
+            const targetBlock = document.getElementById(`${tabId}-code`);
+            if (targetBlock) {
+                targetBlock.classList.add('active');
+            }
         });
-    });
-}
-
-// Функция для автоматического рендеринга KaTeX на всем документе
-function renderMathInDocument() {
-    renderMathInElement(document.body, {
-        delimiters: [
-            {left: "$$", right: "$$", display: true},
-            {left: "$", right: "$", display: false},
-            {left: "\\(", right: "\\)", display: false},
-            {left: "\\[", right: "\\]", display: true}
-        ],
-        throwOnError: false
     });
 }
