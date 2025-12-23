@@ -3,551 +3,696 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Аналитическая геометрия: Уравнения прямой на плоскости</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <title>Аналитическая геометрия</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <link rel="stylesheet" href="style.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="presentation-container">
-        <!-- Меню -->
-        <div class="slide-menu" id="slideMenu">
-            <button class="menu-toggle" id="menuToggle">☰ Меню</button>
-            <div class="menu-content" id="menuContent">
-                <h3>Быстрый переход</h3>
-                <div class="menu-items" id="menuItems"></div>
+        <!-- Меню для быстрого перехода -->
+        <nav class="slide-menu">
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
             </div>
-        </div>
+            <ul class="menu-list">
+                <li><a href="#slide1" class="menu-link">Титульный слайд</a></li>
+                <li><a href="#slide2" class="menu-link">Определение</a></li>
+                <li><a href="#slide3" class="menu-link">Раздел: Уравнения</a></li>
+                <li><a href="#slide4" class="menu-link">Общее уравнение</a></li>
+                <li><a href="#slide5" class="menu-link">Уравнение через 2 точки</a></li>
+                <li><a href="#slide6" class="menu-link">Каноническое уравнение</a></li>
+                <li><a href="#slide7" class="menu-link">Параметрическое уравнение</a></li>
+                <li><a href="#slide8" class="menu-link">Раздел: Алгоритмы</a></li>
+                <li><a href="#slide9" class="menu-link">Общее → Каноническое</a></li>
+                <li><a href="#slide10" class="menu-link">Общее → Параметрическое</a></li>
+                <li><a href="#slide11" class="menu-link">Каноническое → Общее</a></li>
+                <li><a href="#slide12" class="menu-link">Каноническое → Параметрическое</a></li>
+                <li><a href="#slide13" class="menu-link">Параметрическое → Каноническое</a></li>
+                <li><a href="#slide14" class="menu-link">Параметрическое → Общее</a></li>
+                <li><a href="#slide15" class="menu-link">Раздел: Программы</a></li>
+                <li><a href="#slide16" class="menu-link">Программа: Конвертер</a></li>
+                <li><a href="#slide17" class="menu-link">Программа: Через 2 точки</a></li>
+                <li><a href="#slide18" class="menu-link">Исходный код</a></li>
+                <li><a href="#slide19" class="menu-link">Веселые картинки</a></li>
+                <li><a href="#slide20" class="menu-link">Заключение</a></li>
+            </ul>
+        </nav>
 
         <!-- Слайды -->
         <div class="slides-container">
             <!-- Слайд 1: Титульный -->
-            <section class="slide active" id="slide1" data-slide-number="1">
+            <section class="slide active" id="slide1">
                 <div class="slide-content">
-                    <h1>Аналитическая геометрия</h1>
-                    <h2>Уравнения прямой на плоскости</h2>
-                    <div class="title-info">
+                    <h1 class="title">Аналитическая геометрия</h1>
+                    <h2 class="subtitle">Уравнения прямой на плоскости</h2>
+                    <div class="student-info">
+                        <p>Выполнил: <strong>Кутузов Вадим</strong></p>
                         <p>Вариант №9</p>
-                        <p><strong>Выполнил:</strong> студент Кутузов Вадим</p>
                     </div>
-                    <div class="nav-hint">
-                        <p>Используйте ← → или меню для навигации</p>
+                    <div class="math-example">
+                        <div id="title-math"></div>
                     </div>
                 </div>
             </section>
 
-            <!-- Слайд-разделитель 1 -->
-            <section class="slide divider" id="slide2" data-slide-number="2">
+            <!-- Слайд 2: Определение -->
+            <section class="slide" id="slide2">
                 <div class="slide-content">
-                    <h1>Раздел 1</h1>
-                    <h2>Определение аналитической геометрии</h2>
-                </div>
-            </section>
-
-            <!-- Слайд 3: Определение -->
-            <section class="slide" id="slide3" data-slide-number="3">
-                <div class="slide-content">
-                    <h2>Определение аналитической геометрии</h2>
-                    <div class="definition-card">
+                    <h1>Определение аналитической геометрии</h1>
+                    <div class="definition">
                         <p><strong>Аналитическая геометрия</strong> — раздел математики, в котором геометрические задачи решаются средствами алгебры на основе метода координат.</p>
-                    </div>
-                    <div class="key-features">
-                        <div class="feature">
-                            <h3>✓ Метод координат</h3>
-                            <p>Связь геометрии и алгебры через координаты</p>
-                        </div>
-                        <div class="feature">
-                            <h3>✓ Геометрия → Алгебра</h3>
-                            <p>Геометрические объекты описываются уравнениями</p>
-                        </div>
-                        <div class="feature">
-                            <h3>✓ Алгебра → Геометрия</h3>
-                            <p>Уравнения имеют геометрическую интерпретацию</p>
-                        </div>
+                        <p>Основная идея: установление соответствия между геометрическими объектами и уравнениями, описывающими их в координатах.</p>
+                        <div class="math-block" id="def-math"></div>
+                        <p>На плоскости каждая точка определяется парой чисел (x, y), а линии и кривые описываются уравнениями относительно этих координат.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Слайд-разделитель 2 -->
-            <section class="slide divider" id="slide4" data-slide-number="4">
+            <!-- Слайд 3: Разделитель -->
+            <section class="slide divider-slide" id="slide3">
                 <div class="slide-content">
-                    <h1>Раздел 2</h1>
-                    <h2>Виды уравнений прямой на плоскости</h2>
+                    <h1><i class="fas fa-shapes"></i> Виды уравнений прямой на плоскости</h1>
+                    <p>Различные формы записи уравнения одной и той же прямой</p>
                 </div>
             </section>
 
-            <!-- Слайд 5: Общее уравнение -->
-            <section class="slide" id="slide5" data-slide-number="5">
+            <!-- Слайд 4: Общее уравнение -->
+            <section class="slide" id="slide4">
                 <div class="slide-content">
-                    <h2>1. Общее уравнение прямой</h2>
-                    <div class="equation-display">
-                        <div id="eq-general" class="katex-equation">Ax + By + C = 0</div>
-                    </div>
-                    <div class="equation-details">
-                        <p>где <span class="highlight">A, B, C</span> — действительные числа, причем <span class="highlight">A² + B² ≠ 0</span></p>
-                    </div>
-                    <div class="properties">
-                        <h3>Свойства:</h3>
-                        <div class="prop-item">
-                            <span class="prop-name">Вектор нормали:</span>
-                            <span id="eq-normal" class="katex-equation">\vec{n} = (A, B)</span>
-                        </div>
-                        <div class="prop-item">
-                            <span class="prop-name">Угловой коэффициент:</span>
-                            <span id="eq-slope" class="katex-equation">k = -\frac{A}{B}</span>
-                            <span class="condition">(при B ≠ 0)</span>
-                        </div>
-                    </div>
-                    <div class="example">
-                        <h3>Пример:</h3>
-                        <p><span class="katex-equation">2x - 3y + 6 = 0</span></p>
-                        <p>Вектор нормали: <span class="katex-equation">(2, -3)</span></p>
-                        <p>Угловой коэффициент: <span class="katex-equation">k = \frac{2}{3}</span></p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Слайд 6: Через 2 точки -->
-            <section class="slide" id="slide6" data-slide-number="6">
-                <div class="slide-content">
-                    <h2>2. Уравнение через 2 точки</h2>
-                    <div class="equation-display">
-                        <div id="eq-two-points" class="katex-equation">\frac{x - x_1}{x_2 - x_1} = \frac{y - y_1}{y_2 - y_1}</div>
-                    </div>
-                    <div class="equation-details">
-                        <p>где <span class="highlight">(x₁, y₁)</span> и <span class="highlight">(x₂, y₂)</span> — координаты двух точек прямой</p>
-                    </div>
-                    <div class="alternative-form">
-                        <h3>Альтернативная форма:</h3>
-                        <div id="eq-determinant" class="katex-equation">
-                            \begin{vmatrix}
-                            x - x_1 & y - y_1 \\
-                            x_2 - x_1 & y_2 - y_1
-                            \end{vmatrix} = 0
-                        </div>
-                    </div>
-                    <div class="example">
-                        <h3>Пример:</h3>
-                        <p>Точки: <span class="katex-equation">A(1, 2)</span> и <span class="katex-equation">B(4, 5)</span></p>
-                        <p>Уравнение: <span class="katex-equation">\frac{x - 1}{3} = \frac{y - 2}{3}</span></p>
-                        <p>Итог: <span class="katex-equation">x - y + 1 = 0</span></p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Слайд 7: Каноническое уравнение -->
-            <section class="slide" id="slide7" data-slide-number="7">
-                <div class="slide-content">
-                    <h2>3. Каноническое уравнение прямой</h2>
-                    <div class="equation-display">
-                        <div id="eq-canonical" class="katex-equation">\frac{x - x_0}{m} = \frac{y - y_0}{n}</div>
-                    </div>
-                    <div class="equation-details">
-                        <p>где <span class="highlight">(x₀, y₀)</span> — точка на прямой,</p>
-                        <p><span class="highlight">(m, n)</span> — направляющий вектор</p>
-                    </div>
-                    <div class="properties">
-                        <h3>Свойства:</h3>
-                        <div class="prop-item">
-                            <span class="prop-name">Направляющий вектор:</span>
-                            <span id="eq-direction" class="katex-equation">\vec{s} = (m, n)</span>
-                        </div>
-                        <div class="prop-item">
-                            <span class="prop-name">Угловой коэффициент:</span>
-                            <span id="eq-slope-canonical" class="katex-equation">k = \frac{n}{m}</span>
-                            <span class="condition">(при m ≠ 0)</span>
-                        </div>
-                    </div>
-                    <div class="special-cases">
-                        <h3>Особые случаи:</h3>
-                        <ul>
-                            <li>m = 0 → прямая параллельна OY</li>
-                            <li>n = 0 → прямая параллельна OX</li>
+                    <h1>Общее уравнение прямой на плоскости</h1>
+                    <div class="equation-description">
+                        <p><strong>Общий вид:</strong></p>
+                        <div class="math-block" id="general-eq"></div>
+                        <p>где \(A\), \(B\), \(C\) — действительные числа, причем \(A\) и \(B\) не равны нулю одновременно.</p>
+                        <p><strong>Пример:</strong> Уравнение прямой \(2x - 3y + 6 = 0\)</p>
+                        <ul class="features">
+                            <li>Вектор нормали: \(\vec{n} = (A, B) = (2, -3)\)</li>
+                            <li>Угловой коэффициент: \(k = -\frac{A}{B} = \frac{2}{3}\)</li>
+                            <li>Пересечение с осью OY: при \(x = 0\), \(y = 2\)</li>
                         </ul>
                     </div>
                 </div>
             </section>
 
-            <!-- Слайд 8: Параметрическое уравнение -->
-            <section class="slide" id="slide8" data-slide-number="8">
+            <!-- Слайд 5: Уравнение через 2 точки -->
+            <section class="slide" id="slide5">
                 <div class="slide-content">
-                    <h2>4. Параметрическое уравнение</h2>
-                    <div class="equation-display">
-                        <div id="eq-parametric" class="katex-equation">
-                            \begin{cases}
-                            x = x_0 + mt \\
-                            y = y_0 + nt
-                            \end{cases}
-                        </div>
-                    </div>
-                    <div class="equation-details">
-                        <p>где <span class="highlight">(x₀, y₀)</span> — точка на прямой,</p>
-                        <p><span class="highlight">(m, n)</span> — направляющий вектор,</p>
-                        <p><span class="highlight">t</span> — параметр (t ∈ ℝ)</p>
-                    </div>
-                    <div class="properties">
-                        <h3>Свойства:</h3>
-                        <ul>
-                            <li>Каждому значению t соответствует точка на прямой</li>
-                            <li>При t = 0 получаем точку (x₀, y₀)</li>
-                            <li>Параметр t может принимать любые действительные значения</li>
-                        </ul>
-                    </div>
-                    <div class="example">
-                        <h3>Пример:</h3>
-                        <p><span class="katex-equation">\begin{cases} x = 1 + 2t \\ y = 3 + 3t \end{cases}</span></p>
-                        <p>При t=0: точка (1, 3)</p>
-                        <p>При t=1: точка (3, 6)</p>
+                    <h1>Уравнение прямой, проходящей через две точки</h1>
+                    <div class="equation-description">
+                        <p>Если прямая проходит через точки \(M_1(x_1, y_1)\) и \(M_2(x_2, y_2)\), то ее уравнение:</p>
+                        <div class="math-block" id="two-points-eq"></div>
+                        <p><strong>Пример:</strong> Прямая, проходящая через точки \(A(1, 2)\) и \(B(4, 5)\):</p>
+                        <div class="math-block" id="two-points-example"></div>
+                        <p>Упрощаем: \(y - 2 = x - 1\) или \(x - y + 1 = 0\)</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Слайд-разделитель 3 -->
-            <section class="slide divider" id="slide9" data-slide-number="9">
+            <!-- Слайд 6: Каноническое уравнение -->
+            <section class="slide" id="slide6">
                 <div class="slide-content">
-                    <h1>Раздел 3</h1>
-                    <h2>Алгоритмы преобразования уравнений</h2>
+                    <h1>Каноническое уравнение прямой</h1>
+                    <div class="equation-description">
+                        <p><strong>Каноническое уравнение:</strong></p>
+                        <div class="math-block" id="canonical-eq"></div>
+                        <p>где \(M_0(x_0, y_0)\) — точка на прямой, а \(\vec{s} = (l, m)\) — направляющий вектор прямой.</p>
+                        <p><strong>Пример:</strong> Прямая, проходящая через точку \(M_0(2, 1)\) с направляющим вектором \(\vec{s} = (3, 4)\):</p>
+                        <div class="math-block" id="canonical-example"></div>
+                    </div>
                 </div>
             </section>
 
-            <!-- Слайд 10: Общее → Каноническое -->
-            <section class="slide" id="slide10" data-slide-number="10">
+            <!-- Слайд 7: Параметрическое уравнение -->
+            <section class="slide" id="slide7">
                 <div class="slide-content">
-                    <h2>Алгоритм 1: Общее → Каноническое</h2>
+                    <h1>Параметрическое уравнение прямой</h1>
+                    <div class="equation-description">
+                        <p><strong>Параметрическая форма:</strong></p>
+                        <div class="math-block" id="parametric-eq"></div>
+                        <p>где \(t\) — параметр, \(M_0(x_0, y_0)\) — точка на прямой, \(\vec{s} = (l, m)\) — направляющий вектор.</p>
+                        <p><strong>Пример:</strong> Прямая через точку \(M_0(1, -1)\) с направляющим вектором \(\vec{s} = (2, 3)\):</p>
+                        <div class="math-block" id="parametric-example"></div>
+                        <p>При \(t = 0\) получаем точку \((1, -1)\), при \(t = 1\) — точку \((3, 2)\).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Слайд 8: Разделитель алгоритмов -->
+            <section class="slide divider-slide" id="slide8">
+                <div class="slide-content">
+                    <h1><i class="fas fa-exchange-alt"></i> Алгоритмы перевода уравнений</h1>
+                    <p>Преобразования между различными формами уравнений прямой</p>
+                </div>
+            </section>
+
+            <!-- Слайд 9: Общее → Каноническое -->
+            <section class="slide" id="slide9">
+                <div class="slide-content">
+                    <h1>Алгоритм: из общего уравнения в каноническое</h1>
                     <div class="algorithm">
-                        <h3>Дано: <span class="katex-equation">Ax + By + C = 0</span></h3>
                         <ol>
-                            <li>Находим точку на прямой:
-                                <ul>
-                                    <li>Если B ≠ 0: x₀ = 0, y₀ = -C/B</li>
-                                    <li>Если A ≠ 0: y₀ = 0, x₀ = -C/A</li>
-                                </ul>
-                            </li>
-                            <li>Направляющий вектор: <span class="katex-equation">\vec{s} = (-B, A)</span></li>
-                            <li>Каноническое уравнение:
-                                <div class="katex-equation">\frac{x - x_0}{-B} = \frac{y - y_0}{A}</div>
-                            </li>
+                            <li>Найти произвольную точку \(M_0(x_0, y_0)\) на прямой, подставив удобное значение \(x\) (или \(y\)) в уравнение \(Ax + By + C = 0\) и решив относительно другой координаты.</li>
+                            <li>Направляющий вектор: \(\vec{s} = (-B, A)\) или любой коллинеарный ему.</li>
+                            <li>Записать каноническое уравнение: \(\frac{x - x_0}{-B} = \frac{y - y_0}{A}\).</li>
+                        </ol>
+                        <p><strong>Пример:</strong> \(2x - 3y + 6 = 0\)</p>
+                        <ol>
+                            <li>При \(x = 0\): \(-3y + 6 = 0 \Rightarrow y = 2\), точка \(M_0(0, 2)\)</li>
+                            <li>\(\vec{s} = (3, 2)\) (можно взять \(\vec{s} = (-B, A) = (3, 2)\))</li>
+                            <li>Каноническое уравнение: \(\frac{x - 0}{3} = \frac{y - 2}{2}\)</li>
                         </ol>
                     </div>
-                    <div class="example">
-                        <h3>Пример:</h3>
-                        <p>Дано: <span class="katex-equation">2x - 3y + 6 = 0</span></p>
-                        <p>1. Точка: x₀ = 0, y₀ = 2</p>
-                        <p>2. Вектор: <span class="katex-equation">\vec{s} = (3, 2)</span></p>
-                        <p>3. Результат: <span class="katex-equation">\frac{x}{3} = \frac{y - 2}{2}</span></p>
+                </div>
+            </section>
+
+            <!-- Слайд 10: Общее → Параметрическое -->
+            <section class="slide" id="slide10">
+                <div class="slide-content">
+                    <h1>Алгоритм: из общего уравнения в параметрическое</h1>
+                    <div class="algorithm">
+                        <ol>
+                            <li>Найти точку \(M_0(x_0, y_0)\) на прямой (аналогично предыдущему алгоритму).</li>
+                            <li>Направляющий вектор: \(\vec{s} = (-B, A)\).</li>
+                            <li>Записать параметрическое уравнение: 
+                                \(\begin{cases} x = x_0 - Bt \\ y = y_0 + At \end{cases}\), где \(t \in \mathbb{R}\).</li>
+                        </ol>
+                        <p><strong>Пример:</strong> \(2x - 3y + 6 = 0\)</p>
+                        <ol>
+                            <li>Точка \(M_0(0, 2)\)</li>
+                            <li>\(\vec{s} = (3, 2)\)</li>
+                            <li>Параметрическое уравнение: 
+                                \(\begin{cases} x = 0 + 3t \\ y = 2 + 2t \end{cases}\)</li>
+                        </ol>
                     </div>
                 </div>
             </section>
 
-            <!-- Слайд 11: Общее → Параметрическое -->
-            <section class="slide" id="slide11" data-slide-number="11">
+            <!-- Слайд 11: Каноническое → Общее -->
+            <section class="slide" id="slide11">
                 <div class="slide-content">
-                    <h2>Алгоритм 2: Общее → Параметрическое</h2>
+                    <h1>Алгоритм: из канонического в общее уравнение</h1>
                     <div class="algorithm">
-                        <h3>Дано: <span class="katex-equation">Ax + By + C = 0</span></h3>
                         <ol>
-                            <li>Находим точку (x₀, y₀) как в предыдущем алгоритме</li>
-                            <li>Направляющий вектор: <span class="katex-equation">\vec{s} = (-B, A)</span></li>
-                            <li>Параметрическое уравнение:
-                                <div class="katex-equation">
-                                    \begin{cases}
-                                    x = x_0 - Bt \\
-                                    y = y_0 + At
-                                    \end{cases}
+                            <li>Из канонического уравнения \(\frac{x - x_0}{l} = \frac{y - y_0}{m}\) перейти к равенству: 
+                                \(m(x - x_0) = l(y - y_0)\).</li>
+                            <li>Раскрыть скобки: \(mx - mx_0 = ly - ly_0\).</li>
+                            <li>Перенести все члены в одну сторону: \(mx - ly - mx_0 + ly_0 = 0\).</li>
+                            <li>Обозначить: \(A = m\), \(B = -l\), \(C = -mx_0 + ly_0\).</li>
+                        </ol>
+                        <p><strong>Пример:</strong> \(\frac{x - 2}{3} = \frac{y - 1}{4}\)</p>
+                        <ol>
+                            <li>\(4(x - 2) = 3(y - 1)\)</li>
+                            <li>\(4x - 8 = 3y - 3\)</li>
+                            <li>\(4x - 3y - 5 = 0\)</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Слайд 12: Каноническое → Параметрическое -->
+            <section class="slide" id="slide12">
+                <div class="slide-content">
+                    <h1>Алгоритм: из канонического в параметрическое</h1>
+                    <div class="algorithm">
+                        <ol>
+                            <li>Из канонического уравнения \(\frac{x - x_0}{l} = \frac{y - y_0}{m}\) приравнять каждую дробь к параметру \(t\):
+                                \(\frac{x - x_0}{l} = t\) и \(\frac{y - y_0}{m} = t\).</li>
+                            <li>Выразить \(x\) и \(y\) через \(t\):
+                                \(\begin{cases} x = x_0 + lt \\ y = y_0 + mt \end{cases}\).</li>
+                        </ol>
+                        <p><strong>Пример:</strong> \(\frac{x - 2}{3} = \frac{y - 1}{4}\)</p>
+                        <ol>
+                            <li>Пусть \(\frac{x - 2}{3} = t\) и \(\frac{y - 1}{4} = t\)</li>
+                            <li>Тогда: \(\begin{cases} x = 2 + 3t \\ y = 1 + 4t \end{cases}\)</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Слайд 13: Параметрическое → Каноническое -->
+            <section class="slide" id="slide13">
+                <div class="slide-content">
+                    <h1>Алгоритм: из параметрического в каноническое</h1>
+                    <div class="algorithm">
+                        <ol>
+                            <li>Из системы \(\begin{cases} x = x_0 + lt \\ y = y_0 + mt \end{cases}\) выразить параметр \(t\) из каждого уравнения:
+                                \(t = \frac{x - x_0}{l}\), \(t = \frac{y - y_0}{m}\).</li>
+                            <li>Приравнять полученные выражения:
+                                \(\frac{x - x_0}{l} = \frac{y - y_0}{m}\).</li>
+                        </ol>
+                        <p><strong>Пример:</strong> \(\begin{cases} x = 1 + 2t \\ y = -1 + 3t \end{cases}\)</p>
+                        <ol>
+                            <li>\(t = \frac{x - 1}{2}\), \(t = \frac{y + 1}{3}\)</li>
+                            <li>Каноническое уравнение: \(\frac{x - 1}{2} = \frac{y + 1}{3}\)</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Слайд 14: Параметрическое → Общее -->
+            <section class="slide" id="slide14">
+                <div class="slide-content">
+                    <h1>Алгоритм: из параметрического в общее уравнение</h1>
+                    <div class="algorithm">
+                        <ol>
+                            <li>Выразить \(t\) из первого уравнения: \(t = \frac{x - x_0}{l}\).</li>
+                            <li>Подставить во второе уравнение: \(y = y_0 + m \cdot \frac{x - x_0}{l}\).</li>
+                            <li>Преобразовать к виду \(Ax + By + C = 0\):
+                                \(m(x - x_0) = l(y - y_0) \Rightarrow mx - ly - mx_0 + ly_0 = 0\).</li>
+                        </ol>
+                        <p><strong>Пример:</strong> \(\begin{cases} x = 1 + 2t \\ y = -1 + 3t \end{cases}\)</p>
+                        <ol>
+                            <li>\(t = \frac{x - 1}{2}\)</li>
+                            <li>\(y = -1 + 3 \cdot \frac{x - 1}{2}\)</li>
+                            <li>\(2y = -2 + 3x - 3 \Rightarrow 3x - 2y - 5 = 0\)</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Слайд 15: Разделитель программ -->
+            <section class="slide divider-slide" id="slide15">
+                <div class="slide-content">
+                    <h1><i class="fas fa-code"></i> Программная реализация</h1>
+                    <p>JavaScript программы для преобразования уравнений и построения графиков</p>
+                </div>
+            </section>
+
+            <!-- Слайд 16: Программа-конвертер -->
+            <section class="slide" id="slide16">
+                <div class="slide-content">
+                    <h1>Программа: Конвертер уравнений прямой</h1>
+                    <div class="converter-app">
+                        <div class="converter-container">
+                            <div class="input-section">
+                                <h3>Исходное уравнение</h3>
+                                <div class="input-group">
+                                    <label>Тип уравнения:</label>
+                                    <select id="source-type">
+                                        <option value="general">Общее: Ax + By + C = 0</option>
+                                        <option value="canonical">Каноническое: (x-x0)/l = (y-y0)/m</option>
+                                        <option value="parametric">Параметрическое: x=x0+lt, y=y0+mt</option>
+                                    </select>
                                 </div>
-                            </li>
-                        </ol>
-                    </div>
-                    <div class="example">
-                        <h3>Пример:</h3>
-                        <p>Дано: <span class="katex-equation">x + 2y - 4 = 0</span></p>
-                        <p>1. Точка: x₀ = 0, y₀ = 2</p>
-                        <p>2. Вектор: <span class="katex-equation">\vec{s} = (-2, 1)</span></p>
-                        <p>3. Результат: <span class="katex-equation">\begin{cases} x = -2t \\ y = 2 + t \end{cases}</span></p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Слайд 12: Каноническое → Общее -->
-            <section class="slide" id="slide12" data-slide-number="12">
-                <div class="slide-content">
-                    <h2>Алгоритм 3: Каноническое → Общее</h2>
-                    <div class="algorithm">
-                        <h3>Дано: <span class="katex-equation">\frac{x - x_0}{m} = \frac{y - y_0}{n}</span></h3>
-                        <ol>
-                            <li>Умножаем крест-накрест:
-                                <div class="katex-equation">n(x - x_0) = m(y - y_0)</div>
-                            </li>
-                            <li>Раскрываем скобки:
-                                <div class="katex-equation">nx - nx_0 = my - my_0</div>
-                            </li>
-                            <li>Переносим всё в одну сторону:
-                                <div class="katex-equation">nx - my + (my_0 - nx_0) = 0</div>
-                            </li>
-                            <li>Получаем: <span class="katex-equation">Ax + By + C = 0</span>, где
-                                A = n, B = -m, C = my₀ - nx₀
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Слайд-разделитель 4 -->
-            <section class="slide divider" id="slide13" data-slide-number="13">
-                <div class="slide-content">
-                    <h1>Раздел 4</h1>
-                    <h2>JavaScript программы для преобразования</h2>
-                </div>
-            </section>
-
-            <!-- Слайд 14: Программа преобразования -->
-            <section class="slide" id="slide14" data-slide-number="14">
-                <div class="slide-content">
-                    <h2>Программа преобразования уравнений</h2>
-                    <div class="program-container">
-                        <div class="program-controls">
-                            <div class="input-group">
-                                <label for="conversionType">Выберите преобразование:</label>
-                                <select id="conversionType">
-                                    <option value="generalToCanonical">Общее → Каноническое</option>
-                                    <option value="generalToParametric">Общее → Параметрическое</option>
-                                    <option value="canonicalToGeneral">Каноническое → Общее</option>
-                                    <option value="canonicalToParametric">Каноническое → Параметрическое</option>
-                                    <option value="parametricToCanonical">Параметрическое → Каноническое</option>
-                                    <option value="parametricToGeneral">Параметрическое → Общее</option>
-                                </select>
+                                
+                                <div id="general-inputs" class="inputs-group">
+                                    <div class="input-row">
+                                        <label>A:</label>
+                                        <input type="number" id="input-A" value="2" step="any">
+                                        <label>B:</label>
+                                        <input type="number" id="input-B" value="-3" step="any">
+                                        <label>C:</label>
+                                        <input type="number" id="input-C" value="6" step="any">
+                                    </div>
+                                </div>
+                                
+                                <div id="canonical-inputs" class="inputs-group" style="display:none;">
+                                    <div class="input-row">
+                                        <label>x0:</label>
+                                        <input type="number" id="input-x0" value="0" step="any">
+                                        <label>y0:</label>
+                                        <input type="number" id="input-y0" value="2" step="any">
+                                        <label>l:</label>
+                                        <input type="number" id="input-l" value="3" step="any">
+                                        <label>m:</label>
+                                        <input type="number" id="input-m" value="2" step="any">
+                                    </div>
+                                </div>
+                                
+                                <div id="parametric-inputs" class="inputs-group" style="display:none;">
+                                    <div class="input-row">
+                                        <label>x0:</label>
+                                        <input type="number" id="param-x0" value="1" step="any">
+                                        <label>y0:</label>
+                                        <input type="number" id="param-y0" value="-1" step="any">
+                                        <label>l:</label>
+                                        <input type="number" id="param-l" value="2" step="any">
+                                        <label>m:</label>
+                                        <input type="number" id="param-m" value="3" step="any">
+                                    </div>
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label>Преобразовать в:</label>
+                                    <select id="target-type">
+                                        <option value="general">Общее уравнение</option>
+                                        <option value="canonical">Каноническое уравнение</option>
+                                        <option value="parametric">Параметрическое уравнение</option>
+                                    </select>
+                                </div>
+                                
+                                <button id="convert-btn" class="convert-button">
+                                    <i class="fas fa-exchange-alt"></i> Преобразовать
+                                </button>
                             </div>
                             
-                            <div class="input-section" id="inputSection">
-                                <!-- Будет заполняться динамически -->
+                            <div class="output-section">
+                                <h3>Результат преобразования</h3>
+                                <div class="equation-display" id="source-equation"></div>
+                                <div class="arrow">
+                                    <i class="fas fa-arrow-down"></i>
+                                </div>
+                                <div class="equation-display" id="result-equation"></div>
+                                <div class="conversion-steps" id="conversion-steps"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Слайд 17: Программа через 2 точки -->
+            <section class="slide" id="slide17">
+                <div class="slide-content">
+                    <h1>Программа: Уравнение прямой через 2 точки</h1>
+                    <div class="two-points-app">
+                        <div class="app-container">
+                            <div class="input-section">
+                                <h3>Введите координаты двух точек</h3>
+                                <div class="point-input">
+                                    <div class="point">
+                                        <h4>Точка A</h4>
+                                        <div class="coord-input">
+                                            <label>x<sub>1</sub>:</label>
+                                            <input type="number" id="point1-x" value="1" step="any">
+                                            <label>y<sub>1</sub>:</label>
+                                            <input type="number" id="point1-y" value="2" step="any">
+                                        </div>
+                                    </div>
+                                    <div class="point">
+                                        <h4>Точка B</h4>
+                                        <div class="coord-input">
+                                            <label>x<sub>2</sub>:</label>
+                                            <input type="number" id="point2-x" value="4" step="any">
+                                            <label>y<sub>2</sub>:</label>
+                                            <input type="number" id="point2-y" value="5" step="any">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button id="calculate-line" class="calculate-button">
+                                    <i class="fas fa-calculator"></i> Найти уравнение
+                                </button>
                             </div>
                             
-                            <button id="convertBtn" class="btn-primary">Преобразовать</button>
-                        </div>
-                        
-                        <div class="program-output">
-                            <h3>Результат:</h3>
-                            <div id="result" class="result-box">
-                                <p>Выберите тип преобразования</p>
+                            <div class="results-section">
+                                <h3>Уравнение прямой</h3>
+                                <div class="equation-result" id="line-equation"></div>
+                                <div class="equation-forms">
+                                    <div class="form-type">Общее уравнение:</div>
+                                    <div id="general-form"></div>
+                                    <div class="form-type">Каноническое уравнение:</div>
+                                    <div id="canonical-form"></div>
+                                    <div class="form-type">Параметрическое уравнение:</div>
+                                    <div id="parametric-form"></div>
+                                </div>
                             </div>
-                            <div id="steps" class="steps-box">
-                                <h4>Шаги решения:</h4>
-                                <div id="stepsContent"></div>
+                            
+                            <div class="graph-section">
+                                <h3>График прямой</h3>
+                                <div class="canvas-container">
+                                    <canvas id="line-chart"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-
-            <!-- Слайд-разделитель 5 -->
-            <section class="slide divider" id="slide15" data-slide-number="15">
-                <div class="slide-content">
-                    <h1>Раздел 5</h1>
-                    <h2>Построение прямой через 2 точки</h2>
-                </div>
-            </section>
-
-            <!-- Слайд 16: Программа построения графика -->
-            <section class="slide" id="slide16" data-slide-number="16">
-                <div class="slide-content">
-                    <h2>Программа построения прямой</h2>
-                    <div class="graph-program">
-                        <div class="graph-controls">
-                            <h3>Введите координаты двух точек:</h3>
-                            <div class="points-input">
-                                <div class="point-input">
-                                    <h4>Точка A:</h4>
-                                    <input type="number" id="pointAx" placeholder="x₁" value="1">
-                                    <input type="number" id="pointAy" placeholder="y₁" value="2">
-                                </div>
-                                <div class="point-input">
-                                    <h4>Точка B:</h4>
-                                    <input type="number" id="pointBx" placeholder="x₂" value="4">
-                                    <input type="number" id="pointBy" placeholder="y₂" value="5">
-                                </div>
-                            </div>
-                            <button id="drawLineBtn" class="btn-primary">Построить прямую</button>
-                        </div>
-                        
-                        <div class="graph-result">
-                            <h3>Уравнение прямой:</h3>
-                            <div id="lineEquation" class="equation-result">
-                                <p>Введите координаты точек</p>
-                            </div>
-                            <div class="graph-container">
-                                <canvas id="lineCanvas" width="600" height="400"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Слайд-разделитель 6 -->
-            <section class="slide divider" id="slide17" data-slide-number="17">
-                <div class="slide-content">
-                    <h1>Раздел 6</h1>
-                    <h2>Исходный код программ</h2>
                 </div>
             </section>
 
             <!-- Слайд 18: Исходный код -->
-            <section class="slide" id="slide18" data-slide-number="18">
+            <section class="slide" id="slide18">
                 <div class="slide-content">
-                    <h2>Исходный код JavaScript</h2>
-                    <div class="code-container">
-                        <div class="code-section">
-                            <h3>Основные функции преобразования</h3>
-                            <pre><code class="javascript">
-// Преобразование: Общее → Каноническое
+                    <h1>Исходный код программ</h1>
+                    <div class="source-code">
+                        <div class="code-tabs">
+                            <button class="code-tab active" data-tab="converter">Конвертер уравнений</button>
+                            <button class="code-tab" data-tab="two-points">Прямая через 2 точки</button>
+                            <button class="code-tab" data-tab="graph">Построение графика</button>
+                        </div>
+                        <div class="code-content">
+                            <pre id="converter-code" class="code-block active"><code>// Функция преобразования общего уравнения в каноническое
 function generalToCanonical(A, B, C) {
+    // Находим точку на прямой
     let x0, y0;
-    if (B !== 0) {
-        x0 = 0;
-        y0 = -C / B;
-    } else {
+    if (A !== 0) {
         y0 = 0;
         x0 = -C / A;
+    } else {
+        x0 = 0;
+        y0 = -C / B;
     }
-    const m = -B;
-    const n = A;
+    
+    // Направляющий вектор
+    let l = B;
+    let m = -A;
+    
+    // Нормализуем вектор (делим на НОД)
+    let gcdVal = gcd(l, m);
+    if (gcdVal !== 0) {
+        l /= gcdVal;
+        m /= gcdVal;
+    }
+    
+    return {x0, y0, l, m};
+}
+
+// Функция преобразования общего уравнения в параметрическое
+function generalToParametric(A, B, C) {
+    const canonical = generalToCanonical(A, B, C);
     return {
-        equation: `\\frac{x - ${format(x0)}}{${format(m)}} = \\frac{y - ${format(y0)}}{${format(n)}}`,
-        point: {x: x0, y: y0},
-        vector: {m: m, n: n}
+        x0: canonical.x0,
+        y0: canonical.y0,
+        l: canonical.l,
+        m: canonical.m
     };
 }
 
-// Преобразование: Каноническое → Общее
-function canonicalToGeneral(x0, y0, m, n) {
-    const A = n;
-    const B = -m;
-    const C = m * y0 - n * x0;
-    return {
-        equation: `${format(A)}x ${formatSign(B)}y ${formatSign(C)} = 0`,
-        coefficients: {A: A, B: B, C: C}
-    };
-}
-
-// Форматирование чисел
-function format(num) {
-    if (Math.abs(num) < 0.0001) return '0';
-    if (Math.abs(num - Math.round(num)) < 0.0001) {
-        return Math.round(num).toString();
+// Аналогичные функции для других преобразований...</code></pre>
+                            <pre id="two-points-code" class="code-block"><code>// Нахождение уравнения прямой через две точки
+function lineThroughTwoPoints(x1, y1, x2, y2) {
+    // Проверка, что точки не совпадают
+    if (Math.abs(x1 - x2) < 1e-10 && Math.abs(y1 - y2) < 1e-10) {
+        throw new Error("Точки совпадают");
     }
-    return Math.round(num * 1000) / 1000;
+    
+    // Общее уравнение
+    let A = y2 - y1;
+    let B = x1 - x2;
+    let C = x2 * y1 - x1 * y2;
+    
+    // Каноническое уравнение
+    const canonical = {
+        x0: x1,
+        y0: y1,
+        l: x2 - x1,
+        m: y2 - y1
+    };
+    
+    // Параметрическое уравнение
+    const parametric = {
+        x0: x1,
+        y0: y1,
+        l: x2 - x1,
+        m: y2 - y1
+    };
+    
+    return {general: {A, B, C}, canonical, parametric};
 }
-                            </code></pre>
+
+// Функция для расчета точек для графика
+function calculateLinePoints(A, B, C, xMin = -10, xMax = 10) {
+    const points = [];
+    
+    if (Math.abs(B) > 1e-10) {
+        for (let x = xMin; x <= xMax; x++) {
+            let y = (-A * x - C) / B;
+            points.push({x, y});
+        }
+    } else {
+        // Вертикальная прямая
+        let x = -C / A;
+        for (let y = xMin; y <= xMax; y++) {
+            points.push({x, y});
+        }
+    }
+    
+    return points;
+}</code></pre>
+                            <pre id="graph-code" class="code-block"><code>// Создание графика с использованием Chart.js
+function createLineChart(point1, point2, equation) {
+    const ctx = document.getElementById('line-chart').getContext('2d');
+    
+    // Рассчитываем точки для прямой
+    const linePoints = calculateLinePoints(
+        equation.general.A, 
+        equation.general.B, 
+        equation.general.C
+    );
+    
+    // Подготавливаем данные для графика
+    const data = {
+        datasets: [
+            {
+                label: 'Прямая',
+                data: linePoints,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderWidth: 2,
+                fill: false,
+                tension: 0
+            },
+            {
+                label: 'Точка A',
+                data: [{x: point1.x, y: point1.y}],
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                pointRadius: 8,
+                pointHoverRadius: 10
+            },
+            {
+                label: 'Точка B',
+                data: [{x: point2.x, y: point2.y}],
+                backgroundColor: 'rgb(54, 162, 235)',
+                borderColor: 'rgb(54, 162, 235)',
+                pointRadius: 8,
+                pointHoverRadius: 10
+            }
+        ]
+    };
+    
+    // Настройки графика
+    const config = {
+        type: 'scatter',
+        data: data,
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom',
+                    min: -10,
+                    max: 10,
+                    grid: {
+                        color: 'rgba(200, 200, 200, 0.3)'
+                    }
+                },
+                y: {
+                    min: -10,
+                    max: 10,
+                    grid: {
+                        color: 'rgba(200, 200, 200, 0.3)'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += '(' + context.parsed.x.toFixed(2) + 
+                                    ', ' + context.parsed.y.toFixed(2) + ')';
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    };
+    
+    // Создаем или обновляем график
+    if (window.lineChart) {
+        window.lineChart.destroy();
+    }
+    window.lineChart = new Chart(ctx, config);
+}</code></pre>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Слайд-разделитель 7 -->
-            <section class="slide divider" id="slide19" data-slide-number="19">
+            <!-- Слайд 19: Веселые картинки -->
+            <section class="slide" id="slide19">
                 <div class="slide-content">
-                    <h1>Раздел 7</h1>
-                    <h2>Забавные иллюстрации</h2>
-                </div>
-            </section>
-
-            <!-- Слайд 20: Забавные факты 1 -->
-            <section class="slide" id="slide20" data-slide-number="20">
-                <div class="slide-content">
-                    <h2>Геометрия в нашей жизни</h2>
-                    <div class="fun-illustrations">
-                        <div class="illustration">
-                            <div class="illustration-icon">📐</div>
-                            <h3>Факт 1</h3>
-                            <p>Прямые линии в архитектуре делают здания устойчивыми и красивыми.</p>
+                    <h1>Геометрия в юморе и картинках</h1>
+                    <div class="funny-images">
+                        <div class="image-grid">
+                            <div class="image-item">
+                                <div class="image-placeholder">
+                                    <i class="fas fa-ruler-combined"></i>
+                                </div>
+                                <p class="image-caption">"Прямая как луч света в геометрическом царстве"</p>
+                            </div>
+                            <div class="image-item">
+                                <div class="image-placeholder">
+                                    <i class="fas fa-arrow-alt-circle-right"></i>
+                                </div>
+                                <p class="image-caption">"Вектор, который всегда знает куда направлен"</p>
+                            </div>
+                            <div class="image-item">
+                                <div class="image-placeholder">
+                                    <i class="fas fa-infinity"></i>
+                                </div>
+                                <p class="image-caption">"Параллельные прямые встретятся только в проективной геометрии"</p>
+                            </div>
                         </div>
-                        <div class="illustration">
-                            <div class="illustration-icon">🚀</div>
-                            <h3>Факт 2</h3>
-                            <p>Траектории космических ракет рассчитывают с помощью уравнений прямых.</p>
-                        </div>
-                        <div class="illustration">
-                            <div class="illustration-icon">🎨</div>
-                            <h3>Факт 3</h3>
-                            <p>Художники используют прямые линии для создания перспективы.</p>
+                        <div class="math-jokes">
+                            <h3>Математические шутки</h3>
+                            <div class="joke">
+                                <p><strong>Вопрос:</strong> Что сказала одна прямая другой?</p>
+                                <p><strong>Ответ:</strong> "Давай пересечемся в одной точке!"</p>
+                            </div>
+                            <div class="joke">
+                                <p><strong>Вопрос:</strong> Почему угол 90° такой счастливый?</p>
+                                <p><strong>Ответ:</strong> Потому что он всегда прав!</p>
+                            </div>
+                            <div class="joke">
+                                <p><strong>Вопрос:</strong> Как математики называют романтический ужин при свечах?</p>
+                                <p><strong>Ответ:</strong> Тангенс!</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Слайд 21: Забавные факты 2 -->
-            <section class="slide" id="slide21" data-slide-number="21">
+            <!-- Слайд 20: Заключение -->
+            <section class="slide" id="slide20">
                 <div class="slide-content">
-                    <h2>Математические забавности</h2>
-                    <div class="math-jokes">
-                        <div class="joke">
-                            <h3>🤔 Вопрос</h3>
-                            <p>Почему прямая всегда права?</p>
-                            <h3>😄 Ответ</h3>
-                            <p>Потому что она не кривит душой!</p>
-                        </div>
-                        <div class="joke">
-                            <h3>🤔 Вопрос</h3>
-                            <p>Что сказала одна прямая другой?</p>
-                            <h3>😄 Ответ</h3>
-                            <p>"Давай встретимся в бесконечности!"</p>
-                        </div>
-                        <div class="fun-fact">
-                            <h3>Знаете ли вы?</h3>
-                            <p>Самое длинное прямое шоссе — 1200 км без поворотов!</p>
-                            <p>Находится в Саудовской Аравии.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Слайд 22: Забавные факты 3 -->
-            <section class="slide" id="slide22" data-slide-number="22">
-                <div class="slide-content">
-                    <h2>Исторические факты</h2>
-                    <div class="history-facts">
-                        <div class="fact">
-                            <div class="fact-icon">👨‍🎓</div>
-                            <h3>Рене Декарт</h3>
-                            <p>Основатель аналитической геометрии.</p>
-                            <p>Придумал систему координат во сне.</p>
-                        </div>
-                        <div class="fact">
-                            <div class="fact-icon">📚</div>
-                            <h3>"Начала" Эвклида</h3>
-                            <p>Основа геометрии, написанная 2300 лет назад.</p>
-                            <p>Изучалась до XIX века.</p>
-                        </div>
-                        <div class="fact">
-                            <div class="fact-icon">💻</div>
-                            <h3>Современность</h3>
-                            <p>Аналитическая геометрия — основа компьютерной графики.</p>
-                            <p>Без неё не было бы 3D-игр и фильмов.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Слайд 23: Заключительный -->
-            <section class="slide" id="slide23" data-slide-number="23">
-                <div class="slide-content">
-                    <h1>Спасибо за внимание!</h1>
+                    <h1>Заключение</h1>
                     <div class="conclusion">
-                        <h2>Презентация включает:</h2>
                         <div class="summary">
-                            <div class="summary-item">✓ 23 слайда</div>
-                            <div class="summary-item">✓ Все виды уравнений прямой</div>
-                            <div class="summary-item">✓ 6 алгоритмов преобразования</div>
-                            <div class="summary-item">✓ 2 интерактивные программы</div>
-                            <div class="summary-item">✓ Исходный код</div>
-                            <div class="summary-item">✓ 3 слайда с забавными фактами</div>
+                            <h3>Итоги изучения уравнений прямой:</h3>
+                            <ul>
+                                <li>Прямая на плоскости может быть представлена в различных формах: общее, каноническое, параметрическое уравнения</li>
+                                <li>Все формы эквивалентны и могут быть преобразованы друг в друга</li>
+                                <li>Каждая форма удобна для решения определенных типов задач</li>
+                                <li>Аналитическая геометрия связывает алгебраические уравнения с геометрическими образами</li>
+                            </ul>
                         </div>
-                        <div class="author-info">
-                            <h3>Выполнил:</h3>
-                            <p><strong>Кутузов Вадим</strong></p>
-                            <p>Студент группы МАТ-202</p>
+                        <div class="applications">
+                            <h3>Применение в реальном мире:</h3>
+                            <ul>
+                                <li>Компьютерная графика и игровая индустрия</li>
+                                <li>Инженерные расчеты и строительство</li>
+                                <li>Навигационные системы и картография</li>
+                                <li>Машинное обучение и анализ данных</li>
+                                <li>Робототехника и автоматизация</li>
+                            </ul>
                         </div>
-                        <div class="final-equation">
-                            <div class="katex-equation">Ax + By + C = \text{Знание}</div>
+                        <div class="final-message">
+                            <p><strong>Аналитическая геометрия</strong> продолжает оставаться фундаментальным инструментом в математике и ее приложениях, демонстрируя красоту связи между алгеброй и геометрией.</p>
+                            <div class="thank-you">
+                                <p>Спасибо за внимание!</p>
+                                <p><strong>Кутузов Вадим</strong></p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -556,11 +701,15 @@ function format(num) {
 
         <!-- Навигация -->
         <div class="navigation">
-            <button id="prevBtn" class="nav-btn">← Назад</button>
+            <button id="prev-btn" class="nav-btn" title="Предыдущий слайд">
+                <i class="fas fa-chevron-left"></i>
+            </button>
             <div class="slide-counter">
-                <span id="currentSlide">1</span> / <span id="totalSlides">23</span>
+                <span id="current-slide">1</span> / <span id="total-slides">20</span>
             </div>
-            <button id="nextBtn" class="nav-btn">Вперед →</button>
+            <button id="next-btn" class="nav-btn" title="Следующий слайд">
+                <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
     </div>
 
