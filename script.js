@@ -1,7 +1,5 @@
-// Основной скрипт презентации
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Инициализация переменных
+    // Основные переменные
     const slides = document.querySelectorAll('.slide');
     const totalSlides = slides.length;
     let currentSlide = 0;
@@ -12,83 +10,50 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentSlideEl = document.getElementById('currentSlide');
     const totalSlidesEl = document.getElementById('totalSlides');
     
-    // Элементы меню
+    // Меню
     const menuToggle = document.getElementById('menuToggle');
     const menuContent = document.getElementById('menuContent');
     const menuItems = document.getElementById('menuItems');
     
-    // Инициализация счетчика слайдов
+    // Инициализация
     totalSlidesEl.textContent = totalSlides;
     updateSlideCounter();
-    
-    // Создание меню
     createMenu();
+    initPrograms();
     
-    // Инициализация программ
-    initConversionProgram();
-    initGraphProgram();
-    
-    // Навигация по слайдам
+    // Навигация
     prevBtn.addEventListener('click', showPrevSlide);
     nextBtn.addEventListener('click', showNextSlide);
-    
-    // Переключение меню
     menuToggle.addEventListener('click', toggleMenu);
     
-    // Закрытие меню при клике вне его
-    document.addEventListener('click', function(event) {
-        if (!menuToggle.contains(event.target) && !menuContent.contains(event.target)) {
-            menuContent.classList.remove('show');
-        }
-    });
-    
-    // Навигация с клавиатуры
+    // Клавиатура
     document.addEventListener('keydown', function(event) {
-        if (event.key === 'ArrowLeft') {
-            showPrevSlide();
-        } else if (event.key === 'ArrowRight') {
-            showNextSlide();
-        } else if (event.key === 'Escape') {
-            menuContent.classList.remove('show');
-        }
+        if (event.key === 'ArrowLeft') showPrevSlide();
+        if (event.key === 'ArrowRight') showNextSlide();
+        if (event.key === 'Escape') menuContent.classList.remove('show');
     });
     
     // Функции навигации
     function showSlide(index) {
-        // Проверка границ
         if (index < 0) index = 0;
         if (index >= totalSlides) index = totalSlides - 1;
         
-        // Скрытие текущего слайда
         slides[currentSlide].classList.remove('active');
-        
-        // Показ нового слайда
         currentSlide = index;
         slides[currentSlide].classList.add('active');
         
-        // Обновление счетчика
         updateSlideCounter();
-        
-        // Обновление активного пункта меню
         updateMenu();
+        renderMath();
     }
     
-    function showPrevSlide() {
-        showSlide(currentSlide - 1);
-    }
+    function showPrevSlide() { showSlide(currentSlide - 1); }
+    function showNextSlide() { showSlide(currentSlide + 1); }
+    function updateSlideCounter() { currentSlideEl.textContent = currentSlide + 1; }
     
-    function showNextSlide() {
-        showSlide(currentSlide + 1);
-    }
-    
-    function updateSlideCounter() {
-        currentSlideEl.textContent = currentSlide + 1;
-    }
-    
-    // Функции меню
+    // Меню
     function createMenu() {
         menuItems.innerHTML = '';
-        
         slides.forEach((slide, index) => {
             const slideNumber = slide.dataset.slideNumber;
             const slideTitle = slide.querySelector('h1, h2')?.textContent || `Слайд ${slideNumber}`;
@@ -98,25 +63,19 @@ document.addEventListener('DOMContentLoaded', function() {
             menuItem.textContent = `${slideNumber}. ${slideTitle.substring(0, 30)}`;
             menuItem.dataset.slideIndex = index;
             
-            menuItem.addEventListener('click', function() {
+            menuItem.addEventListener('click', () => {
                 showSlide(index);
                 menuContent.classList.remove('show');
             });
             
             menuItems.appendChild(menuItem);
         });
-        
         updateMenu();
     }
     
     function updateMenu() {
-        const menuItems = document.querySelectorAll('.menu-item');
-        menuItems.forEach((item, index) => {
-            if (index === currentSlide) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('active');
-            }
+        document.querySelectorAll('.menu-item').forEach((item, index) => {
+            item.classList.toggle('active', index === currentSlide);
         });
     }
     
@@ -124,79 +83,115 @@ document.addEventListener('DOMContentLoaded', function() {
         menuContent.classList.toggle('show');
     }
     
-    // Инициализация программы преобразования уравнений
-    function initConversionProgram() {
+    // Инициализация программ
+    function initPrograms() {
+        initConverter();
+        initGraph();
+        initCanvas();
+    }
+    
+    // Конвертер уравнений
+    function initConverter() {
         const conversionType = document.getElementById('conversionType');
         const convertBtn = document.getElementById('convertBtn');
+        const inputsSection = document.getElementById('inputsSection');
         
-        const generalInputs = document.getElementById('generalInputs');
-        const canonicalInputs = document.getElementById('canonicalInputs');
-        
-        // Показать/скрыть соответствующие поля ввода
-        conversionType.addEventListener('change', function() {
-            const type = this.value;
+        function updateInputs() {
+            const type = conversionType.value;
+            let html = '';
             
-            // Скрыть все поля ввода
-            generalInputs.style.display = 'none';
-            canonicalInputs.style.display = 'none';
-            
-            // Показать нужные поля
-            if (type.startsWith('general')) {
-                generalInputs.style.display = 'block';
-            } else if (type.startsWith('canonical')) {
-                canonicalInputs.style.display = 'block';
+            switch(type) {
+                case 'generalToCanonical':
+                case 'generalToParametric':
+                    html = `
+                        <h3>Общее уравнение: Ax + By + C = 0</h3>
+                        <div class="inputs-row">
+                            <input type="number" id="A" placeholder="A" value="2">
+                            <input type="number" id="B" placeholder="B" value="-3">
+                            <input type="number" id="C" placeholder="C" value="6">
+                        </div>
+                    `;
+                    break;
+                    
+                case 'canonicalToGeneral':
+                case 'canonicalToParametric':
+                    html = `
+                        <h3>Каноническое: (x - x₀)/m = (y - y₀)/n</h3>
+                        <div class="inputs-row">
+                            <input type="number" id="x0" placeholder="x₀" value="0">
+                            <input type="number" id="y0" placeholder="y₀" value="2">
+                            <input type="number" id="m" placeholder="m" value="3">
+                            <input type="number" id="n" placeholder="n" value="2">
+                        </div>
+                    `;
+                    break;
+                    
+                case 'parametricToCanonical':
+                case 'parametricToGeneral':
+                    html = `
+                        <h3>Параметрическое: x = x₀ + mt, y = y₀ + nt</h3>
+                        <div class="inputs-row">
+                            <input type="number" id="px0" placeholder="x₀" value="0">
+                            <input type="number" id="py0" placeholder="y₀" value="2">
+                            <input type="number" id="pm" placeholder="m" value="3">
+                            <input type="number" id="pn" placeholder="n" value="2">
+                        </div>
+                    `;
+                    break;
             }
-        });
+            
+            inputsSection.innerHTML = html;
+        }
         
-        // Обработка преобразования
+        conversionType.addEventListener('change', updateInputs);
         convertBtn.addEventListener('click', performConversion);
+        updateInputs();
     }
     
     function performConversion() {
         const type = document.getElementById('conversionType').value;
         const resultDiv = document.getElementById('result');
         
-        let result;
-        
         try {
+            let equation;
+            
             switch(type) {
                 case 'generalToCanonical':
-                    result = convertGeneralToCanonical();
+                    equation = convertGeneralToCanonical();
                     break;
                 case 'generalToParametric':
-                    result = convertGeneralToParametric();
+                    equation = convertGeneralToParametric();
                     break;
                 case 'canonicalToGeneral':
-                    result = convertCanonicalToGeneral();
+                    equation = convertCanonicalToGeneral();
                     break;
-                default:
-                    throw new Error('Неизвестный тип преобразования');
+                case 'canonicalToParametric':
+                    equation = convertCanonicalToParametric();
+                    break;
+                case 'parametricToCanonical':
+                    equation = convertParametricToCanonical();
+                    break;
+                case 'parametricToGeneral':
+                    equation = convertParametricToGeneral();
+                    break;
             }
             
-            resultDiv.innerHTML = `<p><strong>Результат:</strong></p><div class="katex-equation">${result.equation}</div>`;
+            resultDiv.innerHTML = `<div class="katex-equation">${equation}</div>`;
+            renderMathInElement(resultDiv);
             
         } catch(error) {
-            resultDiv.innerHTML = `<p style="color: var(--accent-color);"><strong>Ошибка:</strong> ${error.message}</p>`;
+            resultDiv.innerHTML = `<p style="color: #e74c3c;">Ошибка: ${error.message}</p>`;
         }
-        
-        // Рендеринг KaTeX
-        renderMathInElement(resultDiv);
     }
     
+    // Функции преобразования
     function convertGeneralToCanonical() {
-        const A = parseFloat(document.getElementById('coefA').value);
-        const B = parseFloat(document.getElementById('coefB').value);
-        const C = parseFloat(document.getElementById('coefC').value);
+        const A = getNumber('A');
+        const B = getNumber('B');
+        const C = getNumber('C');
         
-        if (isNaN(A) || isNaN(B) || isNaN(C)) {
-            throw new Error('Введите все коэффициенты');
-        }
+        validateCoefficients(A, B);
         
-        if (A === 0 && B === 0) {
-            throw new Error('A и B не могут быть одновременно равны 0');
-        }
-        
-        // Находим точку на прямой
         let x0, y0;
         if (B !== 0) {
             x0 = 0;
@@ -206,29 +201,19 @@ document.addEventListener('DOMContentLoaded', function() {
             x0 = -C / A;
         }
         
-        // Направляющий вектор
         const m = -B;
         const n = A;
         
-        const equation = `\\frac{x ${formatNumberWithSign(-x0)}}{${formatNumber(m)}} = \\frac{y ${formatNumberWithSign(-y0)}}{${formatNumber(n)}}`;
-        
-        return { equation };
+        return `\\frac{x ${formatSign(-x0)}}{${format(m)}} = \\frac{y ${formatSign(-y0)}}{${format(n)}}`;
     }
     
     function convertGeneralToParametric() {
-        const A = parseFloat(document.getElementById('coefA').value);
-        const B = parseFloat(document.getElementById('coefB').value);
-        const C = parseFloat(document.getElementById('coefC').value);
+        const A = getNumber('A');
+        const B = getNumber('B');
+        const C = getNumber('C');
         
-        if (isNaN(A) || isNaN(B) || isNaN(C)) {
-            throw new Error('Введите все коэффициенты');
-        }
+        validateCoefficients(A, B);
         
-        if (A === 0 && B === 0) {
-            throw new Error('A и B не могут быть одновременно равны 0');
-        }
-        
-        // Находим точку на прямой
         let x0, y0;
         if (B !== 0) {
             x0 = 0;
@@ -238,71 +223,103 @@ document.addEventListener('DOMContentLoaded', function() {
             x0 = -C / A;
         }
         
-        // Направляющий вектор
         const m = -B;
         const n = A;
         
-        const equation = `\\begin{cases} x = ${formatNumber(x0)} ${formatNumberWithSign(m)}t \\\\ y = ${formatNumber(y0)} ${formatNumberWithSign(n)}t \\end{cases}`;
-        
-        return { equation };
+        return `\\begin{cases} x = ${format(x0)} ${formatSign(m)}t \\\\ y = ${format(y0)} ${formatSign(n)}t \\end{cases}`;
     }
     
     function convertCanonicalToGeneral() {
-        const x0 = parseFloat(document.getElementById('x0').value);
-        const y0 = parseFloat(document.getElementById('y0').value);
-        const m = parseFloat(document.getElementById('m').value);
-        const n = parseFloat(document.getElementById('n').value);
+        const x0 = getNumber('x0');
+        const y0 = getNumber('y0');
+        const m = getNumber('m');
+        const n = getNumber('n');
         
-        if (isNaN(x0) || isNaN(y0) || isNaN(m) || isNaN(n)) {
-            throw new Error('Введите все коэффициенты');
-        }
+        validateDirectionVector(m, n);
         
-        if (m === 0 && n === 0) {
-            throw new Error('m и n не могут быть одновременно равны 0');
-        }
-        
-        // Общее уравнение: nx - my + (my₀ - nx₀) = 0
         const A = n;
         const B = -m;
         const C = m * y0 - n * x0;
         
-        const equation = `${formatNumber(A)}x ${formatNumberWithSign(B)}y ${formatNumberWithSign(C)} = 0`;
-        
-        return { equation };
+        return `${format(A)}x ${formatSign(B)}y ${formatSign(C)} = 0`;
     }
     
-    // Форматирование чисел
-    function formatNumber(num) {
-        if (Math.abs(num) < 0.0001) return '0';
-        if (Math.abs(num - Math.round(num)) < 0.0001) {
+    function convertCanonicalToParametric() {
+        const x0 = getNumber('x0');
+        const y0 = getNumber('y0');
+        const m = getNumber('m');
+        const n = getNumber('n');
+        
+        validateDirectionVector(m, n);
+        
+        return `\\begin{cases} x = ${format(x0)} ${formatSign(m)}t \\\\ y = ${format(y0)} ${formatSign(n)}t \\end{cases}`;
+    }
+    
+    function convertParametricToCanonical() {
+        const x0 = getNumber('px0');
+        const y0 = getNumber('py0');
+        const m = getNumber('pm');
+        const n = getNumber('pn');
+        
+        validateDirectionVector(m, n);
+        
+        return `\\frac{x ${formatSign(-x0)}}{${format(m)}} = \\frac{y ${formatSign(-y0)}}{${format(n)}}`;
+    }
+    
+    function convertParametricToGeneral() {
+        const x0 = getNumber('px0');
+        const y0 = getNumber('py0');
+        const m = getNumber('pm');
+        const n = getNumber('pn');
+        
+        validateDirectionVector(m, n);
+        
+        const A = n;
+        const B = -m;
+        const C = m * y0 - n * x0;
+        
+        return `${format(A)}x ${formatSign(B)}y ${formatSign(C)} = 0`;
+    }
+    
+    // Вспомогательные функции
+    function getNumber(id) {
+        const element = document.getElementById(id);
+        if (!element) throw new Error('Элемент не найден');
+        return parseFloat(element.value);
+    }
+    
+    function validateCoefficients(A, B) {
+        if (isNaN(A) || isNaN(B)) throw new Error('Введите коэффициенты');
+        if (A === 0 && B === 0) throw new Error('A и B не могут быть оба нулями');
+    }
+    
+    function validateDirectionVector(m, n) {
+        if (isNaN(m) || isNaN(n)) throw new Error('Введите координаты вектора');
+        if (m === 0 && n === 0) throw new Error('Вектор не может быть нулевым');
+    }
+    
+    function format(num) {
+        if (Math.abs(num) < 0.001) return '0';
+        if (Math.abs(num - Math.round(num)) < 0.001) {
             return Math.round(num).toString();
         }
         return Math.round(num * 1000) / 1000;
     }
     
-    function formatNumberWithSign(num) {
-        const formatted = formatNumber(num);
-        if (num >= 0) {
-            return `+ ${formatted}`;
-        } else {
-            return `- ${Math.abs(num).toFixed(3)}`;
-        }
+    function formatSign(num) {
+        const formatted = format(num);
+        return num >= 0 ? `+ ${formatted}` : `- ${Math.abs(num).toFixed(3)}`;
     }
     
-    // Инициализация программы построения графика
-    function initGraphProgram() {
-        const drawLineBtn = document.getElementById('drawLineBtn');
-        
-        drawLineBtn.addEventListener('click', drawLine);
-        
-        // Инициализация графика
-        initCanvas();
+    // График
+    function initGraph() {
+        const drawBtn = document.getElementById('drawLineBtn');
+        drawBtn.addEventListener('click', drawLine);
     }
     
     function initCanvas() {
         const canvas = document.getElementById('lineCanvas');
         const ctx = canvas.getContext('2d');
-        
         drawAxes(ctx, canvas.width, canvas.height);
     }
     
@@ -310,10 +327,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const centerX = width / 2;
         const centerY = height / 2;
         
-        // Очистка
         ctx.clearRect(0, 0, width, height);
-        
-        // Фон
         ctx.fillStyle = '#f8f9fa';
         ctx.fillRect(0, 0, width, height);
         
@@ -321,7 +335,6 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.strokeStyle = '#e0e0e0';
         ctx.lineWidth = 1;
         
-        // Вертикальные линии
         for (let x = 50; x < width; x += 50) {
             ctx.beginPath();
             ctx.moveTo(x, 0);
@@ -329,7 +342,6 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.stroke();
         }
         
-        // Горизонтальные линии
         for (let y = 50; y < height; y += 50) {
             ctx.beginPath();
             ctx.moveTo(0, y);
@@ -337,15 +349,15 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.stroke();
         }
         
-        // Ось X
+        // Оси
         ctx.strokeStyle = '#000';
         ctx.lineWidth = 2;
+        
         ctx.beginPath();
         ctx.moveTo(0, centerY);
         ctx.lineTo(width, centerY);
         ctx.stroke();
         
-        // Ось Y
         ctx.beginPath();
         ctx.moveTo(centerX, 0);
         ctx.lineTo(centerX, height);
@@ -373,26 +385,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const centerX = width / 2;
         const centerY = height / 2;
         
-        // Получаем координаты
         const x1 = parseFloat(document.getElementById('pointAx').value);
         const y1 = parseFloat(document.getElementById('pointAy').value);
         const x2 = parseFloat(document.getElementById('pointBx').value);
         const y2 = parseFloat(document.getElementById('pointBy').value);
         
         if (isNaN(x1) || isNaN(y1) || isNaN(x2) || isNaN(y2)) {
-            alert('Введите координаты обеих точек');
+            alert('Введите координаты точек');
             return;
         }
         
-        if (Math.abs(x1 - x2) < 0.001 && Math.abs(y1 - y2) < 0.001) {
-            alert('Точки не должны совпадать');
-            return;
-        }
-        
-        // Очищаем и рисуем оси
         drawAxes(ctx, width, height);
         
-        // Рисуем точки
+        // Точки
         ctx.fillStyle = '#e74c3c';
         ctx.beginPath();
         ctx.arc(centerX + x1 * 50, centerY - y1 * 50, 5, 0, Math.PI * 2);
@@ -403,38 +408,41 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.arc(centerX + x2 * 50, centerY - y2 * 50, 5, 0, Math.PI * 2);
         ctx.fill();
         
-        // Рисуем линию
+        // Линия
         ctx.strokeStyle = '#27ae60';
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(centerX + x1 * 50, centerY - y1 * 50);
         ctx.lineTo(centerX + x2 * 50, centerY - y2 * 50);
         ctx.stroke();
         
-        // Выводим уравнение
-        const equationDiv = document.getElementById('lineEquation');
+        // Уравнение
+        const output = document.getElementById('equationOutput');
         let equation;
         
-        if (Math.abs(x2 - x1) > 0.001) {
-            const slope = (y2 - y1) / (x2 - x1);
-            const intercept = y1 - slope * x1;
-            equation = `y = ${formatNumber(slope)}x ${intercept >= 0 ? '+' : ''}${formatNumber(intercept)}`;
+        if (Math.abs(x2 - x1) < 0.001) {
+            equation = `x = ${format(x1)}`;
+        } else if (Math.abs(y2 - y1) < 0.001) {
+            equation = `y = ${format(y1)}`;
         } else {
-            equation = `x = ${formatNumber(x1)}`;
+            const k = (y2 - y1) / (x2 - x1);
+            const b = y1 - k * x1;
+            equation = `y = ${format(k)}x ${b >= 0 ? '+' : ''}${format(b)}`;
         }
         
-        equationDiv.innerHTML = `<p><strong>Уравнение прямой:</strong> ${equation}</p>`;
+        output.innerHTML = `<p><strong>Уравнение прямой:</strong> ${equation}</p>`;
     }
     
-    // Функция для рендеринга KaTeX
-    function renderMathInElement(element) {
-        const equations = element.querySelectorAll('.katex-equation');
+    // KaTeX
+    function renderMath() {
+        const slide = slides[currentSlide];
+        const equations = slide.querySelectorAll('.katex-equation');
         equations.forEach(eq => {
-            if (typeof katex !== 'undefined') {
+            if (eq.textContent && typeof katex !== 'undefined') {
                 try {
                     katex.render(eq.textContent, eq, {
                         throwOnError: false,
-                        displayMode: eq.textContent.includes('\\begin')
+                        displayMode: eq.textContent.includes('\\begin') || eq.textContent.includes('\\frac')
                     });
                 } catch (error) {
                     console.error('KaTeX error:', error);
@@ -443,6 +451,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    function renderMathInElement(element) {
+        const equations = element.querySelectorAll('.katex-equation');
+        equations.forEach(eq => {
+            if (eq.textContent && typeof katex !== 'undefined') {
+                try {
+                    katex.render(eq.textContent, eq, {
+                        throwOnError: false,
+                        displayMode: true
+                    });
+                } catch (error) {
+                    console.error('KaTeX error:', error);
+                }
+            }
+        });
+    }
+    
+    // Закрытие меню при клике снаружи
+    document.addEventListener('click', function(event) {
+        if (!menuToggle.contains(event.target) && !menuContent.contains(event.target)) {
+            menuContent.classList.remove('show');
+        }
+    });
+    
     // Инициализация при загрузке
-    initCanvas();
+    setTimeout(() => {
+        renderMath();
+        initCanvas();
+    }, 100);
 });
