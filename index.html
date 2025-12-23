@@ -37,8 +37,10 @@
                 <li><a href="#slide16" class="menu-link">Программа: Конвертер</a></li>
                 <li><a href="#slide17" class="menu-link">Программа: Через 2 точки</a></li>
                 <li><a href="#slide18" class="menu-link">Исходный код</a></li>
-                <li><a href="#slide19" class="menu-link">Веселые картинки</a></li>
-                <li><a href="#slide20" class="menu-link">Заключение</a></li>
+                <li><a href="#slide19" class="menu-link">Геометрия в жизни 1</a></li>
+                <li><a href="#slide20" class="menu-link">Геометрия в жизни 2</a></li>
+                <li><a href="#slide21" class="menu-link">Геометрия в жизни 3</a></li>
+                <li><a href="#slide22" class="menu-link">Заключение</a></li>
             </ul>
         </nav>
 
@@ -200,7 +202,7 @@
                             <li>Из канонического уравнения \(\frac{x - x_0}{l} = \frac{y - y_0}{m}\) перейти к равенству: 
                                 \(m(x - x_0) = l(y - y_0)\).</li>
                             <li>Раскрыть скобки: \(mx - mx_0 = ly - ly_0\).</li>
-                            <li>Перенести все члены в одну сторону: \(mx - ly - mx_0 + ly_0 = 0\).</li>
+                            <li>Перенести все члены в одну стороны: \(mx - ly - mx_0 + ly_0 = 0\).</li>
                             <li>Обозначить: \(A = m\), \(B = -l\), \(C = -mx_0 + ly_0\).</li>
                         </ol>
                         <p><strong>Пример:</strong> \(\frac{x - 2}{3} = \frac{y - 1}{4}\)</p>
@@ -619,52 +621,53 @@ function createLineChart(point1, point2, equation) {
                 </div>
             </section>
 
-            <!-- Слайд 19: Веселые картинки -->
-            <section class="slide" id="slide19">
+            <!-- Слайд 19: Картинка 1 -->
+            <section class="slide image-slide" id="slide19">
                 <div class="slide-content">
-                    <h1>Геометрия в юморе и картинках</h1>
-                    <div class="funny-images">
-                        <div class="image-grid">
-                            <div class="image-item">
-                                <div class="image-placeholder">
-                                    <i class="fas fa-ruler-combined"></i>
-                                </div>
-                                <p class="image-caption">"Прямая как луч света в геометрическом царстве"</p>
-                            </div>
-                            <div class="image-item">
-                                <div class="image-placeholder">
-                                    <i class="fas fa-arrow-alt-circle-right"></i>
-                                </div>
-                                <p class="image-caption">"Вектор, который всегда знает куда направлен"</p>
-                            </div>
-                            <div class="image-item">
-                                <div class="image-placeholder">
-                                    <i class="fas fa-infinity"></i>
-                                </div>
-                                <p class="image-caption">"Параллельные прямые встретятся только в проективной геометрии"</p>
-                            </div>
+                    <div class="image-container">
+                        <div class="image-placeholder large">
+                            <i class="fas fa-ruler-combined"></i>
+                            <div class="image-title">Геометрия в архитектуре</div>
                         </div>
-                        <div class="math-jokes">
-                            <h3>Математические шутки</h3>
-                            <div class="joke">
-                                <p><strong>Вопрос:</strong> Что сказала одна прямая другой?</p>
-                                <p><strong>Ответ:</strong> "Давай пересечемся в одной точке!"</p>
-                            </div>
-                            <div class="joke">
-                                <p><strong>Вопрос:</strong> Почему угол 90° такой счастливый?</p>
-                                <p><strong>Ответ:</strong> Потому что он всегда прав!</p>
-                            </div>
-                            <div class="joke">
-                                <p><strong>Вопрос:</strong> Как математики называют романтический ужин при свечах?</p>
-                                <p><strong>Ответ:</strong> Тангенс!</p>
-                            </div>
+                        <div class="image-description">
+                            <p>Прямые линии и углы - основа современной архитектуры</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Слайд 20: Заключение -->
-            <section class="slide" id="slide20">
+            <!-- Слайд 20: Картинка 2 -->
+            <section class="slide image-slide" id="slide20">
+                <div class="slide-content">
+                    <div class="image-container">
+                        <div class="image-placeholder large">
+                            <i class="fas fa-arrow-alt-circle-right"></i>
+                            <div class="image-title">Векторы в компьютерной графике</div>
+                        </div>
+                        <div class="image-description">
+                            <p>Направляющие векторы определяют движение объектов в играх и анимации</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Слайд 21: Картинка 3 -->
+            <section class="slide image-slide" id="slide21">
+                <div class="slide-content">
+                    <div class="image-container">
+                        <div class="image-placeholder large">
+                            <i class="fas fa-infinity"></i>
+                            <div class="image-title">Параллельные прямые в природе</div>
+                        </div>
+                        <div class="image-description">
+                            <p>Геометрические законы проявляются в структурах живой природы</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Слайд 22: Заключение -->
+            <section class="slide" id="slide22">
                 <div class="slide-content">
                     <h1>Заключение</h1>
                     <div class="conclusion">
@@ -705,7 +708,7 @@ function createLineChart(point1, point2, equation) {
                 <i class="fas fa-chevron-left"></i>
             </button>
             <div class="slide-counter">
-                <span id="current-slide">1</span> / <span id="total-slides">20</span>
+                <span id="current-slide">1</span> / <span id="total-slides">22</span>
             </div>
             <button id="next-btn" class="nav-btn" title="Следующий слайд">
                 <i class="fas fa-chevron-right"></i>
