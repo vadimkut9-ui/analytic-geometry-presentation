@@ -1,6 +1,4 @@
-// Обновляем script.js
 
-// В функцию initSlideNavigation добавляем создание точек
 function initSlideNavigation() {
     const slides = document.querySelectorAll('.slide');
     const totalSlides = slides.length;
