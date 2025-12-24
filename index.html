@@ -36,7 +36,8 @@
                 <li><a href="#slide16" class="menu-link">Программа: Конвертер</a></li>
                 <li><a href="#slide17" class="menu-link">Программа: Через 2 точки</a></li>
                 <li><a href="#slide18" class="menu-link">Исходный код</a></li>
-                <li><a href="#slide19" class="menu-link">Заключение</a></li>
+                <li><a href="#slide19" class="menu-link">Векторная алгебра</a></li>
+                <li><a href="#slide20" class="menu-link">Заключение</a></li>
             </ul>
         </nav>
 
@@ -579,7 +580,62 @@ function calculateLinePoints(A, B, C, xMin = -10, xMax = 10) {
                 </div>
             </section>
 
+            <!-- Новый слайд о векторной алгебре -->
             <section class="slide" id="slide19">
+                <div class="slide-content">
+                    <h1>Векторная алгебра и прямые на плоскости</h1>
+                    <div class="vector-algebra">
+                        <div class="vector-info">
+                            <h3>Основные понятия векторной алгебры:</h3>
+                            <ul>
+                                <li><strong>Вектор</strong> - направленный отрезок, характеризуется длиной и направлением</li>
+                                <li><strong>Направляющий вектор прямой</strong> - вектор, параллельный прямой</li>
+                                <li><strong>Вектор нормали</strong> - вектор, перпендикулярный прямой</li>
+                                <li><strong>Скалярное произведение</strong> - мера "похожести" направлений векторов</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="vector-examples">
+                            <h3>Векторные операции для прямых:</h3>
+                            <div class="vector-grid">
+                                <div class="vector-item">
+                                    <div class="vector-title">Направляющий вектор</div>
+                                    <div class="math-block" id="direction-vector"></div>
+                                    <p>Любой вектор, коллинеарный прямой</p>
+                                </div>
+                                <div class="vector-item">
+                                    <div class="vector-title">Вектор нормали</div>
+                                    <div class="math-block" id="normal-vector"></div>
+                                    <p>Вектор, перпендикулярный прямой</p>
+                                </div>
+                                <div class="vector-item">
+                                    <div class="vector-title">Угол между прямыми</div>
+                                    <div class="math-block" id="angle-between"></div>
+                                    <p>Определяется через направляющие векторы</p>
+                                </div>
+                                <div class="vector-item">
+                                    <div class="vector-title">Расстояние от точки до прямой</div>
+                                    <div class="math-block" id="distance-to-line"></div>
+                                    <p>Вычисляется через вектор нормали</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="vector-applications">
+                            <h3>Применение векторной алгебры:</h3>
+                            <ul>
+                                <li>Определение взаимного расположения прямых (параллельны, перпендикулярны, пересекаются)</li>
+                                <li>Нахождение углов между прямыми</li>
+                                <li>Вычисление расстояний от точек до прямых</li>
+                                <li>Задачи на пересечение прямых</li>
+                                <li>Построение нормалей и касательных</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="slide" id="slide20">
                 <div class="slide-content">
                     <h1>Заключение</h1>
                     <div class="conclusion">
@@ -619,7 +675,7 @@ function calculateLinePoints(A, B, C, xMin = -10, xMax = 10) {
                 <i class="fas fa-chevron-left"></i>
             </button>
             <div class="slide-counter">
-                <span id="current-slide">1</span> / <span id="total-slides">19</span>
+                <span id="current-slide">1</span> / <span id="total-slides">20</span>
             </div>
             <button id="next-btn" class="nav-btn" title="Следующий слайд">
                 <i class="fas fa-chevron-right"></i>
