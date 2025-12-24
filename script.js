@@ -5,9 +5,15 @@ document.addEventListener('DOMContentLoaded', function() {
     initTwoPointsApp();
     initCodeTabs();
     
-    setTimeout(function() {
-        renderMath();
-    }, 100);
+    if (typeof katex !== 'undefined') {
+        setTimeout(renderMath, 300);
+    } else {
+        setTimeout(function() {
+            if (typeof katex !== 'undefined') {
+                renderMath();
+            }
+        }, 1000);
+    }
 });
 
 function initMenu() {
@@ -67,8 +73,6 @@ function initSlideNavigation() {
         
         if (direction === 'auto') {
             direction = index > currentSlideIndex ? 'next' : 'prev';
-        } else if (direction === 'click') {
-            direction = index > currentSlideIndex ? 'next' : 'prev';
         }
         
         currentSlide.classList.add(direction === 'next' ? 'prev' : 'next');
@@ -103,7 +107,32 @@ function initSlideNavigation() {
             }
             
             isAnimating = false;
+            
+            renderMathOnSlide(index);
         }, 600);
+    }
+    
+    function renderMathOnSlide(slideIndex) {
+        setTimeout(() => {
+            if (typeof katex !== 'undefined') {
+                const slide = slides[slideIndex];
+                const mathElements = slide.querySelectorAll('.math-block, .equation-display, [id$="-math"], [id$="-formula"], [id$="-eq"], [id$="-example"]');
+                mathElements.forEach(element => {
+                    if (element.textContent && !element.querySelector('.katex')) {
+                        try {
+                            const isDisplayMode = element.classList.contains('math-block') || 
+                                                 element.id && (element.id.includes('parametric') || 
+                                                 element.id.includes('distance'));
+                            katex.render(element.textContent, element, {
+                                throwOnError: false,
+                                displayMode: isDisplayMode
+                            });
+                        } catch (e) {
+                        }
+                    }
+                });
+            }
+        }, 100);
     }
     
     if (prevBtn) {
@@ -630,7 +659,6 @@ function renderMath() {
         }
         
     } catch (error) {
-        console.error('Ошибка рендеринга математических формул:', error);
     }
 }
 
