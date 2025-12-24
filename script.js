@@ -1,4 +1,4 @@
-// script.js - Полный код для презентации "Аналитическая геометрия"
+
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Презентация "Аналитическая геометрия" загружается...');
