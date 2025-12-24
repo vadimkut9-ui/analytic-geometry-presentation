@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initTwoPointsApp();
     initCodeTabs();
     setTimeout(renderMath, 100);
-    setTimeout(renderVectorMath, 200);
 });
 
 function initMenu() {
@@ -137,14 +136,11 @@ function initSlideNavigation() {
             
             updateActiveDot(index);
             
-            if (index === 15) {
+            if (index === 16) {
                 setTimeout(updateSourceEquation, 50);
             }
-            if (index === 16) {
+            if (index === 17) {
                 setTimeout(calculateLineEquation, 50);
-            }
-            if (index === 18) {
-                setTimeout(renderVectorMath, 50);
             }
             
             isAnimating = false;
@@ -731,6 +727,12 @@ function renderMath() {
             });
         }
         
+        if (document.getElementById('distance-formula')) {
+            katex.render("d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}", document.getElementById('distance-formula'), {
+                throwOnError: false
+            });
+        }
+        
         if (document.getElementById('general-eq')) {
             katex.render("Ax + By + C = 0", document.getElementById('general-eq'), {
                 throwOnError: false
@@ -777,37 +779,6 @@ function renderMath() {
         
     } catch (error) {
         console.error('Ошибка рендеринга математических формул:', error);
-    }
-}
-
-function renderVectorMath() {
-    try {
-        if (document.getElementById('direction-vector')) {
-            katex.render("\\vec{s} = (l, m)", document.getElementById('direction-vector'), {
-                throwOnError: false
-            });
-        }
-        
-        if (document.getElementById('normal-vector')) {
-            katex.render("\\vec{n} = (A, B)", document.getElementById('normal-vector'), {
-                throwOnError: false
-            });
-        }
-        
-        if (document.getElementById('angle-between')) {
-            katex.render("\\cos\\varphi = \\frac{|\\vec{s_1} \\cdot \\vec{s_2}|}{|\\vec{s_1}| \\cdot |\\vec{s_2}|}", document.getElementById('angle-between'), {
-                throwOnError: false
-            });
-        }
-        
-        if (document.getElementById('distance-to-line')) {
-            katex.render("d = \\frac{|Ax_0 + By_0 + C|}{\\sqrt{A^2 + B^2}}", document.getElementById('distance-to-line'), {
-                throwOnError: false
-            });
-        }
-        
-    } catch (error) {
-        console.error('Ошибка рендеринга векторных формул:', error);
     }
 }
 
