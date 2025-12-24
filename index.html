@@ -13,7 +13,6 @@
 </head>
 <body>
     <div class="presentation-container">
-        <!-- Меню для быстрого перехода -->
         <nav class="slide-menu">
             <div class="menu-toggle">
                 <i class="fas fa-bars"></i>
@@ -44,9 +43,7 @@
             </ul>
         </nav>
 
-        <!-- Слайды -->
         <div class="slides-container">
-            <!-- Слайд 1: Титульный -->
             <section class="slide active" id="slide1">
                 <div class="slide-content">
                     <h1 class="title">Аналитическая геометрия</h1>
@@ -61,7 +58,6 @@
                 </div>
             </section>
 
-            <!-- Слайд 2: Определение -->
             <section class="slide" id="slide2">
                 <div class="slide-content">
                     <h1>Определение аналитической геометрии</h1>
@@ -74,7 +70,6 @@
                 </div>
             </section>
 
-            <!-- Слайд 3: Разделитель -->
             <section class="slide divider-slide" id="slide3">
                 <div class="slide-content">
                     <h1><i class="fas fa-shapes"></i> Виды уравнений прямой на плоскости</h1>
@@ -82,7 +77,6 @@
                 </div>
             </section>
 
-            <!-- Слайд 4: Общее уравнение -->
             <section class="slide" id="slide4">
                 <div class="slide-content">
                     <h1>Общее уравнение прямой на плоскости</h1>
@@ -100,7 +94,6 @@
                 </div>
             </section>
 
-            <!-- Слайд 5: Уравнение через 2 точки -->
             <section class="slide" id="slide5">
                 <div class="slide-content">
                     <h1>Уравнение прямой, проходящей через две точки</h1>
@@ -114,7 +107,6 @@
                 </div>
             </section>
 
-            <!-- Слайд 6: Каноническое уравнение -->
             <section class="slide" id="slide6">
                 <div class="slide-content">
                     <h1>Каноническое уравнение прямой</h1>
@@ -128,7 +120,6 @@
                 </div>
             </section>
 
-            <!-- Слайд 7: Параметрическое уравнение -->
             <section class="slide" id="slide7">
                 <div class="slide-content">
                     <h1>Параметрическое уравнение прямой</h1>
@@ -143,7 +134,6 @@
                 </div>
             </section>
 
-            <!-- Слайд 8: Разделитель алгоритмов -->
             <section class="slide divider-slide" id="slide8">
                 <div class="slide-content">
                     <h1><i class="fas fa-exchange-alt"></i> Алгоритмы перевода уравнений</h1>
@@ -151,7 +141,6 @@
                 </div>
             </section>
 
-            <!-- Слайд 9: Общее → Каноническое -->
             <section class="slide" id="slide9">
                 <div class="slide-content">
                     <h1>Алгоритм: из общего уравнения в каноническое</h1>
@@ -171,7 +160,6 @@
                 </div>
             </section>
 
-            <!-- Слайд 10: Общее → Параметрическое -->
             <section class="slide" id="slide10">
                 <div class="slide-content">
                     <h1>Алгоритм: из общего уравнения в параметрическое</h1>
@@ -193,7 +181,6 @@
                 </div>
             </section>
 
-            <!-- Слайд 11: Каноническое → Общее -->
             <section class="slide" id="slide11">
                 <div class="slide-content">
                     <h1>Алгоритм: из канонического в общее уравнение</h1>
@@ -215,7 +202,6 @@
                 </div>
             </section>
 
-            <!-- Слайд 12: Каноническое → Параметрическое -->
             <section class="slide" id="slide12">
                 <div class="slide-content">
                     <h1>Алгоритм: из канонического в параметрическое</h1>
@@ -235,7 +221,6 @@
                 </div>
             </section>
 
-            <!-- Слайд 13: Параметрическое → Каноническое -->
             <section class="slide" id="slide13">
                 <div class="slide-content">
                     <h1>Алгоритм: из параметрического в каноническое</h1>
@@ -255,7 +240,6 @@
                 </div>
             </section>
 
-            <!-- Слайд 14: Параметрическое → Общее -->
             <section class="slide" id="slide14">
                 <div class="slide-content">
                     <h1>Алгоритм: из параметрического в общее уравнение</h1>
@@ -276,7 +260,6 @@
                 </div>
             </section>
 
-            <!-- Слайд 15: Разделитель программ -->
             <section class="slide divider-slide" id="slide15">
                 <div class="slide-content">
                     <h1><i class="fas fa-code"></i> Программная реализация</h1>
@@ -284,7 +267,6 @@
                 </div>
             </section>
 
-            <!-- Слайд 16: Программа-конвертер -->
             <section class="slide" id="slide16">
                 <div class="slide-content">
                     <h1>Программа: Конвертер уравнений прямой</h1>
@@ -366,7 +348,6 @@
                 </div>
             </section>
 
-            <!-- Слайд 17: Программа через 2 точки -->
             <section class="slide" id="slide17">
                 <div class="slide-content">
                     <h1>Программа: Уравнение прямой через 2 точки</h1>
@@ -423,7 +404,6 @@
                 </div>
             </section>
 
-            <!-- Слайд 18: Исходный код -->
             <section class="slide" id="slide18">
                 <div class="slide-content">
                     <h1>Исходный код программ</h1>
@@ -434,9 +414,7 @@
                             <button class="code-tab" data-tab="graph">Построение графика</button>
                         </div>
                         <div class="code-content">
-                            <pre id="converter-code" class="code-block active"><code>// Функция преобразования общего уравнения в каноническое
-function generalToCanonical(A, B, C) {
-    // Находим точку на прямой
+                            <pre id="converter-code" class="code-block active"><code>function generalToCanonical(A, B, C) {
     let x0, y0;
     if (A !== 0) {
         y0 = 0;
@@ -446,11 +424,9 @@ function generalToCanonical(A, B, C) {
         y0 = -C / B;
     }
     
-    // Направляющий вектор
     let l = B;
     let m = -A;
     
-    // Нормализуем вектор (делим на НОД)
     let gcdVal = gcd(l, m);
     if (gcdVal !== 0) {
         l /= gcdVal;
@@ -460,7 +436,6 @@ function generalToCanonical(A, B, C) {
     return {x0, y0, l, m};
 }
 
-// Функция преобразования общего уравнения в параметрическое
 function generalToParametric(A, B, C) {
     const canonical = generalToCanonical(A, B, C);
     return {
@@ -469,22 +444,16 @@ function generalToParametric(A, B, C) {
         l: canonical.l,
         m: canonical.m
     };
-}
-
-// Аналогичные функции для других преобразований...</code></pre>
-                            <pre id="two-points-code" class="code-block"><code>// Нахождение уравнения прямой через две точки
-function lineThroughTwoPoints(x1, y1, x2, y2) {
-    // Проверка, что точки не совпадают
+}</code></pre>
+                            <pre id="two-points-code" class="code-block"><code>function lineThroughTwoPoints(x1, y1, x2, y2) {
     if (Math.abs(x1 - x2) < 1e-10 && Math.abs(y1 - y2) < 1e-10) {
         throw new Error("Точки совпадают");
     }
     
-    // Общее уравнение
     let A = y2 - y1;
     let B = x1 - x2;
     let C = x2 * y1 - x1 * y2;
     
-    // Каноническое уравнение
     const canonical = {
         x0: x1,
         y0: y1,
@@ -492,7 +461,6 @@ function lineThroughTwoPoints(x1, y1, x2, y2) {
         m: y2 - y1
     };
     
-    // Параметрическое уравнение
     const parametric = {
         x0: x1,
         y0: y1,
@@ -503,7 +471,6 @@ function lineThroughTwoPoints(x1, y1, x2, y2) {
     return {general: {A, B, C}, canonical, parametric};
 }
 
-// Функция для расчета точек для графика
 function calculateLinePoints(A, B, C, xMin = -10, xMax = 10) {
     const points = [];
     
@@ -513,7 +480,6 @@ function calculateLinePoints(A, B, C, xMin = -10, xMax = 10) {
             points.push({x, y});
         }
     } else {
-        // Вертикальная прямая
         let x = -C / A;
         for (let y = xMin; y <= xMax; y++) {
             points.push({x, y});
@@ -522,18 +488,15 @@ function calculateLinePoints(A, B, C, xMin = -10, xMax = 10) {
     
     return points;
 }</code></pre>
-                            <pre id="graph-code" class="code-block"><code>// Создание графика с использованием Chart.js
-function createLineChart(point1, point2, equation) {
+                            <pre id="graph-code" class="code-block"><code>function createLineChart(point1, point2, equation) {
     const ctx = document.getElementById('line-chart').getContext('2d');
     
-    // Рассчитываем точки для прямой
     const linePoints = calculateLinePoints(
         equation.general.A, 
         equation.general.B, 
         equation.general.C
     );
     
-    // Подготавливаем данные для графика
     const data = {
         datasets: [
             {
@@ -564,7 +527,6 @@ function createLineChart(point1, point2, equation) {
         ]
     };
     
-    // Настройки графика
     const config = {
         type: 'scatter',
         data: data,
@@ -610,7 +572,6 @@ function createLineChart(point1, point2, equation) {
         }
     };
     
-    // Создаем или обновляем график
     if (window.lineChart) {
         window.lineChart.destroy();
     }
@@ -621,28 +582,21 @@ function createLineChart(point1, point2, equation) {
                 </div>
             </section>
 
-            <!-- Слайд 19: Пустой слайд для картинки 1 -->
             <section class="slide image-slide" id="slide19">
                 <div class="slide-content">
-                    <!-- Пустой слайд для картинки -->
                 </div>
             </section>
 
-            <!-- Слайд 20: Пустой слайд для картинки 2 -->
             <section class="slide image-slide" id="slide20">
                 <div class="slide-content">
-                    <!-- Пустой слайд для картинки -->
                 </div>
             </section>
 
-            <!-- Слайд 21: Пустой слайд для картинки 3 -->
             <section class="slide image-slide" id="slide21">
                 <div class="slide-content">
-                    <!-- Пустой слайд для картинки -->
                 </div>
             </section>
 
-            <!-- Слайд 22: Заключение -->
             <section class="slide" id="slide22">
                 <div class="slide-content">
                     <h1>Заключение</h1>
@@ -678,9 +632,6 @@ function createLineChart(point1, point2, equation) {
             </section>
         </div>
 
-        <!-- Навигация точками будет создана через JavaScript -->
-
-        <!-- Навигация -->
         <div class="navigation">
             <button id="prev-btn" class="nav-btn" title="Предыдущий слайд">
                 <i class="fas fa-chevron-left"></i>
