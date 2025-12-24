@@ -4,7 +4,10 @@ document.addEventListener('DOMContentLoaded', function() {
     initConverter();
     initTwoPointsApp();
     initCodeTabs();
-    setTimeout(renderMath, 100);
+    
+    setTimeout(function() {
+        renderMath();
+    }, 100);
 });
 
 function initMenu() {
@@ -173,9 +176,20 @@ function initConverter() {
         updateSourceEquation();
     });
     
+    targetType.addEventListener('change', function() {
+        if (document.getElementById('source-equation').textContent.trim() !== '') {
+            performConversion();
+        }
+    });
+    
     const inputs = document.querySelectorAll('#general-inputs input, #canonical-inputs input, #parametric-inputs input');
     inputs.forEach(input => {
-        input.addEventListener('input', updateSourceEquation);
+        input.addEventListener('input', function() {
+            updateSourceEquation();
+            if (document.getElementById('source-equation').textContent.trim() !== '') {
+                setTimeout(performConversion, 100);
+            }
+        });
     });
     
     convertBtn.addEventListener('click', performConversion);
@@ -221,7 +235,15 @@ function initConverter() {
             const l = parseFloat(document.getElementById('input-l')?.value) || 1;
             const m = parseFloat(document.getElementById('input-m')?.value) || 1;
             
-            equation = `\\frac{x ${formatSignedNumber(-x0)}}{${l}} = \\frac{y ${formatSignedNumber(-y0)}}{${m}}`;
+            if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) {
+                equation = "\\text{Ошибка: нулевой направляющий вектор}";
+            } else if (Math.abs(l) < 0.001) {
+                equation = `x = ${x0}`;
+            } else if (Math.abs(m) < 0.001) {
+                equation = `y = ${y0}`;
+            } else {
+                equation = `\\frac{x ${formatSignedNumber(-x0)}}{${l}} = \\frac{y ${formatSignedNumber(-y0)}}{${m}}`;
+            }
             
         } else if (sourceType.value === 'parametric') {
             const x0 = parseFloat(document.getElementById('param-x0')?.value) || 0;
@@ -234,6 +256,7 @@ function initConverter() {
         }
         
         try {
+            sourceEqElement.innerHTML = '';
             katex.render(equation, sourceEqElement, { 
                 throwOnError: false, 
                 displayMode: displayMode 
@@ -254,56 +277,74 @@ function initConverter() {
         let displayMode = false;
         
         try {
-            if (sourceTypeVal === 'general' && targetTypeVal === 'canonical') {
+            if (sourceTypeVal === targetTypeVal) {
+                result = "Исходное и целевое уравнения совпадают";
+            } else if (sourceTypeVal === 'general' && targetTypeVal === 'canonical') {
                 const A = parseFloat(document.getElementById('input-A')?.value) || 0;
                 const B = parseFloat(document.getElementById('input-B')?.value) || 0;
                 const C = parseFloat(document.getElementById('input-C')?.value) || 0;
                 
-                let x0, y0;
-                if (Math.abs(A) > 0.0001) {
-                    y0 = 0;
-                    x0 = -C / A;
+                if (Math.abs(A) < 0.0001 && Math.abs(B) < 0.0001) {
+                    result = "\\text{Ошибка: A и B не могут быть одновременно нулями}";
                 } else {
-                    x0 = 0;
-                    y0 = -C / B;
+                    let x0, y0;
+                    if (Math.abs(B) > 0.0001) {
+                        x0 = 0;
+                        y0 = -C / B;
+                    } else {
+                        y0 = 0;
+                        x0 = -C / A;
+                    }
+                    
+                    let l = -B;
+                    let m = A;
+                    
+                    let gcdVal = gcd(Math.abs(l), Math.abs(m));
+                    if (gcdVal > 0.0001) {
+                        l /= gcdVal;
+                        m /= gcdVal;
+                    }
+                    
+                    if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) {
+                        result = "\\text{Ошибка: нулевой направляющий вектор}";
+                    } else if (Math.abs(l) < 0.001) {
+                        result = `x = ${formatNumber(x0)}`;
+                    } else if (Math.abs(m) < 0.001) {
+                        result = `y = ${formatNumber(y0)}`;
+                    } else {
+                        result = `\\frac{x ${formatSignedNumber(-x0)}}{${formatNumber(l)}} = \\frac{y ${formatSignedNumber(-y0)}}{${formatNumber(m)}}`;
+                    }
                 }
-                
-                let l = B;
-                let m = -A;
-                
-                let gcdVal = gcd(l, m);
-                if (Math.abs(gcdVal) > 0.0001) {
-                    l /= gcdVal;
-                    m /= gcdVal;
-                }
-                
-                result = `\\frac{x ${formatSignedNumber(-x0)}}{${formatNumber(l)}} = \\frac{y ${formatSignedNumber(-y0)}}{${formatNumber(m)}}`;
                 
             } else if (sourceTypeVal === 'general' && targetTypeVal === 'parametric') {
                 const A = parseFloat(document.getElementById('input-A')?.value) || 0;
                 const B = parseFloat(document.getElementById('input-B')?.value) || 0;
                 const C = parseFloat(document.getElementById('input-C')?.value) || 0;
                 
-                let x0, y0;
-                if (Math.abs(A) > 0.0001) {
-                    y0 = 0;
-                    x0 = -C / A;
+                if (Math.abs(A) < 0.0001 && Math.abs(B) < 0.0001) {
+                    result = "\\text{Ошибка: A и B не могут быть одновременно нулями}";
                 } else {
-                    x0 = 0;
-                    y0 = -C / B;
+                    let x0, y0;
+                    if (Math.abs(B) > 0.0001) {
+                        x0 = 0;
+                        y0 = -C / B;
+                    } else {
+                        y0 = 0;
+                        x0 = -C / A;
+                    }
+                    
+                    let l = -B;
+                    let m = A;
+                    
+                    let gcdVal = gcd(Math.abs(l), Math.abs(m));
+                    if (gcdVal > 0.0001) {
+                        l /= gcdVal;
+                        m /= gcdVal;
+                    }
+                    
+                    result = `\\begin{cases} x = ${formatNumber(x0)} ${formatSignedNumber(l)}t \\\\ y = ${formatNumber(y0)} ${formatSignedNumber(m)}t \\end{cases}`;
+                    displayMode = true;
                 }
-                
-                let l = B;
-                let m = -A;
-                
-                let gcdVal = gcd(l, m);
-                if (Math.abs(gcdVal) > 0.0001) {
-                    l /= gcdVal;
-                    m /= gcdVal;
-                }
-                
-                result = `\\begin{cases} x = ${formatNumber(x0)} ${formatSignedNumber(l)}t \\\\ y = ${formatNumber(y0)} ${formatSignedNumber(m)}t \\end{cases}`;
-                displayMode = true;
                 
             } else if (sourceTypeVal === 'canonical' && targetTypeVal === 'general') {
                 const x0 = parseFloat(document.getElementById('input-x0')?.value) || 0;
@@ -311,11 +352,15 @@ function initConverter() {
                 const l = parseFloat(document.getElementById('input-l')?.value) || 1;
                 const m = parseFloat(document.getElementById('input-m')?.value) || 1;
                 
-                const A = m;
-                const B = -l;
-                const C = -m*x0 + l*y0;
-                
-                result = `${formatCoefficient(A)}x ${formatSignedCoefficient(B)}y ${formatSignedCoefficient(C)} = 0`;
+                if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) {
+                    result = "\\text{Ошибка: нулевой направляющий вектор}";
+                } else {
+                    const A = m;
+                    const B = -l;
+                    const C = l*y0 - m*x0;
+                    
+                    result = `${formatCoefficient(A)}x ${formatSignedCoefficient(B)}y ${formatSignedCoefficient(C)} = 0`;
+                }
                 
             } else if (sourceTypeVal === 'canonical' && targetTypeVal === 'parametric') {
                 const x0 = parseFloat(document.getElementById('input-x0')?.value) || 0;
@@ -323,8 +368,12 @@ function initConverter() {
                 const l = parseFloat(document.getElementById('input-l')?.value) || 1;
                 const m = parseFloat(document.getElementById('input-m')?.value) || 1;
                 
-                result = `\\begin{cases} x = ${formatNumber(x0)} ${formatSignedNumber(l)}t \\\\ y = ${formatNumber(y0)} ${formatSignedNumber(m)}t \\end{cases}`;
-                displayMode = true;
+                if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) {
+                    result = "\\text{Ошибка: нулевой направляющий вектор}";
+                } else {
+                    result = `\\begin{cases} x = ${formatNumber(x0)} ${formatSignedNumber(l)}t \\\\ y = ${formatNumber(y0)} ${formatSignedNumber(m)}t \\end{cases}`;
+                    displayMode = true;
+                }
                 
             } else if (sourceTypeVal === 'parametric' && targetTypeVal === 'canonical') {
                 const x0 = parseFloat(document.getElementById('param-x0')?.value) || 0;
@@ -332,7 +381,15 @@ function initConverter() {
                 const l = parseFloat(document.getElementById('param-l')?.value) || 1;
                 const m = parseFloat(document.getElementById('param-m')?.value) || 1;
                 
-                result = `\\frac{x ${formatSignedNumber(-x0)}}{${formatNumber(l)}} = \\frac{y ${formatSignedNumber(-y0)}}{${formatNumber(m)}}`;
+                if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) {
+                    result = "\\text{Ошибка: нулевой направляющий вектор}";
+                } else if (Math.abs(l) < 0.001) {
+                    result = `x = ${formatNumber(x0)}`;
+                } else if (Math.abs(m) < 0.001) {
+                    result = `y = ${formatNumber(y0)}`;
+                } else {
+                    result = `\\frac{x ${formatSignedNumber(-x0)}}{${formatNumber(l)}} = \\frac{y ${formatSignedNumber(-y0)}}{${formatNumber(m)}}`;
+                }
                 
             } else if (sourceTypeVal === 'parametric' && targetTypeVal === 'general') {
                 const x0 = parseFloat(document.getElementById('param-x0')?.value) || 0;
@@ -340,15 +397,18 @@ function initConverter() {
                 const l = parseFloat(document.getElementById('param-l')?.value) || 1;
                 const m = parseFloat(document.getElementById('param-m')?.value) || 1;
                 
-                const A = m;
-                const B = -l;
-                const C = -m*x0 + l*y0;
-                
-                result = `${formatCoefficient(A)}x ${formatSignedCoefficient(B)}y ${formatSignedCoefficient(C)} = 0`;
-                
-            } else {
-                result = "Исходное и целевое уравнения совпадают";
+                if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) {
+                    result = "\\text{Ошибка: нулевой направляющий вектор}";
+                } else {
+                    const A = m;
+                    const B = -l;
+                    const C = l*y0 - m*x0;
+                    
+                    result = `${formatCoefficient(A)}x ${formatSignedCoefficient(B)}y ${formatSignedCoefficient(C)} = 0`;
+                }
             }
+            
+            resultEqElement.innerHTML = '';
             
             try {
                 katex.render(result, resultEqElement, { 
@@ -360,7 +420,7 @@ function initConverter() {
             }
             
         } catch (error) {
-            resultEqElement.textContent = "Ошибка преобразования";
+            resultEqElement.textContent = "Ошибка преобразования: " + error.message;
         }
     }
 }
@@ -403,8 +463,11 @@ function calculateLineEquation() {
         const generalFormElement = document.getElementById('general-form');
         if (generalFormElement) {
             const generalEq = `${formatCoefficient(A)}x ${formatSignedCoefficient(B)}y ${formatSignedCoefficient(C)} = 0`;
+            generalFormElement.innerHTML = '';
             try {
-                katex.render(generalEq, generalFormElement, { throwOnError: false });
+                katex.render(generalEq, generalFormElement, { 
+                    throwOnError: false 
+                });
             } catch (e) {
                 generalFormElement.textContent = generalEq;
             }
@@ -414,9 +477,23 @@ function calculateLineEquation() {
         if (canonicalFormElement) {
             const l = x2 - x1;
             const m = y2 - y1;
-            const canonicalEq = `\\frac{x ${formatSignedNumber(-x1)}}{${formatNumber(l)}} = \\frac{y ${formatSignedNumber(-y1)}}{${formatNumber(m)}}`;
+            
+            let canonicalEq;
+            if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) {
+                canonicalEq = "\\text{Ошибка: точки совпадают}";
+            } else if (Math.abs(l) < 0.001) {
+                canonicalEq = `x = ${x1}`;
+            } else if (Math.abs(m) < 0.001) {
+                canonicalEq = `y = ${y1}`;
+            } else {
+                canonicalEq = `\\frac{x ${formatSignedNumber(-x1)}}{${formatNumber(l)}} = \\frac{y ${formatSignedNumber(-y1)}}{${formatNumber(m)}}`;
+            }
+            
+            canonicalFormElement.innerHTML = '';
             try {
-                katex.render(canonicalEq, canonicalFormElement, { throwOnError: false });
+                katex.render(canonicalEq, canonicalFormElement, { 
+                    throwOnError: false 
+                });
             } catch (e) {
                 canonicalFormElement.textContent = canonicalEq;
             }
@@ -426,9 +503,20 @@ function calculateLineEquation() {
         if (parametricFormElement) {
             const l = x2 - x1;
             const m = y2 - y1;
-            const parametricEq = `\\begin{cases} x = ${formatNumber(x1)} ${formatSignedNumber(l)}t \\\\ y = ${formatNumber(y1)} ${formatSignedNumber(m)}t \\end{cases}`;
+            
+            let parametricEq;
+            if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) {
+                parametricEq = "\\text{Ошибка: точки совпадают}";
+            } else {
+                parametricEq = `\\begin{cases} x = ${formatNumber(x1)} ${formatSignedNumber(l)}t \\\\ y = ${formatNumber(y1)} ${formatSignedNumber(m)}t \\end{cases}`;
+            }
+            
+            parametricFormElement.innerHTML = '';
             try {
-                katex.render(parametricEq, parametricFormElement, { throwOnError: false, displayMode: true });
+                katex.render(parametricEq, parametricFormElement, { 
+                    throwOnError: false, 
+                    displayMode: true 
+                });
             } catch (e) {
                 parametricFormElement.textContent = parametricEq;
             }
@@ -436,13 +524,19 @@ function calculateLineEquation() {
         
     } catch (error) {
         const generalFormElement = document.getElementById('general-form');
-        if (generalFormElement) generalFormElement.textContent = "Ошибка: " + error.message;
+        if (generalFormElement) {
+            generalFormElement.textContent = "Ошибка: " + error.message;
+        }
         
         const canonicalFormElement = document.getElementById('canonical-form');
-        if (canonicalFormElement) canonicalFormElement.textContent = "";
+        if (canonicalFormElement) {
+            canonicalFormElement.textContent = "";
+        }
         
         const parametricFormElement = document.getElementById('parametric-form');
-        if (parametricFormElement) parametricFormElement.textContent = "";
+        if (parametricFormElement) {
+            parametricFormElement.textContent = "";
+        }
     }
 }
 
