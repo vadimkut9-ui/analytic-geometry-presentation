@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initTwoPointsApp();
     initCodeTabs();
     setTimeout(renderMath, 100);
+    setTimeout(renderVectorMath, 200);
 });
 
 function initMenu() {
@@ -44,6 +45,7 @@ function initSlideNavigation() {
     if (slides.length === 0) return;
     
     let currentSlideIndex = 0;
+    let isAnimating = false;
     
     if (totalSlidesElement) {
         totalSlidesElement.textContent = totalSlides;
@@ -62,8 +64,9 @@ function initSlideNavigation() {
             dot.title = `Перейти к слайду ${i + 1}`;
             
             dot.addEventListener('click', function() {
+                if (isAnimating) return;
                 const slideIndex = parseInt(this.dataset.slide);
-                showSlide(slideIndex);
+                showSlide(slideIndex, 'click');
             });
             
             dotsContainer.appendChild(dot);
@@ -83,49 +86,82 @@ function initSlideNavigation() {
         }
     }
     
-    function showSlide(index) {
+    function showSlide(index, direction = 'auto') {
+        if (isAnimating) return;
+        
         if (index < 0) index = 0;
         if (index >= totalSlides) index = totalSlides - 1;
         if (index === currentSlideIndex) return;
         
-        slides.forEach(slide => {
-            slide.classList.remove('active');
-        });
+        isAnimating = true;
         
-        slides[index].classList.add('active');
-        currentSlideIndex = index;
+        const currentSlide = slides[currentSlideIndex];
+        const nextSlide = slides[index];
         
-        if (currentSlideElement) {
-            currentSlideElement.textContent = index + 1;
+        if (direction === 'auto') {
+            direction = index > currentSlideIndex ? 'next' : 'prev';
+        } else if (direction === 'click') {
+            direction = index > currentSlideIndex ? 'next' : 'prev';
         }
         
-        menuLinks.forEach(link => {
-            link.classList.remove('active');
-        });
+        currentSlide.classList.add(direction === 'next' ? 'prev' : 'next');
+        nextSlide.classList.add('active');
         
-        if (menuLinks[index]) {
-            menuLinks[index].classList.add('active');
+        if (direction === 'next') {
+            nextSlide.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                nextSlide.style.transform = 'translateX(0)';
+            }, 10);
+        } else {
+            nextSlide.style.transform = 'translateX(-100%)';
+            setTimeout(() => {
+                nextSlide.style.transform = 'translateX(0)';
+            }, 10);
         }
         
-        updateActiveDot(index);
-        
-        if (index === 15) {
-            setTimeout(updateSourceEquation, 50);
-        }
-        if (index === 16) {
-            setTimeout(calculateLineEquation, 50);
-        }
+        setTimeout(() => {
+            currentSlide.classList.remove('active', 'prev', 'next');
+            currentSlideIndex = index;
+            
+            if (currentSlideElement) {
+                currentSlideElement.textContent = index + 1;
+            }
+            
+            menuLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            if (menuLinks[index]) {
+                menuLinks[index].classList.add('active');
+            }
+            
+            updateActiveDot(index);
+            
+            if (index === 15) {
+                setTimeout(updateSourceEquation, 50);
+            }
+            if (index === 16) {
+                setTimeout(calculateLineEquation, 50);
+            }
+            if (index === 18) {
+                setTimeout(renderVectorMath, 50);
+            }
+            
+            isAnimating = false;
+        }, 600);
     }
     
     if (prevBtn) {
         prevBtn.addEventListener('click', function() {
-            showSlide(currentSlideIndex - 1);
+            if (isAnimating) return;
+            showSlide(currentSlideIndex - 1, 'prev');
         });
     }
     
     if (nextBtn) {
         nextBtn.addEventListener('click', function() {
-            showSlide(currentSlideIndex + 1);
+            if (isAnimating) return;
+            showSlide(currentSlideIndex + 1, 'next');
         });
     }
     
@@ -134,18 +170,20 @@ function initSlideNavigation() {
             return;
         }
         
+        if (isAnimating) return;
+        
         switch(e.key) {
             case 'ArrowLeft':
             case 'PageUp':
                 e.preventDefault();
-                showSlide(currentSlideIndex - 1);
+                showSlide(currentSlideIndex - 1, 'prev');
                 break;
                 
             case 'ArrowRight':
             case 'PageDown':
             case ' ':
                 e.preventDefault();
-                showSlide(currentSlideIndex + 1);
+                showSlide(currentSlideIndex + 1, 'next');
                 break;
                 
             case 'Home':
@@ -163,7 +201,8 @@ function initSlideNavigation() {
     menuLinks.forEach((link, index) => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            showSlide(index);
+            if (isAnimating) return;
+            showSlide(index, 'click');
         });
     });
     
@@ -738,6 +777,37 @@ function renderMath() {
         
     } catch (error) {
         console.error('Ошибка рендеринга математических формул:', error);
+    }
+}
+
+function renderVectorMath() {
+    try {
+        if (document.getElementById('direction-vector')) {
+            katex.render("\\vec{s} = (l, m)", document.getElementById('direction-vector'), {
+                throwOnError: false
+            });
+        }
+        
+        if (document.getElementById('normal-vector')) {
+            katex.render("\\vec{n} = (A, B)", document.getElementById('normal-vector'), {
+                throwOnError: false
+            });
+        }
+        
+        if (document.getElementById('angle-between')) {
+            katex.render("\\cos\\varphi = \\frac{|\\vec{s_1} \\cdot \\vec{s_2}|}{|\\vec{s_1}| \\cdot |\\vec{s_2}|}", document.getElementById('angle-between'), {
+                throwOnError: false
+            });
+        }
+        
+        if (document.getElementById('distance-to-line')) {
+            katex.render("d = \\frac{|Ax_0 + By_0 + C|}{\\sqrt{A^2 + B^2}}", document.getElementById('distance-to-line'), {
+                throwOnError: false
+            });
+        }
+        
+    } catch (error) {
+        console.error('Ошибка рендеринга векторных формул:', error);
     }
 }
 
