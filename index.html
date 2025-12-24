@@ -67,15 +67,6 @@
                         <p>Основная идея: установление соответствия между геометрическими объектами и уравнениями, описывающими их в координатах.</p>
                         <div class="math-block" id="def-math"></div>
                         <p>На плоскости каждая точка определяется парой чисел (x, y), а линии и кривые описываются уравнениями относительно этих координат.</p>
-                        <div class="features">
-                            <h3>Основные преимущества:</h3>
-                            <ul>
-                                <li>Позволяет решать геометрические задачи алгебраическими методами</li>
-                                <li>Обеспечивает точность вычислений</li>
-                                <li>Дает возможность изучать сложные геометрические фигуры</li>
-                                <li>Используется в компьютерной графике, физике, инженерии</li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -85,37 +76,28 @@
                 <div class="slide-content">
                     <h1>Основные понятия аналитической геометрии</h1>
                     <div class="definition">
+                        <h3>Ключевые элементы:</h3>
                         <div class="vector-grid">
                             <div class="vector-item">
                                 <div class="vector-title">Декартова система координат</div>
-                                <p>Система отсчета, состоящая из двух взаимно перпендикулярных осей (X и Y)</p>
-                                <div class="math-block">\( O(0,0) \) - начало координат</div>
+                                <p>Две взаимно перпендикулярные оси X и Y</p>
+                                <div class="math-block">\( O(0,0) \)</div>
                             </div>
                             <div class="vector-item">
                                 <div class="vector-title">Точка на плоскости</div>
-                                <p>Определяется парой чисел (x, y) — ее координатами</p>
+                                <p>Определяется парой чисел (x, y)</p>
                                 <div class="math-block">\( M(x, y) \)</div>
                             </div>
                             <div class="vector-item">
                                 <div class="vector-title">Расстояние между точками</div>
-                                <p>Длина отрезка, соединяющего две точки</p>
+                                <p>Длина отрезка между точками</p>
                                 <div id="distance-formula"></div>
                             </div>
                             <div class="vector-item">
                                 <div class="vector-title">Уравнение линии</div>
-                                <p>Математическая зависимость между координатами точек линии</p>
+                                <p>Зависимость между координатами</p>
                                 <div class="math-block">\( F(x, y) = 0 \)</div>
                             </div>
-                        </div>
-                        
-                        <div class="algorithm" style="margin-top: 20px;">
-                            <h3>Основные задачи аналитической геометрии:</h3>
-                            <ol>
-                                <li>Построение уравнения по геометрическому свойству линии</li>
-                                <li>Исследование геометрических свойств по уравнению</li>
-                                <li>Решение задач на взаимное расположение геометрических объектов</li>
-                                <li>Вычисление расстояний, углов, площадей</li>
-                            </ol>
                         </div>
                     </div>
                 </div>
@@ -124,17 +106,8 @@
             <!-- Слайд 4: Разделитель - Виды уравнений -->
             <section class="slide divider-slide" id="slide4">
                 <div class="slide-content">
-                    <h1><i class="fas fa-shapes"></i> Виды уравнений прямой на плоскости</h1>
+                    <h1><i class="fas fa-shapes"></i> Виды уравнений прямой</h1>
                     <p>Различные формы записи уравнения одной и той же прямой</p>
-                    <div class="features" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 30px;">
-                        <p>Прямая может быть задана:</p>
-                        <ul>
-                            <li>Общим уравнением</li>
-                            <li>Через две точки</li>
-                            <li>Каноническим уравнением</li>
-                            <li>Параметрическими уравнениями</li>
-                        </ul>
-                    </div>
                 </div>
             </section>
 
@@ -146,26 +119,9 @@
                         <p><strong>Общий вид:</strong></p>
                         <div class="math-block" id="general-eq"></div>
                         <p>где \(A\), \(B\), \(C\) — действительные числа, причем \(A\) и \(B\) не равны нулю одновременно.</p>
-                        
                         <div class="example">
                             <h3>Пример:</h3>
                             <p>Уравнение прямой \(2x - 3y + 6 = 0\)</p>
-                            <ul class="features">
-                                <li>Вектор нормали: \(\vec{n} = (A, B) = (2, -3)\)</li>
-                                <li>Угловой коэффициент: \(k = -\frac{A}{B} = \frac{2}{3}\)</li>
-                                <li>Пересечение с осью OY: при \(x = 0\), \(y = 2\)</li>
-                                <li>Пересечение с осью OX: при \(y = 0\), \(x = -3\)</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="properties">
-                            <h3>Свойства общего уравнения:</h3>
-                            <ul>
-                                <li>Вектор \(\vec{n} = (A, B)\) перпендикулярен прямой</li>
-                                <li>Если \(C = 0\), прямая проходит через начало координат</li>
-                                <li>Если \(A = 0\), прямая параллельна оси OX</li>
-                                <li>Если \(B = 0\), прямая параллельна оси OY</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -178,21 +134,10 @@
                     <div class="equation-description">
                         <p>Если прямая проходит через точки \(M_1(x_1, y_1)\) и \(M_2(x_2, y_2)\), то ее уравнение:</p>
                         <div class="math-block" id="two-points-eq"></div>
-                        
                         <div class="example">
                             <h3>Пример:</h3>
-                            <p>Прямая, проходящая через точки \(A(1, 2)\) и \(B(4, 5)\):</p>
+                            <p>Прямая через точки \(A(1, 2)\) и \(B(4, 5)\):</p>
                             <div class="math-block" id="two-points-example"></div>
-                            <p>Упрощаем: \(y - 2 = x - 1\) или \(x - y + 1 = 0\)</p>
-                        </div>
-                        
-                        <div class="algorithm">
-                            <h3>Алгоритм построения:</h3>
-                            <ol>
-                                <li>Вычислить координаты направляющего вектора: \(\vec{s} = (x_2 - x_1, y_2 - y_1)\)</li>
-                                <li>Записать уравнение в виде: \(\frac{x - x_1}{x_2 - x_1} = \frac{y - y_1}{y_2 - y_1}\)</li>
-                                <li>Преобразовать к общему виду</li>
-                            </ol>
                         </div>
                     </div>
                 </div>
@@ -205,24 +150,11 @@
                     <div class="equation-description">
                         <p><strong>Каноническое уравнение:</strong></p>
                         <div class="math-block" id="canonical-eq"></div>
-                        <p>где \(M_0(x_0, y_0)\) — точка на прямой, а \(\vec{s} = (l, m)\) — направляющий вектор прямой.</p>
-                        
+                        <p>где \(M_0(x_0, y_0)\) — точка на прямой, \(\vec{s} = (l, m)\) — направляющий вектор.</p>
                         <div class="example">
                             <h3>Пример:</h3>
-                            <p>Прямая, проходящая через точку \(M_0(2, 1)\) с направляющим вектором \(\vec{s} = (3, 4)\):</p>
+                            <p>Через точку \(M_0(2, 1)\) с вектором \(\vec{s} = (3, 4)\):</p>
                             <div class="math-block" id="canonical-example"></div>
-                            <p>Направляющий вектор показывает направление прямой, его координаты не должны быть одновременно нулевыми.</p>
-                        </div>
-                        
-                        <div class="properties">
-                            <h3>Особенности канонического уравнения:</h3>
-                            <ul>
-                                <li>Удобно для задания прямой точкой и направлением</li>
-                                <li>Легко преобразуется в другие формы</li>
-                                <li>Наглядно показывает геометрический смысл</li>
-                                <li>Если \(l = 0\): \(\frac{x - x_0}{0} = \frac{y - y_0}{m}\) — вертикальная прямая</li>
-                                <li>Если \(m = 0\): \(\frac{x - x_0}{l} = \frac{y - y_0}{0}\) — горизонтальная прямая</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -235,23 +167,11 @@
                     <div class="equation-description">
                         <p><strong>Параметрическая форма:</strong></p>
                         <div class="math-block" id="parametric-eq"></div>
-                        <p>где \(t\) — параметр, \(M_0(x_0, y_0)\) — точка на прямой, \(\vec{s} = (l, m)\) — направляющий вектор.</p>
-                        
+                        <p>где \(t\) — параметр, \(M_0(x_0, y_0)\) — точка, \(\vec{s} = (l, m)\) — направляющий вектор.</p>
                         <div class="example">
                             <h3>Пример:</h3>
-                            <p>Прямая через точку \(M_0(1, -1)\) с направляющим вектором \(\vec{s} = (2, 3)\):</p>
+                            <p>Через точку \(M_0(1, -1)\) с вектором \(\vec{s} = (2, 3)\):</p>
                             <div class="math-block" id="parametric-example"></div>
-                            <p>При \(t = 0\) получаем точку \((1, -1)\), при \(t = 1\) — точку \((3, 2)\).</p>
-                        </div>
-                        
-                        <div class="algorithm">
-                            <h3>Геометрический смысл параметра:</h3>
-                            <ul>
-                                <li>Параметр \(t\) можно интерпретировать как "время"</li>
-                                <li>При изменении \(t\) точка "движется" по прямой</li>
-                                <li>Направляющий вектор задает скорость движения</li>
-                                <li>Каждому значению \(t\) соответствует одна точка на прямой</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -260,39 +180,28 @@
             <!-- Слайд 9: Разделитель - Алгоритмы -->
             <section class="slide divider-slide" id="slide9">
                 <div class="slide-content">
-                    <h1><i class="fas fa-exchange-alt"></i> Алгоритмы преобразования уравнений</h1>
-                    <p>Преобразования между различными формами уравнений прямой</p>
-                    <div class="features" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 30px;">
-                        <p>Рассмотрим 6 алгоритмов преобразования:</p>
-                        <ul>
-                            <li>Общее → Каноническое</li>
-                            <li>Общее → Параметрическое</li>
-                            <li>Каноническое → Общее</li>
-                            <li>Каноническое → Параметрическое</li>
-                            <li>Параметрическое → Каноническое</li>
-                            <li>Параметрическое → Общее</li>
-                        </ul>
-                    </div>
+                    <h1><i class="fas fa-exchange-alt"></i> Алгоритмы преобразования</h1>
+                    <p>Преобразования между различными формами уравнений</p>
                 </div>
             </section>
 
             <!-- Слайд 10: Алгоритм 1 -->
             <section class="slide" id="slide10">
                 <div class="slide-content">
-                    <h1>Алгоритм: из общего уравнения в каноническое</h1>
+                    <h1>Из общего уравнения в каноническое</h1>
                     <div class="algorithm">
                         <ol>
-                            <li>Найти произвольную точку \(M_0(x_0, y_0)\) на прямой, подставив удобное значение \(x\) (или \(y\)) в уравнение \(Ax + By + C = 0\) и решив относительно другой координаты.</li>
-                            <li>Направляющий вектор: \(\vec{s} = (-B, A)\) или любой коллинеарный ему.</li>
-                            <li>Записать каноническое уравнение: \(\frac{x - x_0}{-B} = \frac{y - y_0}{A}\).</li>
+                            <li>Найти точку \(M_0(x_0, y_0)\) на прямой</li>
+                            <li>Направляющий вектор: \(\vec{s} = (-B, A)\)</li>
+                            <li>Записать: \(\frac{x - x_0}{-B} = \frac{y - y_0}{A}\)</li>
                         </ol>
                         <div class="example">
                             <h3>Пример:</h3>
                             <p>\(2x - 3y + 6 = 0\)</p>
                             <ol>
-                                <li>При \(x = 0\): \(-3y + 6 = 0 \Rightarrow y = 2\), точка \(M_0(0, 2)\)</li>
-                                <li>\(\vec{s} = (3, 2)\) (можно взять \(\vec{s} = (-B, A) = (3, 2)\))</li>
-                                <li>Каноническое уравнение: \(\frac{x - 0}{3} = \frac{y - 2}{2}\)</li>
+                                <li>При \(x = 0\): \(y = 2\), точка \(M_0(0, 2)\)</li>
+                                <li>\(\vec{s} = (3, 2)\)</li>
+                                <li>\(\frac{x}{3} = \frac{y - 2}{2}\)</li>
                             </ol>
                         </div>
                     </div>
@@ -302,13 +211,12 @@
             <!-- Слайд 11: Алгоритм 2 -->
             <section class="slide" id="slide11">
                 <div class="slide-content">
-                    <h1>Алгоритм: из общего уравнения в параметрическое</h1>
+                    <h1>Из общего уравнения в параметрическое</h1>
                     <div class="algorithm">
                         <ol>
-                            <li>Найти точку \(M_0(x_0, y_0)\) на прямой (аналогично предыдущему алгоритму).</li>
-                            <li>Направляющий вектор: \(\vec{s} = (-B, A)\).</li>
-                            <li>Записать параметрическое уравнение: 
-                                \(\begin{cases} x = x_0 - Bt \\ y = y_0 + At \end{cases}\), где \(t \in \mathbb{R}\).</li>
+                            <li>Найти точку \(M_0(x_0, y_0)\)</li>
+                            <li>Направляющий вектор: \(\vec{s} = (-B, A)\)</li>
+                            <li>Записать: \(x = x_0 - Bt\), \(y = y_0 + At\)</li>
                         </ol>
                         <div class="example">
                             <h3>Пример:</h3>
@@ -316,8 +224,7 @@
                             <ol>
                                 <li>Точка \(M_0(0, 2)\)</li>
                                 <li>\(\vec{s} = (3, 2)\)</li>
-                                <li>Параметрическое уравнение: 
-                                    \(\begin{cases} x = 0 + 3t \\ y = 2 + 2t \end{cases}\)</li>
+                                <li>\(x = 3t\), \(y = 2 + 2t\)</li>
                             </ol>
                         </div>
                     </div>
@@ -327,14 +234,12 @@
             <!-- Слайд 12: Алгоритм 3 -->
             <section class="slide" id="slide12">
                 <div class="slide-content">
-                    <h1>Алгоритм: из канонического в общее уравнение</h1>
+                    <h1>Из канонического в общее уравнение</h1>
                     <div class="algorithm">
                         <ol>
-                            <li>Из канонического уравнения \(\frac{x - x_0}{l} = \frac{y - y_0}{m}\) перейти к равенству: 
-                                \(m(x - x_0) = l(y - y_0)\).</li>
-                            <li>Раскрыть скобки: \(mx - mx_0 = ly - ly_0\).</li>
-                            <li>Перенести все члены в одну сторону: \(mx - ly - mx_0 + ly_0 = 0\).</li>
-                            <li>Обозначить: \(A = m\), \(B = -l\), \(C = -mx_0 + ly_0\).</li>
+                            <li>Из \(\frac{x - x_0}{l} = \frac{y - y_0}{m}\) перейти к \(m(x - x_0) = l(y - y_0)\)</li>
+                            <li>Раскрыть скобки</li>
+                            <li>Перенести все члены в одну сторону</li>
                         </ol>
                         <div class="example">
                             <h3>Пример:</h3>
@@ -352,20 +257,18 @@
             <!-- Слайд 13: Алгоритм 4 -->
             <section class="slide" id="slide13">
                 <div class="slide-content">
-                    <h1>Алгоритм: из канонического в параметрическое</h1>
+                    <h1>Из канонического в параметрическое</h1>
                     <div class="algorithm">
                         <ol>
-                            <li>Из канонического уравнения \(\frac{x - x_0}{l} = \frac{y - y_0}{m}\) приравнять каждую дробь к параметру \(t\):
-                                \(\frac{x - x_0}{l} = t\) и \(\frac{y - y_0}{m} = t\).</li>
-                            <li>Выразить \(x\) и \(y\) через \(t\):
-                                \(\begin{cases} x = x_0 + lt \\ y = y_0 + mt \end{cases}\).</li>
+                            <li>Приравнять каждую дробь к параметру \(t\)</li>
+                            <li>Выразить \(x\) и \(y\) через \(t\)</li>
                         </ol>
                         <div class="example">
                             <h3>Пример:</h3>
                             <p>\(\frac{x - 2}{3} = \frac{y - 1}{4}\)</p>
                             <ol>
-                                <li>Пусть \(\frac{x - 2}{3} = t\) и \(\frac{y - 1}{4} = t\)</li>
-                                <li>Тогда: \(\begin{cases} x = 2 + 3t \\ y = 1 + 4t \end{cases}\)</li>
+                                <li>\(\frac{x - 2}{3} = t\), \(\frac{y - 1}{4} = t\)</li>
+                                <li>\(x = 2 + 3t\), \(y = 1 + 4t\)</li>
                             </ol>
                         </div>
                     </div>
@@ -375,20 +278,18 @@
             <!-- Слайд 14: Алгоритм 5 -->
             <section class="slide" id="slide14">
                 <div class="slide-content">
-                    <h1>Алгоритм: из параметрического в каноническое</h1>
+                    <h1>Из параметрического в каноническое</h1>
                     <div class="algorithm">
                         <ol>
-                            <li>Из системы \(\begin{cases} x = x_0 + lt \\ y = y_0 + mt \end{cases}\) выразить параметр \(t\) из каждого уравнения:
-                                \(t = \frac{x - x_0}{l}\), \(t = \frac{y - y_0}{m}\).</li>
-                            <li>Приравнять полученные выражения:
-                                \(\frac{x - x_0}{l} = \frac{y - y_0}{m}\).</li>
+                            <li>Выразить \(t\) из каждого уравнения</li>
+                            <li>Приравнять выражения для \(t\)</li>
                         </ol>
                         <div class="example">
                             <h3>Пример:</h3>
-                            <p>\(\begin{cases} x = 1 + 2t \\ y = -1 + 3t \end{cases}\)</p>
+                            <p>\(x = 1 + 2t\), \(y = -1 + 3t\)</p>
                             <ol>
                                 <li>\(t = \frac{x - 1}{2}\), \(t = \frac{y + 1}{3}\)</li>
-                                <li>Каноническое уравнение: \(\frac{x - 1}{2} = \frac{y + 1}{3}\)</li>
+                                <li>\(\frac{x - 1}{2} = \frac{y + 1}{3}\)</li>
                             </ol>
                         </div>
                     </div>
@@ -398,21 +299,20 @@
             <!-- Слайд 15: Алгоритм 6 -->
             <section class="slide" id="slide15">
                 <div class="slide-content">
-                    <h1>Алгоритм: из параметрического в общее уравнение</h1>
+                    <h1>Из параметрического в общее уравнение</h1>
                     <div class="algorithm">
                         <ol>
-                            <li>Выразить \(t\) из первого уравнения: \(t = \frac{x - x_0}{l}\).</li>
-                            <li>Подставить во второе уравнение: \(y = y_0 + m \cdot \frac{x - x_0}{l}\).</li>
-                            <li>Преобразовать к виду \(Ax + By + C = 0\):
-                                \(m(x - x_0) = l(y - y_0) \Rightarrow mx - ly - mx_0 + ly_0 = 0\).</li>
+                            <li>Выразить \(t\) из первого уравнения</li>
+                            <li>Подставить во второе уравнение</li>
+                            <li>Преобразовать к виду \(Ax + By + C = 0\)</li>
                         </ol>
                         <div class="example">
                             <h3>Пример:</h3>
-                            <p>\(\begin{cases} x = 1 + 2t \\ y = -1 + 3t \end{cases}\)</p>
+                            <p>\(x = 1 + 2t\), \(y = -1 + 3t\)</p>
                             <ol>
                                 <li>\(t = \frac{x - 1}{2}\)</li>
                                 <li>\(y = -1 + 3 \cdot \frac{x - 1}{2}\)</li>
-                                <li>\(2y = -2 + 3x - 3 \Rightarrow 3x - 2y - 5 = 0\)</li>
+                                <li>\(3x - 2y - 5 = 0\)</li>
                             </ol>
                         </div>
                     </div>
@@ -423,22 +323,14 @@
             <section class="slide divider-slide" id="slide16">
                 <div class="slide-content">
                     <h1><i class="fas fa-code"></i> Программная реализация</h1>
-                    <p>JavaScript программы для преобразования уравнений и построения графиков</p>
-                    <div class="features" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 30px;">
-                        <h3>Реализованные программы:</h3>
-                        <ul>
-                            <li>Конвертер уравнений прямой (все 6 преобразований)</li>
-                            <li>Построение уравнения прямой через 2 точки</li>
-                            <li>Визуализация прямой на графике</li>
-                        </ul>
-                    </div>
+                    <p>JavaScript программы для преобразования уравнений</p>
                 </div>
             </section>
 
             <!-- Слайд 17: Программа 1 - Конвертер -->
             <section class="slide" id="slide17">
                 <div class="slide-content">
-                    <h1>Программа: Конвертер уравнений прямой</h1>
+                    <h1>Программа: Конвертер уравнений</h1>
                     <div class="converter-app">
                         <div class="converter-container">
                             <div class="input-section">
@@ -510,7 +402,6 @@
                                     <i class="fas fa-arrow-down"></i>
                                 </div>
                                 <div class="equation-display" id="result-equation"></div>
-                                <div class="conversion-steps" id="conversion-steps"></div>
                             </div>
                         </div>
                     </div>
@@ -520,7 +411,7 @@
             <!-- Слайд 18: Программа 2 - Через 2 точки -->
             <section class="slide" id="slide18">
                 <div class="slide-content">
-                    <h1>Программа: Уравнение прямой через 2 точки</h1>
+                    <h1>Программа: Уравнение через 2 точки</h1>
                     <div class="two-points-app">
                         <div class="app-container">
                             <div class="input-section">
@@ -552,7 +443,6 @@
                             
                             <div class="results-section">
                                 <h3>Уравнение прямой</h3>
-                                <div class="equation-result" id="line-equation"></div>
                                 <div class="equation-forms">
                                     <div class="form-type">Общее уравнение:</div>
                                     <div id="general-form"></div>
@@ -560,13 +450,6 @@
                                     <div id="canonical-form"></div>
                                     <div class="form-type">Параметрическое уравнение:</div>
                                     <div id="parametric-form"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="graph-section">
-                                <h3>График прямой</h3>
-                                <div class="canvas-container">
-                                    <canvas id="line-chart"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -581,12 +464,10 @@
                     <div class="source-code">
                         <div class="code-tabs">
                             <button class="code-tab active" data-tab="converter">Конвертер уравнений</button>
-                            <button class="code-tab" data-tab="two-points">Прямая через 2 точки</button>
-                            <button class="code-tab" data-tab="graph">Построение графика</button>
+                            <button class="code-tab" data-tab="two-points">Через 2 точки</button>
                         </div>
                         <div class="code-content">
-                            <pre id="converter-code" class="code-block active"><code>// Функция преобразования общего уравнения в каноническое
-function generalToCanonical(A, B, C) {
+                            <pre id="converter-code" class="code-block active"><code>function generalToCanonical(A, B, C) {
     let x0, y0;
     if (Math.abs(A) > 0.0001) {
         y0 = 0;
@@ -599,7 +480,6 @@ function generalToCanonical(A, B, C) {
     let l = B;
     let m = -A;
     
-    // Упрощаем направляющий вектор
     let gcdVal = gcd(l, m);
     if (Math.abs(gcdVal) > 0.0001) {
         l /= gcdVal;
@@ -607,195 +487,32 @@ function generalToCanonical(A, B, C) {
     }
     
     return {x0, y0, l, m};
-}
-
-// Функция преобразования общего уравнения в параметрическое
-function generalToParametric(A, B, C) {
-    const canonical = generalToCanonical(A, B, C);
-    return {
-        x0: canonical.x0,
-        y0: canonical.y0,
-        l: canonical.l,
-        m: canonical.m
-    };
-}
-
-// Функция преобразования канонического уравнения в общее
-function canonicalToGeneral(x0, y0, l, m) {
-    const A = m;
-    const B = -l;
-    const C = -m*x0 + l*y0;
-    return {A, B, C};
-}
-
-// Функция преобразования канонического уравнения в параметрическое
-function canonicalToParametric(x0, y0, l, m) {
-    return {
-        x0: x0,
-        y0: y0,
-        l: l,
-        m: m
-    };
-}
-
-// Функция преобразования параметрического уравнения в каноническое
-function parametricToCanonical(x0, y0, l, m) {
-    return {
-        x0: x0,
-        y0: y0,
-        l: l,
-        m: m
-    };
-}
-
-// Функция преобразования параметрического уравнения в общее
-function parametricToGeneral(x0, y0, l, m) {
-    return canonicalToGeneral(x0, y0, l, m);
 }</code></pre>
-                            <pre id="two-points-code" class="code-block"><code>// Функция вычисления уравнения прямой через 2 точки
-function lineThroughTwoPoints(x1, y1, x2, y2) {
-    // Проверяем, что точки не совпадают
-    if (Math.abs(x1 - x2) < 0.001 && Math.abs(y1 - y2) < 0.001) {
+                            <pre id="two-points-code" class="code-block"><code>function lineThroughTwoPoints(x1, y1, x2, y2) {
+    if (Math.abs(x1 - x2) < 0.001 && 
+        Math.abs(y1 - y2) < 0.001) {
         throw new Error("Точки совпадают");
     }
     
-    // Вычисляем коэффициенты общего уравнения
     let A = y2 - y1;
     let B = x1 - x2;
     let C = x2 * y1 - x1 * y2;
     
-    // Вычисляем каноническое уравнение
-    const canonical = {
-        x0: x1,
-        y0: y1,
-        l: x2 - x1,
-        m: y2 - y1
-    };
-    
-    // Вычисляем параметрическое уравнение
-    const parametric = {
-        x0: x1,
-        y0: y1,
-        l: x2 - x1,
-        m: y2 - y1
-    };
-    
     return {
         general: {A, B, C},
-        canonical: canonical,
-        parametric: parametric
-    };
-}
-
-// Функция вычисления точек для построения графика
-function calculateLinePoints(A, B, C, xMin = -10, xMax = 10) {
-    const points = [];
-    
-    if (Math.abs(B) > 0.001) {
-        // Прямая не вертикальная
-        for (let x = xMin; x <= xMax; x += 0.5) {
-            let y = (-A * x - C) / B;
-            if (y >= -10 && y <= 10) {
-                points.push({x, y});
-            }
-        }
-    } else {
-        // Вертикальная прямая
-        let x = -C / A;
-        for (let y = xMin; y <= xMax; y += 0.5) {
-            points.push({x, y});
-        }
-    }
-    
-    return points;
-}</code></pre>
-                            <pre id="graph-code" class="code-block"><code>// Функция построения графика прямой
-function createLineChart(x1, y1, x2, y2, A, B, C) {
-    const canvas = document.getElementById('line-chart');
-    if (!canvas) return;
-    
-    // Вычисляем точки для прямой
-    const linePoints = calculateLinePoints(A, B, C);
-    
-    const data = {
-        datasets: [
-            {
-                label: 'Прямая',
-                data: linePoints,
-                borderColor: 'rgb(75, 192, 192)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderWidth: 2,
-                fill: false,
-                tension: 0,
-                pointRadius: 0
-            },
-            {
-                label: 'Точка A',
-                data: [{x: x1, y: y1}],
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                pointRadius: 8,
-                pointHoverRadius: 10
-            },
-            {
-                label: 'Точка B',
-                data: [{x: x2, y: y2}],
-                backgroundColor: 'rgb(54, 162, 235)',
-                borderColor: 'rgb(54, 162, 235)',
-                pointRadius: 8,
-                pointHoverRadius: 10
-            }
-        ]
-    };
-    
-    const config = {
-        type: 'scatter',
-        data: data,
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                x: {
-                    type: 'linear',
-                    position: 'bottom',
-                    min: -10,
-                    max: 10,
-                    grid: {color: 'rgba(200, 200, 200, 0.3)'},
-                    ticks: {stepSize: 2},
-                    title: {display: true, text: 'Ось X'}
-                },
-                y: {
-                    min: -10,
-                    max: 10,
-                    grid: {color: 'rgba(200, 200, 200, 0.3)'},
-                    ticks: {stepSize: 2},
-                    title: {display: true, text: 'Ось Y'}
-                }
-            },
-            plugins: {
-                legend: {display: true, position: 'top'},
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            let label = context.dataset.label || '';
-                            if (label) label += ': ';
-                            label += '(' + context.parsed.x.toFixed(2) + 
-                                    ', ' + context.parsed.y.toFixed(2) + ')';
-                            return label;
-                        }
-                    }
-                }
-            }
+        canonical: {
+            x0: x1,
+            y0: y1,
+            l: x2 - x1,
+            m: y2 - y1
+        },
+        parametric: {
+            x0: x1,
+            y0: y1,
+            l: x2 - x1,
+            m: y2 - y1
         }
     };
-    
-    // Уничтожаем предыдущий график, если есть
-    if (window.lineChart) {
-        window.lineChart.destroy();
-    }
-    
-    // Создаем новый график
-    window.lineChart = new Chart(canvas, config);
 }</code></pre>
                         </div>
                     </div>
@@ -808,26 +525,16 @@ function createLineChart(x1, y1, x2, y2, A, B, C) {
                     <h1>Заключение</h1>
                     <div class="conclusion">
                         <div class="summary">
-                            <h3>Итоги изучения уравнений прямой:</h3>
+                            <h3>Итоги изучения:</h3>
                             <ul>
-                                <li>Прямая на плоскости может быть представлена в различных формах: общее, каноническое, параметрическое уравнения</li>
-                                <li>Все формы эквивалентны и могут быть преобразованы друг в друга</li>
-                                <li>Каждая форма удобна для решения определенных типов задач</li>
-                                <li>Аналитическая геометрия связывает алгебраические уравнения с геометрическими образами</li>
-                            </ul>
-                        </div>
-                        <div class="applications">
-                            <h3>Применение в реальном мире:</h3>
-                            <ul>
-                                <li>Компьютерная графика и игровая индустрия</li>
-                                <li>Инженерные расчеты и строительство</li>
-                                <li>Навигационные системы и картография</li>
-                                <li>Машинное обучение и анализ данных</li>
-                                <li>Робототехника и автоматизация</li>
+                                <li>Прямая может быть представлена в различных формах</li>
+                                <li>Все формы эквивалентны и преобразуемы</li>
+                                <li>Каждая форма удобна для определенных задач</li>
+                                <li>Аналитическая геометрия связывает алгебру и геометрию</li>
                             </ul>
                         </div>
                         <div class="final-message">
-                            <p><strong>Аналитическая геометрия</strong> продолжает оставаться фундаментальным инструментом в математике и ее приложениях, демонстрируя красоту связи между алгеброй и геометрией.</p>
+                            <p><strong>Аналитическая геометрия</strong> продолжает оставаться фундаментальным инструментом в математике.</p>
                             <div class="thank-you">
                                 <p>Спасибо за внимание!</p>
                                 <p><strong>Кутузов Вадим</strong></p>
