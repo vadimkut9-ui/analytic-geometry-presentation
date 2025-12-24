@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="style.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="script.js"></script>
 </head>
 <body>
     <div class="presentation-container">
@@ -20,22 +21,22 @@
             <ul class="menu-list">
                 <li><a href="#slide1" class="menu-link">Титульный слайд</a></li>
                 <li><a href="#slide2" class="menu-link">Определение</a></li>
-                <li><a href="#slide3" class="menu-link">Раздел: Уравнения</a></li>
-                <li><a href="#slide4" class="menu-link">Общее уравнение</a></li>
-                <li><a href="#slide5" class="menu-link">Уравнение через 2 точки</a></li>
-                <li><a href="#slide6" class="menu-link">Каноническое уравнение</a></li>
-                <li><a href="#slide7" class="menu-link">Параметрическое уравнение</a></li>
-                <li><a href="#slide8" class="menu-link">Раздел: Алгоритмы</a></li>
-                <li><a href="#slide9" class="menu-link">Общее → Каноническое</a></li>
-                <li><a href="#slide10" class="menu-link">Общее → Параметрическое</a></li>
-                <li><a href="#slide11" class="menu-link">Каноническое → Общее</a></li>
-                <li><a href="#slide12" class="menu-link">Каноническое → Параметрическое</a></li>
-                <li><a href="#slide13" class="menu-link">Параметрическое → Каноническое</a></li>
-                <li><a href="#slide14" class="menu-link">Параметрическое → Общее</a></li>
-                <li><a href="#slide15" class="menu-link">Раздел: Программы</a></li>
-                <li><a href="#slide16" class="menu-link">Программа: Конвертер</a></li>
-                <li><a href="#slide17" class="menu-link">Программа: Через 2 точки</a></li>
-                <li><a href="#slide18" class="menu-link">Исходный код</a></li>
+                <li><a href="#slide3" class="menu-link">Основные понятия аналитической геометрии</a></li>
+                <li><a href="#slide4" class="menu-link">Раздел: Уравнения</a></li>
+                <li><a href="#slide5" class="menu-link">Общее уравнение</a></li>
+                <li><a href="#slide6" class="menu-link">Уравнение через 2 точки</a></li>
+                <li><a href="#slide7" class="menu-link">Каноническое уравнение</a></li>
+                <li><a href="#slide8" class="menu-link">Параметрическое уравнение</a></li>
+                <li><a href="#slide9" class="menu-link">Раздел: Алгоритмы</a></li>
+                <li><a href="#slide10" class="menu-link">Общее → Каноническое</a></li>
+                <li><a href="#slide11" class="menu-link">Общее → Параметрическое</a></li>
+                <li><a href="#slide12" class="menu-link">Каноническое → Общее</a></li>
+                <li><a href="#slide13" class="menu-link">Каноническое → Параметрическое</a></li>
+                <li><a href="#slide14" class="menu-link">Параметрическое → Каноническое</a></li>
+                <li><a href="#slide15" class="menu-link">Параметрическое → Общее</a></li>
+                <li><a href="#slide16" class="menu-link">Раздел: Программы</a></li>
+                <li><a href="#slide17" class="menu-link">Программа: Конвертер</a></li>
+                <li><a href="#slide18" class="menu-link">Программа: Через 2 точки</a></li>
                 <li><a href="#slide19" class="menu-link">Векторная алгебра</a></li>
                 <li><a href="#slide20" class="menu-link">Заключение</a></li>
             </ul>
@@ -68,14 +69,45 @@
                 </div>
             </section>
 
-            <section class="slide divider-slide" id="slide3">
+            <section class="slide" id="slide3">
+                <div class="slide-content">
+                    <h1>Основные понятия аналитической геометрии</h1>
+                    <div class="definition">
+                        <h3>Ключевые элементы аналитической геометрии:</h3>
+                        <ul>
+                            <li><strong>Декартова система координат</strong> — система отсчета, состоящая из двух взаимно перпендикулярных осей (X и Y)</li>
+                            <li><strong>Точка</strong> — определяется парой чисел (x, y) — ее координатами</li>
+                            <li><strong>Линия (кривая)</strong> — множество точек, координаты которых удовлетворяют определенному уравнению</li>
+                            <li><strong>Уравнение линии</strong> — математическая зависимость между координатами точек, принадлежащих этой линии</li>
+                        </ul>
+                        
+                        <h3>Историческая справка:</h3>
+                        <p>Аналитическая геометрия была создана в XVII веке Рене Декартом и Пьером де Ферма. Основная идея — применение алгебраических методов к решению геометрических задач.</p>
+                        
+                        <h3>Основные задачи аналитической геометрии:</h3>
+                        <ol>
+                            <li>Построение уравнения по геометрическому свойству линии</li>
+                            <li>Исследование геометрических свойств по уравнению</li>
+                            <li>Решение задач на взаимное расположение геометрических объектов</li>
+                            <li>Вычисление расстояний, углов, площадей и других геометрических величин</li>
+                        </ol>
+                        
+                        <div class="math-block">
+                            <p><strong>Формула расстояния между двумя точками:</strong></p>
+                            <p>\( d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2} \)</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="slide divider-slide" id="slide4">
                 <div class="slide-content">
                     <h1><i class="fas fa-shapes"></i> Виды уравнений прямой на плоскости</h1>
                     <p>Различные формы записи уравнения одной и той же прямой</p>
                 </div>
             </section>
 
-            <section class="slide" id="slide4">
+            <section class="slide" id="slide5">
                 <div class="slide-content">
                     <h1>Общее уравнение прямой на плоскости</h1>
                     <div class="equation-description">
@@ -92,7 +124,7 @@
                 </div>
             </section>
 
-            <section class="slide" id="slide5">
+            <section class="slide" id="slide6">
                 <div class="slide-content">
                     <h1>Уравнение прямой, проходящей через две точки</h1>
                     <div class="equation-description">
@@ -105,7 +137,7 @@
                 </div>
             </section>
 
-            <section class="slide" id="slide6">
+            <section class="slide" id="slide7">
                 <div class="slide-content">
                     <h1>Каноническое уравнение прямой</h1>
                     <div class="equation-description">
@@ -118,7 +150,7 @@
                 </div>
             </section>
 
-            <section class="slide" id="slide7">
+            <section class="slide" id="slide8">
                 <div class="slide-content">
                     <h1>Параметрическое уравнение прямой</h1>
                     <div class="equation-description">
@@ -132,14 +164,14 @@
                 </div>
             </section>
 
-            <section class="slide divider-slide" id="slide8">
+            <section class="slide divider-slide" id="slide9">
                 <div class="slide-content">
                     <h1><i class="fas fa-exchange-alt"></i> Алгоритмы перевода уравнений</h1>
                     <p>Преобразования между различными формами уравнений прямой</p>
                 </div>
             </section>
 
-            <section class="slide" id="slide9">
+            <section class="slide" id="slide10">
                 <div class="slide-content">
                     <h1>Алгоритм: из общего уравнения в каноническое</h1>
                     <div class="algorithm">
@@ -158,7 +190,7 @@
                 </div>
             </section>
 
-            <section class="slide" id="slide10">
+            <section class="slide" id="slide11">
                 <div class="slide-content">
                     <h1>Алгоритм: из общего уравнения в параметрическое</h1>
                     <div class="algorithm">
@@ -179,7 +211,7 @@
                 </div>
             </section>
 
-            <section class="slide" id="slide11">
+            <section class="slide" id="slide12">
                 <div class="slide-content">
                     <h1>Алгоритм: из канонического в общее уравнение</h1>
                     <div class="algorithm">
@@ -200,7 +232,7 @@
                 </div>
             </section>
 
-            <section class="slide" id="slide12">
+            <section class="slide" id="slide13">
                 <div class="slide-content">
                     <h1>Алгоритм: из канонического в параметрическое</h1>
                     <div class="algorithm">
@@ -219,7 +251,7 @@
                 </div>
             </section>
 
-            <section class="slide" id="slide13">
+            <section class="slide" id="slide14">
                 <div class="slide-content">
                     <h1>Алгоритм: из параметрического в каноническое</h1>
                     <div class="algorithm">
@@ -238,7 +270,7 @@
                 </div>
             </section>
 
-            <section class="slide" id="slide14">
+            <section class="slide" id="slide15">
                 <div class="slide-content">
                     <h1>Алгоритм: из параметрического в общее уравнение</h1>
                     <div class="algorithm">
@@ -258,14 +290,14 @@
                 </div>
             </section>
 
-            <section class="slide divider-slide" id="slide15">
+            <section class="slide divider-slide" id="slide16">
                 <div class="slide-content">
                     <h1><i class="fas fa-code"></i> Программная реализация</h1>
                     <p>JavaScript программы для преобразования уравнений и построения графиков</p>
                 </div>
             </section>
 
-            <section class="slide" id="slide16">
+            <section class="slide" id="slide17">
                 <div class="slide-content">
                     <h1>Программа: Конвертер уравнений прямой</h1>
                     <div class="converter-app">
@@ -346,7 +378,7 @@
                 </div>
             </section>
 
-            <section class="slide" id="slide17">
+            <section class="slide" id="slide18">
                 <div class="slide-content">
                     <h1>Программа: Уравнение прямой через 2 точки</h1>
                     <div class="two-points-app">
@@ -402,185 +434,6 @@
                 </div>
             </section>
 
-            <section class="slide" id="slide18">
-                <div class="slide-content">
-                    <h1>Исходный код программ</h1>
-                    <div class="source-code">
-                        <div class="code-tabs">
-                            <button class="code-tab active" data-tab="converter">Конвертер уравнений</button>
-                            <button class="code-tab" data-tab="two-points">Прямая через 2 точки</button>
-                            <button class="code-tab" data-tab="graph">Построение графика</button>
-                        </div>
-                        <div class="code-content">
-                            <pre id="converter-code" class="code-block active"><code>function generalToCanonical(A, B, C) {
-    let x0, y0;
-    if (A !== 0) {
-        y0 = 0;
-        x0 = -C / A;
-    } else {
-        x0 = 0;
-        y0 = -C / B;
-    }
-    
-    let l = B;
-    let m = -A;
-    
-    let gcdVal = gcd(l, m);
-    if (gcdVal !== 0) {
-        l /= gcdVal;
-        m /= gcdVal;
-    }
-    
-    return {x0, y0, l, m};
-}
-
-function generalToParametric(A, B, C) {
-    const canonical = generalToCanonical(A, B, C);
-    return {
-        x0: canonical.x0,
-        y0: canonical.y0,
-        l: canonical.l,
-        m: canonical.m
-    };
-}</code></pre>
-                            <pre id="two-points-code" class="code-block"><code>function lineThroughTwoPoints(x1, y1, x2, y2) {
-    if (Math.abs(x1 - x2) < 1e-10 && Math.abs(y1 - y2) < 1e-10) {
-        throw new Error("Точки совпадают");
-    }
-    
-    let A = y2 - y1;
-    let B = x1 - x2;
-    let C = x2 * y1 - x1 * y2;
-    
-    const canonical = {
-        x0: x1,
-        y0: y1,
-        l: x2 - x1,
-        m: y2 - y1
-    };
-    
-    const parametric = {
-        x0: x1,
-        y0: y1,
-        l: x2 - x1,
-        m: y2 - y1
-    };
-    
-    return {general: {A, B, C}, canonical, parametric};
-}
-
-function calculateLinePoints(A, B, C, xMin = -10, xMax = 10) {
-    const points = [];
-    
-    if (Math.abs(B) > 1e-10) {
-        for (let x = xMin; x <= xMax; x++) {
-            let y = (-A * x - C) / B;
-            points.push({x, y});
-        }
-    } else {
-        let x = -C / A;
-        for (let y = xMin; y <= xMax; y++) {
-            points.push({x, y});
-        }
-    }
-    
-    return points;
-}</code></pre>
-                            <pre id="graph-code" class="code-block"><code>function createLineChart(point1, point2, equation) {
-    const ctx = document.getElementById('line-chart').getContext('2d');
-    
-    const linePoints = calculateLinePoints(
-        equation.general.A, 
-        equation.general.B, 
-        equation.general.C
-    );
-    
-    const data = {
-        datasets: [
-            {
-                label: 'Прямая',
-                data: linePoints,
-                borderColor: 'rgb(75, 192, 192)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderWidth: 2,
-                fill: false,
-                tension: 0
-            },
-            {
-                label: 'Точка A',
-                data: [{x: point1.x, y: point1.y}],
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                pointRadius: 8,
-                pointHoverRadius: 10
-            },
-            {
-                label: 'Точка B',
-                data: [{x: point2.x, y: point2.y}],
-                backgroundColor: 'rgb(54, 162, 235)',
-                borderColor: 'rgb(54, 162, 235)',
-                pointRadius: 8,
-                pointHoverRadius: 10
-            }
-        ]
-    };
-    
-    const config = {
-        type: 'scatter',
-        data: data,
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    type: 'linear',
-                    position: 'bottom',
-                    min: -10,
-                    max: 10,
-                    grid: {
-                        color: 'rgba(200, 200, 200, 0.3)'
-                    }
-                },
-                y: {
-                    min: -10,
-                    max: 10,
-                    grid: {
-                        color: 'rgba(200, 200, 200, 0.3)'
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top'
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            let label = context.dataset.label || '';
-                            if (label) {
-                                label += ': ';
-                            }
-                            label += '(' + context.parsed.x.toFixed(2) + 
-                                    ', ' + context.parsed.y.toFixed(2) + ')';
-                            return label;
-                        }
-                    }
-                }
-            }
-        }
-    };
-    
-    if (window.lineChart) {
-        window.lineChart.destroy();
-    }
-    window.lineChart = new Chart(ctx, config);
-}</code></pre>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Новый слайд о векторной алгебре -->
             <section class="slide" id="slide19">
                 <div class="slide-content">
                     <h1>Векторная алгебра и прямые на плоскости</h1>
@@ -682,7 +535,5 @@ function calculateLinePoints(A, B, C, xMin = -10, xMax = 10) {
             </button>
         </div>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
