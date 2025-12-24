@@ -116,13 +116,11 @@ function initSlideNavigation() {
         setTimeout(() => {
             if (typeof katex !== 'undefined') {
                 const slide = slides[slideIndex];
-                const mathElements = slide.querySelectorAll('.math-block, .equation-display, [id$="-math"], [id$="-formula"], [id$="-eq"], [id$="-example"]');
+                const mathElements = slide.querySelectorAll('.math-block, .equation-display');
                 mathElements.forEach(element => {
                     if (element.textContent && !element.querySelector('.katex')) {
                         try {
-                            const isDisplayMode = element.classList.contains('math-block') || 
-                                                 element.id && (element.id.includes('parametric') || 
-                                                 element.id.includes('distance'));
+                            const isDisplayMode = element.classList.contains('math-block');
                             katex.render(element.textContent, element, {
                                 throwOnError: false,
                                 displayMode: isDisplayMode
@@ -271,7 +269,7 @@ function initConverter() {
             } else if (Math.abs(m) < 0.001) {
                 equation = `y = ${y0}`;
             } else {
-                equation = `\\frac{x ${formatSignedNumber(-x0)}}{${l}} = \\frac{y ${formatSignedNumber(-y0)}}{${m}}`;
+                equation = `\\frac{x - ${formatNumber(x0)}}{${formatNumber(l)}} = \\frac{y - ${formatNumber(y0)}}{${formatNumber(m)}}`;
             }
             
         } else if (sourceType.value === 'parametric') {
@@ -280,7 +278,7 @@ function initConverter() {
             const l = parseFloat(document.getElementById('param-l')?.value) || 1;
             const m = parseFloat(document.getElementById('param-m')?.value) || 1;
             
-            equation = `\\begin{cases} x = ${x0} ${formatSignedNumber(l)}t \\\\ y = ${y0} ${formatSignedNumber(m)}t \\end{cases}`;
+            equation = `\\begin{cases} x = ${formatNumber(x0)} ${formatSignedNumber(l)}t \\\\ y = ${formatNumber(y0)} ${formatSignedNumber(m)}t \\end{cases}`;
             displayMode = true;
         }
         
@@ -341,7 +339,7 @@ function initConverter() {
                     } else if (Math.abs(m) < 0.001) {
                         result = `y = ${formatNumber(y0)}`;
                     } else {
-                        result = `\\frac{x ${formatSignedNumber(-x0)}}{${formatNumber(l)}} = \\frac{y ${formatSignedNumber(-y0)}}{${formatNumber(m)}}`;
+                        result = `\\frac{x - ${formatNumber(x0)}}{${formatNumber(l)}} = \\frac{y - ${formatNumber(y0)}}{${formatNumber(m)}}`;
                     }
                 }
                 
@@ -417,7 +415,7 @@ function initConverter() {
                 } else if (Math.abs(m) < 0.001) {
                     result = `y = ${formatNumber(y0)}`;
                 } else {
-                    result = `\\frac{x ${formatSignedNumber(-x0)}}{${formatNumber(l)}} = \\frac{y ${formatSignedNumber(-y0)}}{${formatNumber(m)}}`;
+                    result = `\\frac{x - ${formatNumber(x0)}}{${formatNumber(l)}} = \\frac{y - ${formatNumber(y0)}}{${formatNumber(m)}}`;
                 }
                 
             } else if (sourceTypeVal === 'parametric' && targetTypeVal === 'general') {
@@ -515,7 +513,7 @@ function calculateLineEquation() {
             } else if (Math.abs(m) < 0.001) {
                 canonicalEq = `y = ${y1}`;
             } else {
-                canonicalEq = `\\frac{x ${formatSignedNumber(-x1)}}{${formatNumber(l)}} = \\frac{y ${formatSignedNumber(-y1)}}{${formatNumber(m)}}`;
+                canonicalEq = `\\frac{x - ${formatNumber(x1)}}{${formatNumber(l)}} = \\frac{y - ${formatNumber(y1)}}{${formatNumber(m)}}`;
             }
             
             canonicalFormElement.innerHTML = '';
@@ -608,14 +606,38 @@ function renderMath() {
             });
         }
         
+        if (document.getElementById('origin-point')) {
+            katex.render("O(0,0)", document.getElementById('origin-point'), {
+                throwOnError: false
+            });
+        }
+        
+        if (document.getElementById('point-formula')) {
+            katex.render("M(x, y)", document.getElementById('point-formula'), {
+                throwOnError: false
+            });
+        }
+        
         if (document.getElementById('distance-formula')) {
             katex.render("d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}", document.getElementById('distance-formula'), {
                 throwOnError: false
             });
         }
         
+        if (document.getElementById('line-equation')) {
+            katex.render("F(x, y) = 0", document.getElementById('line-equation'), {
+                throwOnError: false
+            });
+        }
+        
         if (document.getElementById('general-eq')) {
             katex.render("Ax + By + C = 0", document.getElementById('general-eq'), {
+                throwOnError: false
+            });
+        }
+        
+        if (document.getElementById('general-example')) {
+            katex.render("2x - 3y + 6 = 0", document.getElementById('general-example'), {
                 throwOnError: false
             });
         }
@@ -645,16 +667,104 @@ function renderMath() {
         }
         
         if (document.getElementById('parametric-eq')) {
-            katex.render("\\begin{cases} x = x_0 + lt \\\\ y = y_0 + mt \\end{cases}, \\quad t \\in \\mathbb{R}", document.getElementById('parametric-eq'), {
+            katex.render("\\begin{cases} x = x_0 + lt \\\\ y = y_0 + mt \\end{cases}, t \\in \\mathbb{R}", document.getElementById('parametric-eq'), {
                 throwOnError: false,
                 displayMode: true
             });
         }
         
         if (document.getElementById('parametric-example')) {
-            katex.render("\\begin{cases} x = 1 + 2t \\\\ y = -1 + 3t \\end{cases}, \\quad t \\in \\mathbb{R}", document.getElementById('parametric-example'), {
+            katex.render("\\begin{cases} x = 1 + 2t \\\\ y = -1 + 3t \\end{cases}, t \\in \\mathbb{R}", document.getElementById('parametric-example'), {
                 throwOnError: false,
                 displayMode: true
+            });
+        }
+        
+        if (document.getElementById('example10-1')) {
+            katex.render("2x - 3y + 6 = 0", document.getElementById('example10-1'), {
+                throwOnError: false
+            });
+        }
+        
+        if (document.getElementById('example10-2')) {
+            katex.render("\\frac{x}{3} = \\frac{y - 2}{2}", document.getElementById('example10-2'), {
+                throwOnError: false
+            });
+        }
+        
+        if (document.getElementById('example11-1')) {
+            katex.render("2x - 3y + 6 = 0", document.getElementById('example11-1'), {
+                throwOnError: false
+            });
+        }
+        
+        if (document.getElementById('example11-2')) {
+            katex.render("\\begin{cases} x = 3t \\\\ y = 2 + 2t \\end{cases}", document.getElementById('example11-2'), {
+                throwOnError: false,
+                displayMode: true
+            });
+        }
+        
+        if (document.getElementById('example12-1')) {
+            katex.render("\\frac{x - 2}{3} = \\frac{y - 1}{4}", document.getElementById('example12-1'), {
+                throwOnError: false
+            });
+        }
+        
+        if (document.getElementById('example12-2')) {
+            katex.render("4(x - 2) = 3(y - 1)", document.getElementById('example12-2'), {
+                throwOnError: false
+            });
+        }
+        
+        if (document.getElementById('example12-3')) {
+            katex.render("4x - 8 = 3y - 3", document.getElementById('example12-3'), {
+                throwOnError: false
+            });
+        }
+        
+        if (document.getElementById('example12-4')) {
+            katex.render("4x - 3y - 5 = 0", document.getElementById('example12-4'), {
+                throwOnError: false
+            });
+        }
+        
+        if (document.getElementById('example13-1')) {
+            katex.render("\\frac{x - 2}{3} = \\frac{y - 1}{4}", document.getElementById('example13-1'), {
+                throwOnError: false
+            });
+        }
+        
+        if (document.getElementById('example13-2')) {
+            katex.render("\\begin{cases} x = 2 + 3t \\\\ y = 1 + 4t \\end{cases}", document.getElementById('example13-2'), {
+                throwOnError: false,
+                displayMode: true
+            });
+        }
+        
+        if (document.getElementById('example14-1')) {
+            katex.render("\\begin{cases} x = 1 + 2t \\\\ y = -1 + 3t \\end{cases}", document.getElementById('example14-1'), {
+                throwOnError: false,
+                displayMode: true
+            });
+        }
+        
+        if (document.getElementById('example14-2')) {
+            katex.render("\\frac{x - 1}{2} = \\frac{y + 1}{3}", document.getElementById('example14-2'), {
+                throwOnError: false
+            });
+        }
+        
+        if (document.getElementById('example15-1')) {
+            katex.render("\\begin{cases} x = 1 + 2t \\\\ y = -1 + 3t \\end{cases}", document.getElementById('example15-1'), {
+                throwOnError: false,
+                displayMode: true
+            });
+        }
+        
+        if (document.getElementById('example15-2')) {
+            katex.render("3x - 2y - 5 = 0", document.getElementById('example15-2'), {
+                throwOnError: false
             });
         }
         
