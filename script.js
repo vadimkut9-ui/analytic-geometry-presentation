@@ -215,14 +215,14 @@ function initConverter() {
         
         try {
             if (sourceTypeVal === targetTypeVal) {
-                result = "Уравнения совпадают";
+                result = "Исходное и целевое уравнения совпадают";
             } else if (sourceTypeVal === 'general' && targetTypeVal === 'canonical') {
                 const A = parseFloat(document.getElementById('input-A')?.value) || 0;
                 const B = parseFloat(document.getElementById('input-B')?.value) || 0;
                 const C = parseFloat(document.getElementById('input-C')?.value) || 0;
                 
                 if (Math.abs(A) < 0.0001 && Math.abs(B) < 0.0001) {
-                    result = "A и B нули";
+                    result = "A и B не могут быть одновременно нулями";
                 } else {
                     let x0, y0;
                     if (Math.abs(B) > 0.0001) { x0 = 0; y0 = -C / B; } 
@@ -244,7 +244,7 @@ function initConverter() {
                 const C = parseFloat(document.getElementById('input-C')?.value) || 0;
                 
                 if (Math.abs(A) < 0.0001 && Math.abs(B) < 0.0001) {
-                    result = "A и B нули";
+                    result = "A и B не могут быть одновременно нулями";
                 } else {
                     let x0, y0;
                     if (Math.abs(B) > 0.0001) { x0 = 0; y0 = -C / B; } 
@@ -312,7 +312,7 @@ function initConverter() {
                 resultEqElement.textContent = result;
             }
         } catch (error) {
-            resultEqElement.textContent = "Ошибка";
+            resultEqElement.textContent = "Ошибка преобразования";
         }
     }
     
@@ -394,7 +394,7 @@ function calculateLineEquation() {
         }
     } catch (error) {
         const generalFormElement = document.getElementById('general-form');
-        if (generalFormElement) generalFormElement.textContent = "Ошибка";
+        if (generalFormElement) generalFormElement.textContent = "Ошибка: точки совпадают";
         const canonicalFormElement = document.getElementById('canonical-form');
         if (canonicalFormElement) canonicalFormElement.textContent = "";
         const parametricFormElement = document.getElementById('parametric-form');
