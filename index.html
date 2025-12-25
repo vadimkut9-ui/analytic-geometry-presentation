@@ -458,88 +458,36 @@
             </section>
 
             <!-- ==================== СЛАЙД 19: Исходный код программ ==================== -->
-            <section class="slide" id="slide19">
-                <div class="slide-content">
-                    <h1>Исходный код программ</h1>
-                    <div class="source-code">
-                        <div class="code-tabs">
-                            <button class="code-tab active" data-tab="converter">Конвертер уравнений</button>
-                            <button class="code-tab" data-tab="two-points">Через 2 точки</button>
-                        </div>
-                        <div class="code-content">
-                            <pre id="converter-code" class="code-block active"><code>function generalToCanonical(A, B, C) {
-    let x0, y0;
-    if (Math.abs(A) > 0.0001) {
-        y0 = 0;
-        x0 = -C / A;
-    } else {
-        x0 = 0;
-        y0 = -C / B;
-    }
-    
-    let l = B;
-    let m = -A;
-    
-    let gcdVal = gcd(l, m);
-    if (Math.abs(gcdVal) > 0.0001) {
-        l /= gcdVal;
-        m /= gcdVal;
-    }
-    
-    return {x0, y0, l, m};
-}</code></pre>
-                            <pre id="two-points-code" class="code-block"><code>function lineThroughTwoPoints(x1, y1, x2, y2) {
-    if (Math.abs(x1 - x2) < 0.001 && 
-        Math.abs(y1 - y2) < 0.001) {
-        throw new Error("Точки совпадают");
-    }
-    
-    let A = y2 - y1;
-    let B = x1 - x2;
-    let C = x2 * y1 - x1 * y2;
-    
-    return {
-        general: {A, B, C},
-        canonical: {
-            x0: x1,
-            y0: y1,
-            l: x2 - x1,
-            m: y2 - y1
-        },
-        parametric: {
-            x0: x1,
-            y0: y1,
-            l: x2 - x1,
-            m: y2 - y1
-        }
-    };
-}</code></pre>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <div class="slide" id="slide19">
+    <h2>Графическое представление данных</h2>
+    <div class="image-container">
+        <img src="images/meme1.jpg" 
+             alt="Anal geom1"
+             class="presentation-image"
+             style="max-width: 90%; max-height: 500px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+    </div>
+</div>
 
             <!-- ==================== СЛАЙД 20: Графики 1 ==================== -->
-            <section class="slide image-slide" id="slide20">
-                <div class="slide-content">
-                    <div class="image-container">
-                        <div class="image-placeholder">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
+           <div class="slide" id="slide20">
+    <h2>Графическое представление данных</h2>
+    <div class="image-container">
+        <img src="images/meme2.jpg" 
+             alt="Anal geom2"
+             class="presentation-image"
+             style="max-width: 90%; max-height: 500px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+    </div>
+</div>
             <!-- ==================== СЛАЙД 21: Графики 2 ==================== -->
-            <section class="slide image-slide" id="slide21">
-                <div class="slide-content">
-                    <div class="image-container">
-                        <div class="image-placeholder">
-                            <i class="fas fa-drafting-compass"></i>
-                        </div>
-                    </div>
-                </div>
-            </section>
+           <div class="slide" id="slide10">
+    <h2>Графическое представление данных</h2>
+    <div class="image-container">
+        <img src="images/meme3.jpg" 
+             alt="Anal geom3"
+             class="presentation-image"
+             style="max-width: 90%; max-height: 500px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+    </div>
+</div>
 
             <!-- ==================== СЛАЙД 22: Графики 3 ==================== -->
             <section class="slide image-slide" id="slide22">
