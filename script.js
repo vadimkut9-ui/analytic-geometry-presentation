@@ -215,7 +215,7 @@ function initConverter() {
         
         try {
             if (sourceTypeVal === targetTypeVal) {
-                result = "Исходное и целевое уравнения совпадают";
+                result = "Уравнения совпадают";
             } else if (sourceTypeVal === 'general' && targetTypeVal === 'canonical') {
                 const A = parseFloat(document.getElementById('input-A')?.value) || 0;
                 const B = parseFloat(document.getElementById('input-B')?.value) || 0;
@@ -494,3 +494,4 @@ function gcd(a, b) {
     }
     return a;
 }
+
