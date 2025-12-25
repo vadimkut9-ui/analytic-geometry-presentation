@@ -7,22 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (typeof katex !== 'undefined') {
         setTimeout(renderMath, 300);
-    } else {
-        setTimeout(function() {
-            if (typeof katex !== 'undefined') {
-                renderMath();
-            }
-        }, 1000);
     }
 });
 
 window.addEventListener('load', function() {
     initSwipeSupport();
     setTimeout(renderMath, 500);
-    setTimeout(function() {
-        if (typeof performConversion === 'function') performConversion();
-        if (typeof calculateLineEquation === 'function') calculateLineEquation();
-    }, 300);
 });
 
 function initMenu() {
@@ -65,7 +55,7 @@ function initSlideNavigation() {
     
     if (totalSlidesElement) totalSlidesElement.textContent = totalSlides;
     
-    function showSlide(index, direction = 'auto') {
+    function showSlide(index) {
         if (isAnimating) return;
         if (index < 0) index = 0;
         if (index >= totalSlides) index = totalSlides - 1;
@@ -74,22 +64,16 @@ function initSlideNavigation() {
         isAnimating = true;
         const currentSlide = slides[currentSlideIndex];
         const nextSlide = slides[index];
+        const direction = index > currentSlideIndex ? 'next' : 'prev';
         
-        if (direction === 'auto') direction = index > currentSlideIndex ? 'next' : 'prev';
-        
-        currentSlide.classList.add(direction === 'next' ? 'prev' : 'next');
-        nextSlide.classList.add('active');
-        
-        if (direction === 'next') {
-            nextSlide.style.transform = 'translateX(100%)';
-            setTimeout(() => nextSlide.style.transform = 'translateX(0)', 10);
-        } else {
-            nextSlide.style.transform = 'translateX(-100%)';
-            setTimeout(() => nextSlide.style.transform = 'translateX(0)', 10);
-        }
+        currentSlide.classList.add('slide-out');
+        nextSlide.classList.add('slide-in', direction);
         
         setTimeout(() => {
-            currentSlide.classList.remove('active', 'prev', 'next');
+            currentSlide.classList.remove('active', 'slide-out');
+            nextSlide.classList.add('active');
+            nextSlide.classList.remove('slide-in', direction);
+            
             currentSlideIndex = index;
             if (currentSlideElement) currentSlideElement.textContent = index + 1;
             
@@ -97,38 +81,15 @@ function initSlideNavigation() {
             if (menuLinks[index]) menuLinks[index].classList.add('active');
             
             isAnimating = false;
-            renderMathOnSlide(index);
         }, 600);
     }
     
-    function renderMathOnSlide(slideIndex) {
-        setTimeout(() => {
-            if (typeof katex !== 'undefined') {
-                const slide = slides[slideIndex];
-                const mathElements = slide.querySelectorAll('.math-block, .equation-display');
-                mathElements.forEach(element => {
-                    if (element.textContent && !element.querySelector('.katex')) {
-                        try {
-                            const isDisplayMode = element.classList.contains('math-block');
-                            katex.render(element.textContent, element, {
-                                throwOnError: false,
-                                displayMode: isDisplayMode
-                            });
-                        } catch (e) {}
-                    }
-                });
-            }
-        }, 100);
-    }
-    
     if (prevBtn) prevBtn.addEventListener('click', function() {
-        if (isAnimating) return;
-        showSlide(currentSlideIndex - 1, 'prev');
+        showSlide(currentSlideIndex - 1);
     });
     
     if (nextBtn) nextBtn.addEventListener('click', function() {
-        if (isAnimating) return;
-        showSlide(currentSlideIndex + 1, 'next');
+        showSlide(currentSlideIndex + 1);
     });
     
     document.addEventListener('keydown', function(e) {
@@ -139,13 +100,13 @@ function initSlideNavigation() {
             case 'ArrowLeft':
             case 'PageUp':
                 e.preventDefault();
-                showSlide(currentSlideIndex - 1, 'prev');
+                showSlide(currentSlideIndex - 1);
                 break;
             case 'ArrowRight':
             case 'PageDown':
             case ' ':
                 e.preventDefault();
-                showSlide(currentSlideIndex + 1, 'next');
+                showSlide(currentSlideIndex + 1);
                 break;
             case 'Home':
                 e.preventDefault();
@@ -161,8 +122,7 @@ function initSlideNavigation() {
     menuLinks.forEach((link, index) => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            if (isAnimating) return;
-            showSlide(index, 'click');
+            showSlide(index);
         });
     });
     
@@ -176,28 +136,13 @@ function initConverter() {
     
     if (!sourceType || !convertBtn) return;
     
-    sourceType.addEventListener('change', function() {
-        updateInputVisibility();
-        updateSourceEquation();
-    });
-    
-    targetType.addEventListener('change', function() {
-        if (document.getElementById('source-equation').textContent.trim() !== '') {
-            performConversion();
-        }
-    });
+    sourceType.addEventListener('change', updateInputVisibility);
+    targetType.addEventListener('change', performConversion);
     
     const inputs = document.querySelectorAll('#general-inputs input, #canonical-inputs input, #parametric-inputs input');
-    inputs.forEach(input => input.addEventListener('input', function() {
-        updateSourceEquation();
-        if (document.getElementById('source-equation').textContent.trim() !== '') {
-            setTimeout(performConversion, 100);
-        }
-    }));
+    inputs.forEach(input => input.addEventListener('input', performConversion));
     
     convertBtn.addEventListener('click', performConversion);
-    updateInputVisibility();
-    updateSourceEquation();
     
     function updateInputVisibility() {
         const generalInputs = document.getElementById('general-inputs');
@@ -211,45 +156,8 @@ function initConverter() {
         if (sourceType.value === 'general' && generalInputs) generalInputs.style.display = 'block';
         else if (sourceType.value === 'canonical' && canonicalInputs) canonicalInputs.style.display = 'block';
         else if (sourceType.value === 'parametric' && parametricInputs) parametricInputs.style.display = 'block';
-    }
-    
-    function updateSourceEquation() {
-        const sourceEqElement = document.getElementById('source-equation');
-        if (!sourceEqElement) return;
         
-        let equation = '';
-        let displayMode = false;
-        
-        if (sourceType.value === 'general') {
-            const A = parseFloat(document.getElementById('input-A')?.value) || 0;
-            const B = parseFloat(document.getElementById('input-B')?.value) || 0;
-            const C = parseFloat(document.getElementById('input-C')?.value) || 0;
-            equation = `${formatCoefficient(A)}x ${formatSignedCoefficient(B)}y ${formatSignedCoefficient(C)} = 0`;
-        } else if (sourceType.value === 'canonical') {
-            const x0 = parseFloat(document.getElementById('input-x0')?.value) || 0;
-            const y0 = parseFloat(document.getElementById('input-y0')?.value) || 0;
-            const l = parseFloat(document.getElementById('input-l')?.value) || 1;
-            const m = parseFloat(document.getElementById('input-m')?.value) || 1;
-            
-            if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) equation = "\\text{Ошибка: нулевой направляющий вектор}";
-            else if (Math.abs(l) < 0.001) equation = `x = ${x0}`;
-            else if (Math.abs(m) < 0.001) equation = `y = ${y0}`;
-            else equation = `\\frac{x - ${formatNumber(x0)}}{${formatNumber(l)}} = \\frac{y - ${formatNumber(y0)}}{${formatNumber(m)}}`;
-        } else if (sourceType.value === 'parametric') {
-            const x0 = parseFloat(document.getElementById('param-x0')?.value) || 0;
-            const y0 = parseFloat(document.getElementById('param-y0')?.value) || 0;
-            const l = parseFloat(document.getElementById('param-l')?.value) || 1;
-            const m = parseFloat(document.getElementById('param-m')?.value) || 1;
-            equation = `\\begin{cases} x = ${formatNumber(x0)} ${formatSignedNumber(l)}t \\\\ y = ${formatNumber(y0)} ${formatSignedNumber(m)}t \\end{cases}`;
-            displayMode = true;
-        }
-        
-        try {
-            sourceEqElement.innerHTML = '';
-            katex.render(equation, sourceEqElement, { throwOnError: false, displayMode: displayMode });
-        } catch (e) {
-            sourceEqElement.textContent = equation;
-        }
+        performConversion();
     }
     
     function performConversion() {
@@ -270,23 +178,18 @@ function initConverter() {
                 const C = parseFloat(document.getElementById('input-C')?.value) || 0;
                 
                 if (Math.abs(A) < 0.0001 && Math.abs(B) < 0.0001) {
-                    result = "\\text{Ошибка: A и B не могут быть одновременно нулями}";
+                    result = "Ошибка: A и B не могут быть одновременно нулями";
                 } else {
                     let x0, y0;
-                    if (Math.abs(B) > 0.0001) {
-                        x0 = 0;
-                        y0 = -C / B;
-                    } else {
-                        y0 = 0;
-                        x0 = -C / A;
-                    }
+                    if (Math.abs(B) > 0.0001) { x0 = 0; y0 = -C / B; } 
+                    else { y0 = 0; x0 = -C / A; }
                     
                     let l = -B;
                     let m = A;
                     let gcdVal = gcd(Math.abs(l), Math.abs(m));
                     if (gcdVal > 0.0001) { l /= gcdVal; m /= gcdVal; }
                     
-                    if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) result = "\\text{Ошибка: нулевой направляющий вектор}";
+                    if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) result = "Ошибка: нулевой направляющий вектор";
                     else if (Math.abs(l) < 0.001) result = `x = ${formatNumber(x0)}`;
                     else if (Math.abs(m) < 0.001) result = `y = ${formatNumber(y0)}`;
                     else result = `\\frac{x - ${formatNumber(x0)}}{${formatNumber(l)}} = \\frac{y - ${formatNumber(y0)}}{${formatNumber(m)}}`;
@@ -297,7 +200,7 @@ function initConverter() {
                 const C = parseFloat(document.getElementById('input-C')?.value) || 0;
                 
                 if (Math.abs(A) < 0.0001 && Math.abs(B) < 0.0001) {
-                    result = "\\text{Ошибка: A и B не могут быть одновременно нулями}";
+                    result = "Ошибка: A и B не могут быть одновременно нулями";
                 } else {
                     let x0, y0;
                     if (Math.abs(B) > 0.0001) { x0 = 0; y0 = -C / B; } 
@@ -318,7 +221,7 @@ function initConverter() {
                 const m = parseFloat(document.getElementById('input-m')?.value) || 1;
                 
                 if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) {
-                    result = "\\text{Ошибка: нулевой направляющий вектор}";
+                    result = "Ошибка: нулевой направляющий вектор";
                 } else {
                     const A = m;
                     const B = -l;
@@ -331,7 +234,7 @@ function initConverter() {
                 const l = parseFloat(document.getElementById('input-l')?.value) || 1;
                 const m = parseFloat(document.getElementById('input-m')?.value) || 1;
                 
-                if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) result = "\\text{Ошибка: нулевой направляющий вектор}";
+                if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) result = "Ошибка: нулевой направляющий вектор";
                 else { result = `\\begin{cases} x = ${formatNumber(x0)} ${formatSignedNumber(l)}t \\\\ y = ${formatNumber(y0)} ${formatSignedNumber(m)}t \\end{cases}`; displayMode = true; }
             } else if (sourceTypeVal === 'parametric' && targetTypeVal === 'canonical') {
                 const x0 = parseFloat(document.getElementById('param-x0')?.value) || 0;
@@ -339,7 +242,7 @@ function initConverter() {
                 const l = parseFloat(document.getElementById('param-l')?.value) || 1;
                 const m = parseFloat(document.getElementById('param-m')?.value) || 1;
                 
-                if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) result = "\\text{Ошибка: нулевой направляющий вектор}";
+                if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) result = "Ошибка: нулевой направляющий вектор";
                 else if (Math.abs(l) < 0.001) result = `x = ${formatNumber(x0)}`;
                 else if (Math.abs(m) < 0.001) result = `y = ${formatNumber(y0)}`;
                 else result = `\\frac{x - ${formatNumber(x0)}}{${formatNumber(l)}} = \\frac{y - ${formatNumber(y0)}}{${formatNumber(m)}}`;
@@ -349,7 +252,7 @@ function initConverter() {
                 const l = parseFloat(document.getElementById('param-l')?.value) || 1;
                 const m = parseFloat(document.getElementById('param-m')?.value) || 1;
                 
-                if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) result = "\\text{Ошибка: нулевой направляющий вектор}";
+                if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) result = "Ошибка: нулевой направляющий вектор";
                 else {
                     const A = m;
                     const B = -l;
@@ -365,9 +268,11 @@ function initConverter() {
                 resultEqElement.textContent = result;
             }
         } catch (error) {
-            resultEqElement.textContent = "Ошибка преобразования: " + error.message;
+            resultEqElement.textContent = "Ошибка преобразования";
         }
     }
+    
+    updateInputVisibility();
 }
 
 function initTwoPointsApp() {
@@ -414,7 +319,7 @@ function calculateLineEquation() {
             const m = y2 - y1;
             let canonicalEq;
             
-            if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) canonicalEq = "\\text{Ошибка: точки совпадают}";
+            if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) canonicalEq = "Точки совпадают";
             else if (Math.abs(l) < 0.001) canonicalEq = `x = ${x1}`;
             else if (Math.abs(m) < 0.001) canonicalEq = `y = ${y1}`;
             else canonicalEq = `\\frac{x - ${formatNumber(x1)}}{${formatNumber(l)}} = \\frac{y - ${formatNumber(y1)}}{${formatNumber(m)}}`;
@@ -433,7 +338,7 @@ function calculateLineEquation() {
             const m = y2 - y1;
             let parametricEq;
             
-            if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) parametricEq = "\\text{Ошибка: точки совпадают}";
+            if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) parametricEq = "Точки совпадают";
             else parametricEq = `\\begin{cases} x = ${formatNumber(x1)} ${formatSignedNumber(l)}t \\\\ y = ${formatNumber(y1)} ${formatSignedNumber(m)}t \\end{cases}`;
             
             parametricFormElement.innerHTML = '';
