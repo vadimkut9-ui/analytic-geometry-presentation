@@ -635,7 +635,6 @@ h1 {
     text-align: center;
 }
 
-/* Стили для слайдов с изображениями (20-22) */
 .image-slide .slide-content {
     display: flex;
     flex-direction: column;
@@ -712,7 +711,6 @@ h1 {
     color: var(--primary-color);
 }
 
-/* Адаптивность */
 @media (max-width: 1200px) {
     .vector-grid {
         grid-template-columns: 1fr;
@@ -814,7 +812,6 @@ h1 {
     }
 }
 
-/* Анимация появления изображений */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -832,33 +829,4 @@ h1 {
 
 .image-slide.active .image-description {
     animation: fadeInUp 0.8s ease-out 0.3s both;
-}
-
-/* Общие адаптивные стили */
-@media (max-width: 768px) {
-    .menu-toggle {
-        right: -40px;
-        width: 35px;
-        height: 35px;
-        font-size: 1rem;
-    }
-    
-    .menu-link {
-        padding: 10px 15px;
-        font-size: 0.85rem;
-    }
-    
-    .input-row {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .input-row input {
-        max-width: 100%;
-        width: 100%;
-    }
-    
-    .coord-input input {
-        width: 100px;
-    }
 }
