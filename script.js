@@ -1,3 +1,7 @@
+let currentSlideIndex = 0;
+let isAnimating = false;
+let slides = [];
+
 document.addEventListener('DOMContentLoaded', function() {
     initMenu();
     initSlideNavigation();
@@ -29,8 +33,8 @@ function initMenu() {
             e.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
             const targetSlide = document.getElementById(targetId);
-            const slides = document.querySelectorAll('.slide');
-            const slideIndex = Array.from(slides).indexOf(targetSlide);
+            const allSlides = document.querySelectorAll('.slide');
+            const slideIndex = Array.from(allSlides).indexOf(targetSlide);
             
             if (slideIndex !== -1) {
                 slideMenu.classList.remove('active');
@@ -41,10 +45,6 @@ function initMenu() {
         });
     });
 }
-
-let currentSlideIndex = 0;
-let isAnimating = false;
-let slides = [];
 
 function initSlideNavigation() {
     slides = document.querySelectorAll('.slide');
@@ -94,13 +94,19 @@ function initSlideNavigation() {
         }, 600);
     }
     
-    if (prevBtn) prevBtn.addEventListener('click', function() {
-        showSlide(currentSlideIndex - 1, 'prev');
-    });
+    window.showSlide = showSlide;
     
-    if (nextBtn) nextBtn.addEventListener('click', function() {
-        showSlide(currentSlideIndex + 1, 'next');
-    });
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+            showSlide(currentSlideIndex - 1, 'prev');
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+            showSlide(currentSlideIndex + 1, 'next');
+        });
+    }
     
     document.addEventListener('keydown', function(e) {
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
@@ -140,9 +146,6 @@ function initSlideNavigation() {
     slides[currentSlideIndex].classList.add('active');
     if (menuLinks[currentSlideIndex]) menuLinks[currentSlideIndex].classList.add('active');
     if (currentSlideElement) currentSlideElement.textContent = '1';
-    
-    // Экспортируем showSlide для использования в других функциях
-    window.showSlide = showSlide;
 }
 
 function initConverter() {
