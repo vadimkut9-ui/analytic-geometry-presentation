@@ -225,13 +225,21 @@ function initConverter() {
                     result = "A и B не могут быть одновременно нулями";
                 } else {
                     let x0, y0;
-                    if (Math.abs(B) > 0.0001) { x0 = 0; y0 = -C / B; } 
-                    else { y0 = 0; x0 = -C / A; }
+                    if (Math.abs(B) > 0.0001) {
+                        x0 = 0;
+                        y0 = -C / B;
+                    } else {
+                        y0 = 0;
+                        x0 = -C / A;
+                    }
                     
                     let l = -B;
                     let m = A;
                     let gcdVal = gcd(Math.abs(l), Math.abs(m));
-                    if (gcdVal > 0.0001) { l /= gcdVal; m /= gcdVal; }
+                    if (gcdVal > 0.0001) {
+                        l /= gcdVal;
+                        m /= gcdVal;
+                    }
                     
                     if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) result = "Нулевой вектор";
                     else if (Math.abs(l) < 0.001) result = `x = ${formatNumber(x0)}`;
@@ -247,13 +255,21 @@ function initConverter() {
                     result = "A и B не могут быть одновременно нулями";
                 } else {
                     let x0, y0;
-                    if (Math.abs(B) > 0.0001) { x0 = 0; y0 = -C / B; } 
-                    else { y0 = 0; x0 = -C / A; }
+                    if (Math.abs(B) > 0.0001) {
+                        x0 = 0;
+                        y0 = -C / B;
+                    } else {
+                        y0 = 0;
+                        x0 = -C / A;
+                    }
                     
                     let l = -B;
                     let m = A;
                     let gcdVal = gcd(Math.abs(l), Math.abs(m));
-                    if (gcdVal > 0.0001) { l /= gcdVal; m /= gcdVal; }
+                    if (gcdVal > 0.0001) {
+                        l /= gcdVal;
+                        m /= gcdVal;
+                    }
                     
                     result = `\\begin{cases} x = ${formatNumber(x0)} ${formatSignedNumber(l)}t \\\\ y = ${formatNumber(y0)} ${formatSignedNumber(m)}t \\end{cases}`;
                     displayMode = true;
@@ -269,7 +285,7 @@ function initConverter() {
                 } else {
                     const A = m;
                     const B = -l;
-                    const C = l*y0 - m*x0;
+                    const C = l * y0 - m * x0;
                     result = `${formatCoefficient(A)}x ${formatSignedCoefficient(B)}y ${formatSignedCoefficient(C)} = 0`;
                 }
             } else if (sourceTypeVal === 'canonical' && targetTypeVal === 'parametric') {
@@ -279,7 +295,10 @@ function initConverter() {
                 const m = parseFloat(document.getElementById('input-m')?.value) || 1;
                 
                 if (Math.abs(l) < 0.001 && Math.abs(m) < 0.001) result = "Нулевой вектор";
-                else { result = `\\begin{cases} x = ${formatNumber(x0)} ${formatSignedNumber(l)}t \\\\ y = ${formatNumber(y0)} ${formatSignedNumber(m)}t \\end{cases}`; displayMode = true; }
+                else {
+                    result = `\\begin{cases} x = ${formatNumber(x0)} ${formatSignedNumber(l)}t \\\\ y = ${formatNumber(y0)} ${formatSignedNumber(m)}t \\end{cases}`;
+                    displayMode = true;
+                }
             } else if (sourceTypeVal === 'parametric' && targetTypeVal === 'canonical') {
                 const x0 = parseFloat(document.getElementById('param-x0')?.value) || 0;
                 const y0 = parseFloat(document.getElementById('param-y0')?.value) || 0;
@@ -300,7 +319,7 @@ function initConverter() {
                 else {
                     const A = m;
                     const B = -l;
-                    const C = l*y0 - m*x0;
+                    const C = l * y0 - m * x0;
                     result = `${formatCoefficient(A)}x ${formatSignedCoefficient(B)}y ${formatSignedCoefficient(C)} = 0`;
                 }
             }
@@ -454,7 +473,9 @@ function renderMath() {
         render('example14-2', "\\frac{x - 1}{2} = \\frac{y + 1}{3}");
         render('example15-1', "\\begin{cases} x = 1 + 2t \\\\ y = -1 + 3t \\end{cases}", true);
         render('example15-2', "3x - 2y - 5 = 0");
-    } catch (error) {}
+    } catch (error) {
+        console.error('Ошибка при рендеринге математики:', error);
+    }
 }
 
 function formatNumber(num) {
@@ -494,4 +515,3 @@ function gcd(a, b) {
     }
     return a;
 }
-
