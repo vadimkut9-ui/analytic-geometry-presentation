@@ -488,9 +488,7 @@ function renderMath() {
         render('example14-2', "\\frac{x - 1}{2} = \\frac{y + 1}{3}");
         render('example15-1', "\\begin{cases} x = 1 + 2t \\\\ y = -1 + 3t \\end{cases}", true);
         render('example15-2', "3x - 2y - 5 = 0");
-    } catch (error) {
-        console.error('Ошибка при рендеринге математики:', error);
-    }
+    } catch (error) {}
 }
 
 function formatNumber(num) {
