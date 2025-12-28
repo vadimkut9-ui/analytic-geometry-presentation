@@ -361,6 +361,10 @@ h1 {
     font-size: 0.9rem;
 }
 
+.inputs-group {
+    margin-bottom: 15px;
+}
+
 .input-row {
     display: flex;
     align-items: center;
@@ -478,6 +482,21 @@ h1 {
     font-weight: 600;
     color: var(--primary-color);
     margin-top: 8px;
+}
+
+#general-form,
+#canonical-form,
+#parametric-form {
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed var(--border-color);
+    font-family: 'KaTeX_Main', 'Times New Roman', serif;
+    font-size: 1.2rem;
 }
 
 .source-code {
@@ -616,25 +635,81 @@ h1 {
     text-align: center;
 }
 
-/* Стили для слайдов 19-22 с изображениями */
+/* Стили для слайдов с изображениями (20-22) */
+.image-slide .slide-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    padding: 40px;
+}
+
+.image-slide h1 {
+    margin-bottom: 30px;
+    color: var(--primary-color);
+    font-size: 2.2rem;
+    text-align: center;
+    width: 100%;
+}
+
 .image-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 30px 0;
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
     padding: 20px;
     background-color: #f8f9fa;
-    border-radius: 10px;
-    min-height: 450px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    min-height: 400px;
+}
+
+.image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
 
 .centered-image {
     max-width: 100%;
     max-height: 400px;
     object-fit: contain;
-    border-radius: 8px;
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    border: 2px solid var(--secondary-color);
+    transition: transform 0.3s ease;
+}
+
+.centered-image:hover {
+    transform: scale(1.02);
+}
+
+.image-description {
+    max-width: 800px;
+    margin: 30px auto 0;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    border-left: 5px solid var(--accent-color);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.image-description p {
+    margin: 10px 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.image-description .katex {
+    font-size: 1.1em;
+    color: var(--primary-color);
 }
 
 /* Адаптивность */
@@ -648,7 +723,7 @@ h1 {
     }
     
     .centered-image {
-        max-height: 300px;
+        max-height: 350px;
     }
 }
 
@@ -695,23 +770,95 @@ h1 {
         padding: 10px;
     }
     
+    .image-slide h1 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+    
     .image-container {
-        min-height: 250px;
-        margin: 20px 0;
+        min-height: 300px;
         padding: 15px;
+        margin: 15px auto;
     }
     
     .centered-image {
-        max-height: 200px;
+        max-height: 300px;
+    }
+    
+    .image-description {
+        padding: 15px;
+        margin: 20px auto 0;
+    }
+    
+    .image-description p {
+        font-size: 1rem;
     }
 }
 
 @media (max-width: 480px) {
+    .image-slide h1 {
+        font-size: 1.5rem;
+    }
+    
     .image-container {
-        min-height: 200px;
+        min-height: 250px;
+        padding: 10px;
     }
     
     .centered-image {
-        max-height: 150px;
+        max-height: 250px;
+    }
+    
+    .image-description {
+        padding: 12px;
+    }
+}
+
+/* Анимация появления изображений */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.image-slide.active .image-container {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.image-slide.active .image-description {
+    animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+/* Общие адаптивные стили */
+@media (max-width: 768px) {
+    .menu-toggle {
+        right: -40px;
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .menu-link {
+        padding: 10px 15px;
+        font-size: 0.85rem;
+    }
+    
+    .input-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .input-row input {
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .coord-input input {
+        width: 100px;
     }
 }
