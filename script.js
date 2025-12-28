@@ -27,15 +27,27 @@ function initMenu() {
     menuLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            slideMenu.classList.remove('active');
-            slidesContainer.classList.remove('menu-open');
-            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            const targetId = this.getAttribute('href').substring(1);
+            const targetSlide = document.getElementById(targetId);
+            const slides = document.querySelectorAll('.slide');
+            const slideIndex = Array.from(slides).indexOf(targetSlide);
+            
+            if (slideIndex !== -1) {
+                slideMenu.classList.remove('active');
+                slidesContainer.classList.remove('menu-open');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                showSlide(slideIndex);
+            }
         });
     });
 }
 
+let currentSlideIndex = 0;
+let isAnimating = false;
+let slides = [];
+
 function initSlideNavigation() {
-    const slides = document.querySelectorAll('.slide');
+    slides = document.querySelectorAll('.slide');
     const totalSlides = slides.length;
     const currentSlideElement = document.getElementById('current-slide');
     const totalSlidesElement = document.getElementById('total-slides');
@@ -44,9 +56,6 @@ function initSlideNavigation() {
     const menuLinks = document.querySelectorAll('.menu-link');
     
     if (slides.length === 0) return;
-    
-    let currentSlideIndex = 0;
-    let isAnimating = false;
     
     if (totalSlidesElement) totalSlidesElement.textContent = totalSlides;
     
@@ -131,6 +140,9 @@ function initSlideNavigation() {
     slides[currentSlideIndex].classList.add('active');
     if (menuLinks[currentSlideIndex]) menuLinks[currentSlideIndex].classList.add('active');
     if (currentSlideElement) currentSlideElement.textContent = '1';
+    
+    // Экспортируем showSlide для использования в других функциях
+    window.showSlide = showSlide;
 }
 
 function initConverter() {
