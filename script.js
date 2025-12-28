@@ -1,17 +1,32 @@
 let currentSlideIndex = 0;
 let isAnimating = false;
 let slides = [];
+let totalSlides = 0;
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Презентация загружается...');
+    
+    // Быстрая проверка элементов
+    console.log('Проверка элементов:');
+    console.log('- Слайды:', document.querySelectorAll('.slide').length);
+    console.log('- Кнопка вперед:', document.getElementById('next-btn'));
+    console.log('- Кнопка назад:', document.getElementById('prev-btn'));
+    console.log('- Счетчик слайдов:', document.getElementById('current-slide'));
+    console.log('- Общее количество:', document.getElementById('total-slides'));
+    
+    // Инициализация
     initMenu();
     initSlideNavigation();
     initConverter();
     initTwoPointsApp();
     initCodeTabs();
     
+    // Рендер математики
     if (typeof katex !== 'undefined') {
         setTimeout(renderMath, 300);
     }
+    
+    console.log('Презентация готова!');
 });
 
 function initMenu() {
@@ -48,14 +63,17 @@ function initMenu() {
 
 function initSlideNavigation() {
     slides = document.querySelectorAll('.slide');
-    const totalSlides = slides.length;
+    totalSlides = slides.length;
     const currentSlideElement = document.getElementById('current-slide');
     const totalSlidesElement = document.getElementById('total-slides');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const menuLinks = document.querySelectorAll('.menu-link');
     
-    if (slides.length === 0) return;
+    if (slides.length === 0) {
+        console.error('Слайды не найдены!');
+        return;
+    }
     
     if (totalSlidesElement) totalSlidesElement.textContent = totalSlides;
     
@@ -71,22 +89,28 @@ function initSlideNavigation() {
         
         const actualDirection = index > currentSlideIndex ? 'next' : 'prev';
         
+        // Убираем активный класс с текущего слайда
         currentSlide.classList.remove('active');
         currentSlide.classList.add(actualDirection);
         
+        // Добавляем активный класс новому слайду
         nextSlide.classList.add('active');
         nextSlide.style.transform = actualDirection === 'next' ? 'translateX(100%)' : 'translateX(-100%)';
         
+        // Сбрасываем трансформацию после небольшой задержки
         setTimeout(() => {
             nextSlide.style.transform = 'translateX(0)';
         }, 10);
         
+        // Завершаем анимацию
         setTimeout(() => {
             currentSlide.classList.remove('prev', 'next');
             currentSlideIndex = index;
             
+            // Обновляем счетчик
             if (currentSlideElement) currentSlideElement.textContent = index + 1;
             
+            // Обновляем активную ссылку в меню
             menuLinks.forEach(link => link.classList.remove('active'));
             if (menuLinks[index]) menuLinks[index].classList.add('active');
             
@@ -94,20 +118,27 @@ function initSlideNavigation() {
         }, 600);
     }
     
+    // Экспортируем функцию для использования в меню
     window.showSlide = showSlide;
     
+    // Обработчики для кнопок навигации
     if (prevBtn) {
         prevBtn.addEventListener('click', function() {
             showSlide(currentSlideIndex - 1, 'prev');
         });
+    } else {
+        console.error('Кнопка "Назад" не найдена!');
     }
     
     if (nextBtn) {
         nextBtn.addEventListener('click', function() {
             showSlide(currentSlideIndex + 1, 'next');
         });
+    } else {
+        console.error('Кнопка "Вперед" не найдена!');
     }
     
+    // Навигация с клавиатуры
     document.addEventListener('keydown', function(e) {
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
         if (isAnimating) return;
@@ -135,6 +166,7 @@ function initSlideNavigation() {
         }
     });
     
+    // Обработчики для ссылок в меню
     menuLinks.forEach((link, index) => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -143,9 +175,12 @@ function initSlideNavigation() {
         });
     });
     
+    // Инициализация первого слайда
     slides[currentSlideIndex].classList.add('active');
     if (menuLinks[currentSlideIndex]) menuLinks[currentSlideIndex].classList.add('active');
     if (currentSlideElement) currentSlideElement.textContent = '1';
+    
+    console.log('Навигация инициализирована успешно!');
 }
 
 function initConverter() {
@@ -230,7 +265,7 @@ function initConverter() {
         
         try {
             if (sourceTypeVal === targetTypeVal) {
-                result = "Исходное и целевое уравнения совпадают";
+                result = " Ошибка ";
             } else if (sourceTypeVal === 'general' && targetTypeVal === 'canonical') {
                 const A = parseFloat(document.getElementById('input-A')?.value) || 0;
                 const B = parseFloat(document.getElementById('input-B')?.value) || 0;
@@ -488,7 +523,9 @@ function renderMath() {
         render('example14-2', "\\frac{x - 1}{2} = \\frac{y + 1}{3}");
         render('example15-1', "\\begin{cases} x = 1 + 2t \\\\ y = -1 + 3t \\end{cases}", true);
         render('example15-2', "3x - 2y - 5 = 0");
-    } catch (error) {}
+    } catch (error) {
+        console.error('Ошибка при рендеринге математики:', error);
+    }
 }
 
 function formatNumber(num) {
