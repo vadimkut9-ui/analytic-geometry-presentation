@@ -1,4 +1,4 @@
-/* Стили для слайдов с полноэкранными изображениями (20-22) */
+
 .image-slide .slide-content {
     display: flex;
     align-items: center;
@@ -80,3 +80,4 @@
 .fullscreen-image[src=""] + .fullscreen-image-container::after {
     display: block;
 }
+
